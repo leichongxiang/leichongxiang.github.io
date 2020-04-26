@@ -228,6 +228,110 @@
             
             
               
+                <a class="post-title-link" href="/2015/11/09/python_迭代器_生成器/" itemprop="url">
+                  python迭代器和生成器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-11-09T18:50:35+08:00" content="2015-11-09">
+              2015-11-09
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/09/python_迭代器_生成器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/09/python_迭代器_生成器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2015/11/09/python_迭代器_生成器/" class="leancloud_visitors" data-flag-title="python迭代器和生成器">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h1><p>迭代器：就是具有next方法的对象。在调用next方法时，迭代器会返回它的下一个值；当没有值可以返回时，会引发一个StopIteration异常。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">gennum</span><span class="params">(n)</span>:</span></span><br><span class="line"><span class="meta">... </span>    i = <span class="number">1</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">while</span> i &lt;= n:</span><br><span class="line"><span class="meta">... </span>        <span class="keyword">yield</span> i**<span class="number">2</span></span><br><span class="line"><span class="meta">... </span>        i +=<span class="number">1</span></span><br><span class="line"><span class="meta">... </span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g1=gennum(<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g1.next()</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g1.next()</span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g1.next()</span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g1.next()</span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g1.next()</span><br><span class="line"><span class="number">25</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>g1.next()</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">StopIteration</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/11/09/python_迭代器_生成器/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2015/11/03/python_class/" itemprop="url">
                   python的类
                 </a>
@@ -499,7 +603,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww1.sinaimg.cn/large/8e712944jw1exnr202c2kj20lp0frdha.jpg" rel="gallery_ck9ghw0w600561ch75i1uvlsq" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://ww1.sinaimg.cn/large/8e712944jw1exnr202c2kj20lp0frdha.jpg" rel="gallery_ck9gkdz8z005c0uh7y24f7bzy" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://ww1.sinaimg.cn/large/8e712944jw1exnr202c2kj20lp0frdha.jpg" itemprop="contentUrl">
               </a>
             
@@ -641,110 +745,6 @@
 
 
     
-      
-
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/10/29/shell脚本中的问题/" itemprop="url">
-                  shell脚本中问题01
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-10-29T17:53:35+08:00" content="2015-10-29">
-              2015-10-29
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/10/29/shell脚本中的问题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/29/shell脚本中的问题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-	  
-	     <span id="/2015/10/29/shell脚本中的问题/" class="leancloud_visitors" data-flag-title="shell脚本中问题01">
-	     &nbsp; | &nbsp; 阅读次数
-	     </span>
-	  
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h1 id="问题1：shell的位置参数-1与每行的第一个字段-1冲突"><a href="#问题1：shell的位置参数-1与每行的第一个字段-1冲突" class="headerlink" title="问题1：shell的位置参数\$1与每行的第一个字段\$1冲突"></a><font color="red">问题1：shell的位置参数\$1与每行的第一个字段\$1冲突</font></h1><p>比如awk读取shell的位置参数\$1 ,如果直接放在awk命令中会与每行的第一个字段\$1冲突,需要特殊处理。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> 3 | awk  <span class="string">'&#123;if ($1==3) print $1 "不是" "'</span><span class="variable">$1</span><span class="string">'"&#125;'</span></span><br><span class="line"></span><br><span class="line">sh a.sh 7</span><br><span class="line">3不是7</span><br></pre></td></tr></table></figure></p>
-<p>实例2：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">SOCK_FILE=`ssh -p 30022 <span class="variable">$1</span> <span class="string">"cat /etc/my.cnf | grep sock | head -1|awk -F'=' '&#123;print "</span><span class="string">'$2'</span><span class="string">" &#125;' "</span> `</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$SOCK_FILE</span></span><br><span class="line"></span><br><span class="line">[root@manager ~]<span class="comment"># sh a.sh  backup</span></span><br><span class="line">/tmp/mysql3306.sock</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/29/shell脚本中的问题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -785,7 +785,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-count">63</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -334,6 +334,109 @@
             
             
               
+                <a class="post-title-link" href="/2016/05/04/hexo_coding/" itemprop="url">
+                  hexo迁移从gitcafe到coding-net
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-05-04T17:30:35+08:00" content="2016-05-04">
+              2016-05-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/04/hexo_coding/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/hexo_coding/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2016/05/04/hexo_coding/" class="leancloud_visitors" data-flag-title="hexo迁移从gitcafe到coding-net">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><div style="border-radius:10px; width: 90%; border:10px solid #AFEEEE;font-size:16px;align=left;  background:#AFEEEE">2016.05.10更新:部署到coding时，如果使用pages的话，项目名称必须与coding的用户名一致，但是演示并没有这个要求。而且目前为止：演示不能绑定自己的域名，而pages可以，所以说，为了以后方便，项目名称还是与用户名一致的好，不然部署pages会出现没有样式的bug.之前已经把hexo部署到github，但是有时候挺慢的，于是就像跟大家一样搞到国内的gitcafe上，岂料，gitcafe被coding收购，要求迁移</div>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/04/hexo_coding/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2016/04/14/linux_ss/" itemprop="url">
                   ss命令替代netstat
                 </a>
@@ -605,7 +708,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww3.sinaimg.cn/large/8e712944jw1f1wjdty31qj209706odfv.jpg" rel="gallery_ck9ghw0tt00121ch7s9dlejhn" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://ww3.sinaimg.cn/large/8e712944jw1f1wjdty31qj209706odfv.jpg" rel="gallery_ck9gkdz6t00170uh7fvq7pmwt" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://ww3.sinaimg.cn/large/8e712944jw1f1wjdty31qj209706odfv.jpg" itemprop="contentUrl">
               </a>
             
@@ -622,125 +725,6 @@
 <p>看到这么一道题，求平均和个数<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cat a.txt </span><br><span class="line">a,<span class="number">2</span></span><br><span class="line">a,<span class="number">3</span></span><br><span class="line">b,<span class="number">4</span></span><br><span class="line">b,<span class="number">5</span></span><br><span class="line">c,<span class="number">6</span></span><br><span class="line">d,<span class="number">7</span></span><br><span class="line">#结果</span><br><span class="line">awk -F, '&#123;a[$<span class="number">1</span>]+=$<span class="number">2</span> &#125;&#123;cnt[$<span class="number">1</span>]++&#125;END&#123;for(i in a) print i,cnt[i],a[i],a[i]/cnt[i]&#125;' a.txt</span><br><span class="line">a <span class="number">2</span> <span class="number">5</span> <span class="number">2.5</span></span><br><span class="line">b <span class="number">2</span> <span class="number">9</span> <span class="number">4.5</span></span><br><span class="line">c <span class="number">1</span> <span class="number">6</span> <span class="number">6</span></span><br><span class="line">d <span class="number">1</span> <span class="number">7</span> <span class="number">7</span></span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/03/14/linux_01/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2016/03/02/shell_expect/" itemprop="url">
-                  shell中调用expect
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-02T21:53:35+08:00" content="2016-03-02">
-              2016-03-02
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/02/shell_expect/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/02/shell_expect/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-	  
-	     <span id="/2016/03/02/shell_expect/" class="leancloud_visitors" data-flag-title="shell中调用expect">
-	     &nbsp; | &nbsp; 阅读次数
-	     </span>
-	  
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww2.sinaimg.cn/large/8e712944jw1f1k0oq9ovmj20go0nlwev.jpg" rel="gallery_ck9ghw0vt004f1ch7qyeky4i7" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://ww2.sinaimg.cn/large/8e712944jw1f1k0oq9ovmj20go0nlwev.jpg" itemprop="contentUrl">
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
-
-      
-        
-          <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>在批量部署手游环境的时候，经常需要批量对组内的服务器做信任，所以可以利用shell中的expect去自动化。</p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><h4 id="实例1：使用expect来完成密码应答"><a href="#实例1：使用expect来完成密码应答" class="headerlink" title="实例1：使用expect来完成密码应答"></a>实例1：使用expect来完成密码应答</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="function"><span class="title">auto_login_ssh</span></span>() &#123;</span><br><span class="line">    expect -c <span class="string">"set timeout -1;</span></span><br><span class="line"><span class="string">                spawn -noecho ssh -o StrictHostKeyChecking=no <span class="variable">$2</span> <span class="variable">$&#123;@:3&#125;</span>;</span></span><br><span class="line"><span class="string">                expect *assword:*;</span></span><br><span class="line"><span class="string">                send -- <span class="variable">$1</span>\r;</span></span><br><span class="line"><span class="string">                interact;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">auto_login_ssh passwd user@host</span><br></pre></td></tr></table></figure>
-<p>StrictHostKeyChecking=no参数让ssh默认添加新主机的公钥指纹，也就不会出现出现是否继续yes/no的提示了。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/02/shell_expect/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -802,7 +786,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-count">63</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
