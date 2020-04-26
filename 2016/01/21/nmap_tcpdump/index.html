@@ -1,0 +1,1006 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+  
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2">
+
+
+    <meta name="description" content="记录时间">
+
+
+
+  <meta name="keywords" content="nmap,tcpdump,">
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
+
+
+<meta name="description" content="NMap工具主要功能：探测主机是否在线、扫描主机开放端口和嗅探网络服务，用于网络探测和安全扫描.NMap支持很多扫描技术，例如：UDP、TCPconnect()、TCPSYN(半开扫描)、ftp代理(bounce攻击)、反向标志、ICMP、FIN、ACK扫描、SYN扫描和null扫描。命令格式：Nmap [ 扫描类型 ] [ 通用选项 ] { 扫描目标说明 }">
+<meta name="keywords" content="nmap,tcpdump">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nmap与tcpdump">
+<meta property="og:url" content="http://leichongxiang.github.io/2016/01/21/nmap_tcpdump/index.html">
+<meta property="og:site_name" content="Vike&#39;s Blog">
+<meta property="og:description" content="NMap工具主要功能：探测主机是否在线、扫描主机开放端口和嗅探网络服务，用于网络探测和安全扫描.NMap支持很多扫描技术，例如：UDP、TCPconnect()、TCPSYN(半开扫描)、ftp代理(bounce攻击)、反向标志、ICMP、FIN、ACK扫描、SYN扫描和null扫描。命令格式：Nmap [ 扫描类型 ] [ 通用选项 ] { 扫描目标说明 }">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-26T03:23:15.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nmap与tcpdump">
+<meta name="twitter:description" content="NMap工具主要功能：探测主机是否在线、扫描主机开放端口和嗅探网络服务，用于网络探测和安全扫描.NMap支持很多扫描技术，例如：UDP、TCPconnect()、TCPSYN(半开扫描)、ftp代理(bounce攻击)、反向标志、ICMP、FIN、ACK扫描、SYN扫描和null扫描。命令格式：Nmap [ 扫描类型 ] [ 通用选项 ] { 扫描目标说明 }">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> nmap与tcpdump | Vike's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f77b20a6d14f2ad51ff2830ef9fbf36d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vike's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">人生苦短，我用python</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+		
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '6ywXKaDWo7MbiWzbPCVP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                nmap与tcpdump
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-21T14:30:35+08:00" content="2016-01-21">
+              2016-01-21
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/21/nmap_tcpdump/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/21/nmap_tcpdump/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2016/01/21/nmap_tcpdump/" class="leancloud_visitors" data-flag-title="nmap与tcpdump">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="NMap工具"><a href="#NMap工具" class="headerlink" title="NMap工具"></a>NMap工具</h1><p><strong>主要功能：探测主机是否在线、扫描主机开放端口和嗅探网络服务，用于网络探测和安全扫描.</strong><br>NMap支持很多扫描技术，例如：UDP、TCPconnect()、TCPSYN(半开扫描)、ftp代理(bounce攻击)、反向标志、ICMP、FIN、ACK扫描、SYN扫描和null扫描。<br>命令格式：<code>Nmap [ 扫描类型 ] [ 通用选项 ] { 扫描目标说明 }</code><br><a id="more"></a></p>
+<h2 id="扫描类型"><a href="#扫描类型" class="headerlink" title="扫描类型:"></a>扫描类型:</h2><table>
+<thead>
+<tr>
+<th>-sT</th>
+<th style="text-align:center">TCPconnect()扫描，这是最基本的TCP扫描方式，用来建立一个TCP连接，如果成功则认为目标端口正在监听，否则认为目标端口没有监听程序。这种扫描很容易被检测到，在目标主机的日志中会记录大批的连接请求以及错误信息.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-sS</td>
+<td style="text-align:center">TCP同步扫描(TCPSYN)，只向目标发出SYN数据包，如果收到SYN/ACK响应包就认为目标端口正在监听，并立即断开连接；否则认为目标端口没有监听程序。所以这项技术通常称为半开扫描(half-open)。这项技术最大的好处是，很少有系统能够把这记入系统日志。不过，你需要root权限来定制SYN数据包.</td>
+</tr>
+<tr>
+<td>-sF,-sX,-sN</td>
+<td style="text-align:center">秘密FIN数据包扫描、圣诞树(XmasTree)、空(Null)扫描模式。这些扫描方式的理论依据是：关闭的端口需要对你的探测包回应RST包，而打开的端口必需忽略有问题的包，通过这种扫描，可间接用于检测防火墙的健壮性。</td>
+</tr>
+<tr>
+<td>-sP</td>
+<td style="text-align:center">ping扫描，用ping方式检查网络上哪些主机正在运行。当主机阻塞ICMP,echo请求包是ping扫描是无效的。nmap在任何情况下都会进行ping扫描，只有目标主机处于运行状态，才会进行后续的扫描。</td>
+</tr>
+<tr>
+<td>-sU</td>
+<td style="text-align:center">UDP扫描，如果你想知道在某台主机上提供哪些UDP服务，可以使用此选项。</td>
+</tr>
+<tr>
+<td>-sA</td>
+<td style="text-align:center">ACK扫描，这项高级的扫描方法通常可以用来穿过防火墙。</td>
+</tr>
+<tr>
+<td>-sW</td>
+<td style="text-align:center">滑动窗口扫描，非常类似于ACK的扫描</td>
+</tr>
+<tr>
+<td>-sR</td>
+<td style="text-align:center">RPC扫描，和其它不同的端口扫描方法结合使用</td>
+</tr>
+<tr>
+<td>-b</td>
+<td style="text-align:center">FTP反弹攻击(bounce attack)，连接到防火墙后面的一台FTP服务器做代理，接着进行端口扫描。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="通用选项"><a href="#通用选项" class="headerlink" title="通用选项:"></a>通用选项:</h2><table>
+<thead>
+<tr>
+<th>-n</th>
+<th style="text-align:center">不做反向DNS解析，以加快扫描速度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-P0</td>
+<td style="text-align:center">在扫描之前，不ping主机；有些网络防火墙可能禁止ICMP请求包，使用这种扫描类型可以跳过ping测试</td>
+</tr>
+<tr>
+<td>-PT</td>
+<td style="text-align:center">扫描之前，使用TCP ping确定哪些主机正在运行。</td>
+</tr>
+<tr>
+<td>-PS</td>
+<td style="text-align:center">对于root用户，这个选项让nmap使用SYN包而不是ACK包来对目标主机进行扫描。</td>
+</tr>
+<tr>
+<td>-PI</td>
+<td style="text-align:center">设置这个选项，让nmap使用真正的ping(ICMP echo请求)来扫描目标主机是否正在运行。</td>
+</tr>
+<tr>
+<td>-PB</td>
+<td style="text-align:center">这是默认的ping扫描选项。它使用ACK(-PT)和ICMP(-PI)两种扫描类型并行扫描。如果防火墙能够过滤其中一种包，使用这种方法，你就能够穿过防火墙。</td>
+</tr>
+<tr>
+<td>-O</td>
+<td style="text-align:center">这个选项激活对TCP/IP指纹特征(fingerprinting)的扫描，获得远程主机的标志，也就是操作系统类型。</td>
+</tr>
+<tr>
+<td>-I</td>
+<td style="text-align:center">打开nmap的反向标志扫描功能。</td>
+</tr>
+<tr>
+<td>-f</td>
+<td style="text-align:center">使用碎片IP数据包发送SYN、FIN、XMAS、NULL。包增加包过滤、入侵检测系统的难度，使其无法知道你的企图。</td>
+</tr>
+<tr>
+<td>-v</td>
+<td style="text-align:center">强烈推荐使用这个选项，它会给出扫描过程中的详细信息。</td>
+</tr>
+<tr>
+<td>-S <ip></ip></td>
+<td style="text-align:center">在一些情况下，nmap可能无法确定你的源地址(nmap会告诉你)。在这种情况使用这个选项给出你的IP地址。</td>
+</tr>
+<tr>
+<td>-g端口</td>
+<td style="text-align:center">设置扫描的源端口.一些防火墙和包过滤器的规则集允许源端口为DNS(53)或者FTP-DATA(20)的包通过和实现连接.如果攻击者把源端口修改为20或者53，就可以摧毁防火墙的防护。</td>
+</tr>
+<tr>
+<td>-oN</td>
+<td style="text-align:center">把扫描结果重定向到一个可读的文件logfilename中。</td>
+</tr>
+<tr>
+<td>-oS</td>
+<td style="text-align:center">扫描结果输出到标准输出。</td>
+</tr>
+<tr>
+<td>-A</td>
+<td style="text-align:center">打开操作系统探测和版本探测。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="扫描目标"><a href="#扫描目标" class="headerlink" title="扫描目标:"></a>扫描目标:</h2><table>
+<thead>
+<tr>
+<th>目标地址</th>
+<th style="text-align:center">可以为IP地址，CIRD地址等。如192.168.1.2，222.247.54.5/24</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-iL</td>
+<td style="text-align:center">filename 从filename文件中读取扫描的目标。</td>
+</tr>
+<tr>
+<td>-iR</td>
+<td style="text-align:center">让nmap自己随机挑选主机进行扫描。</td>
+</tr>
+<tr>
+<td>-p</td>
+<td style="text-align:center">端口,这个选项让你选择要进行扫描的端口号的范围。可使用逗号分隔多个端口，减号连接一个端口范围，在列表前指定T：表示TCP端口，U：表示UDP端口</td>
+</tr>
+<tr>
+<td>-exclude</td>
+<td style="text-align:center">排除指定主机。</td>
+</tr>
+<tr>
+<td>-exclude file</td>
+<td style="text-align:center">排除指定文件中的主机。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="端口的三种状态："><a href="#端口的三种状态：" class="headerlink" title="端口的三种状态："></a>端口的三种状态：</h2><p>Open：意味着目标主机能够在这个端口使用accept()系统调用接受连接。<br>filtered：表示防火墙、包过滤和其它的网络安全软件掩盖了这个端口，禁止nmap探测其是否打开。<br>unfiltered：表示这个端口关闭，并且没有防火墙/包过滤软件来隔离nmap的探测企图。</p>
+<h2 id="举例说明："><a href="#举例说明：" class="headerlink" title="举例说明："></a>举例说明：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1、探测指定网段是否有FTP服务的主机，不做DNS反向解析</span><br><span class="line">nmap -sS –n –p 21192.168.0.0/24</span><br><span class="line">2、探测指定服务器是否启有特定端口的服务</span><br><span class="line">nmap –n –p T:21-25,80,110,3389–sS 192.168.0.1</span><br><span class="line">3、使用TCP连接扫描探测指定服务器，即使无法ping通也仍然继续探测</span><br><span class="line">nmap -sT –PO 192.168.0.1</span><br><span class="line">4、探测指定服务器的操作系统类型</span><br><span class="line">nmap –O –n 192.168.0.1</span><br><span class="line">5、探测局域网段中各主机开启了哪些服务</span><br><span class="line">nmap –sS 192.168.0.0/24</span><br><span class="line">6、探测192.168.0.0和172.16.0.0/16网段中有哪些主机在运行</span><br><span class="line">nmap –sP –n 192.168.0.0/24 172.16.0.0/16</span><br><span class="line">7、快速扫描主机开放端口</span><br><span class="line">nmap -F 192.168.0.1</span><br></pre></td></tr></table></figure>
+<h1 id="TCPDump工具"><a href="#TCPDump工具" class="headerlink" title="TCPDump工具"></a>TCPDump工具</h1><h2 id="主要功能：捕获和分析数据包。"><a href="#主要功能：捕获和分析数据包。" class="headerlink" title="主要功能：捕获和分析数据包。"></a>主要功能：捕获和分析数据包。</h2><p>TcpDump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供 and、or、not等逻辑语句来帮助你去掉无用的信息。<br>命令格式：tcpdump [ 选项 ] [ -c 数量 ] [ -i 网络接口 ] [ -w 文件名 ] [ 表达式 ]</p>
+<h2 id="常用选项："><a href="#常用选项：" class="headerlink" title="常用选项："></a>常用选项：</h2><p>-l：使标准输出变为缓冲行形式；<br>-c：抓包次数；<br>-nn：直接以 IP 及 Port Number 显示，而非主机名与服务名称；<br>-s ：&lt;数据包大小&gt; 设置每个数据包的大小；<br>-i：指定监听的网络接口；<br>-r：从指定的文件中读取包；<br>-w：输出信息保存到指定文件；<br>-a：将网络地址和广播地址转变成名字；<br>-d：将匹配信息包的代码以人们能够理解的汇编格式给出；<br>-e：在输出行打印出数据链路层的头部信息；<br>-f：将外部的Internet地址以数字的形式打印出来；<br>-t：在输出的每一行不打印时间戳；<br>-v ：输出稍微详细的报文信息；加一个v更详细。</p>
+<h2 id="四种表达式：过滤报文条件"><a href="#四种表达式：过滤报文条件" class="headerlink" title="四种表达式：过滤报文条件"></a>四种表达式：过滤报文条件</h2><p>1、关于类型的关键字，主要包括host，net，port,<br>例如 host 210.27.48.2，指明 210.27.48.2是一台主机，net 202.0.0.0 指明202.0.0.0是一个网络地址，port 23 指明端口号是23。如果没有指定类型，缺省的类型是host。<br>2、确定传输方向的关键字，主要包括src, dst ,dst or src, dst and src ,这些关键字指明了传输的方向。例如 src 210.27.48.2 ,指明ip包中源地址是210.27.48.2,dst net  202.0.0.0指明目的网络地址是202.0.0.0。如果没有指明方向关键字，则缺省是src or dst关键字。<br>3、协议的关键字，主要包括ip,arp,tcp,udp等类型。<br>4、三种逻辑运算，与运算是’and’,’&amp;&amp;’; 或运算是’or’ ,’ | ‘； 非运算是 ‘not ‘ ‘! ‘。<br>其他重要的关键字如下： broadcast,less（小于）,greater（大于）</p>
+<h2 id="举例说明：-1"><a href="#举例说明：-1" class="headerlink" title="举例说明："></a>举例说明：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">1、截获eth0网卡10次收发所有数据包并将抓包结果保存到<span class="built_in">test</span>文件,再读取<span class="built_in">test</span>抓包结果文件</span><br><span class="line">tcpdump –i eth0 –c 10 –w <span class="built_in">test</span></span><br><span class="line">tcpdump –r <span class="built_in">test</span></span><br><span class="line">2、截获来访问80端口的所有数据包（指定端口范围portrange 1-1024）</span><br><span class="line">tcpdump port 80</span><br><span class="line">3、截获所有来自主机114.254.151.51的进出所有数据包</span><br><span class="line">tcpdump host 114.254.151.51</span><br><span class="line">4、截获ip包中源地址是114.254.151.51的（目的是dst）</span><br><span class="line">tcpdump src 114.254.151.51</span><br><span class="line">5、截获主机114.254.151.51和主机114.254.151.52的通信</span><br><span class="line">tcpdum host 114.254.151.51 and 114.254.151.52</span><br><span class="line">6、截获tcp协议并且源地址114.254.151.51来访问80的端口</span><br><span class="line">tcpdump tcp and src 114.254.151.51 and port 80</span><br><span class="line">7、截获主机114.254.151.51除了和114.254.151.52之外的所有ip包</span><br><span class="line">tcpdump ip host 114.254.151.51 and ! 114.254.151.52</span><br><span class="line">8、截获长度大于1000数据包,对于DDOS攻击时，可以使用</span><br><span class="line">tcpdump -i eth0 greater 1000</span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nmap/" rel="tag">#nmap</a>
+          
+            <a href="/tags/tcpdump/" rel="tag">#tcpdump</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/22/mysql_upgrade/" rel="prev">
+                <i class="fa fa-chevron-left"></i> mysql升级
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/20/mysql_help/" rel="next">
+                mysql下查看帮助 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/01/21/nmap_tcpdump/" data-title="nmap与tcpdump" data-url="http://leichongxiang.github.io/2016/01/21/nmap_tcpdump/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://ww3.sinaimg.cn/large/8e712944jw1exen95p8hej208c08cq4u.jpg" alt="Vike Lee" itemprop="image">
+          <p class="site-author-name" itemprop="name">Vike Lee</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">记录时间</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+<! -- 添加微信图标 -->
+    
+<! -- 完成 -->
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/leichongxiang/" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://macshuo.com/" target="_blank">MacTalk</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NMap工具"><span class="nav-number">1.</span> <span class="nav-text">NMap工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#扫描类型"><span class="nav-number">1.1.</span> <span class="nav-text">扫描类型:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用选项"><span class="nav-number">1.2.</span> <span class="nav-text">通用选项:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扫描目标"><span class="nav-number">1.3.</span> <span class="nav-text">扫描目标:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#端口的三种状态："><span class="nav-number">1.4.</span> <span class="nav-text">端口的三种状态：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举例说明："><span class="nav-number">1.5.</span> <span class="nav-text">举例说明：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCPDump工具"><span class="nav-number">2.</span> <span class="nav-text">TCPDump工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要功能：捕获和分析数据包。"><span class="nav-number">2.1.</span> <span class="nav-text">主要功能：捕获和分析数据包。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用选项："><span class="nav-number">2.2.</span> <span class="nav-text">常用选项：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四种表达式：过滤报文条件"><span class="nav-number">2.3.</span> <span class="nav-text">四种表达式：过滤报文条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举例说明：-1"><span class="nav-number">2.4.</span> <span class="nav-text">举例说明：</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vike Lee</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"leicx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+  
+    	 <!-- custom analytics part  --> 
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("mWA1nE7gcYVszHzU3BxSMc1a-gzGzoHsz", "4zH2GdGce6gOiDRfhcomjPBU");</script>
+<script>
+function showTime(Counter) {
+  var query = new AV.Query(Counter);
+  $(".leancloud_visitors").each(function() {
+    var url = $(this).attr("id").trim();
+    query.equalTo("url", url);
+    query.find({
+      success: function(results) {
+        if (results.length == 0) {
+          var content = $(document.getElementById(url)).text() + ': 0';
+          $(document.getElementById(url)).text(content);
+          return;
+        }
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+          $(document.getElementById(url)).text(content);
+        }
+      },
+      error: function(object, error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+
+  });
+}
+
+function addCount(Counter) {
+  var Counter = AV.Object.extend("Counter");
+  url = $(".leancloud_visitors").attr('id').trim();
+  title = $(".leancloud_visitors").attr('data-flag-title').trim();
+  var query = new AV.Query(Counter);
+  query.equalTo("url", url);
+  query.find({
+    success: function(results) {
+      if (results.length > 0) {
+        var counter = results[0];
+        counter.fetchWhenSave(true);
+        counter.increment("time");
+        counter.save(null, {
+          success: function(counter) {
+            var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(counter, error) {
+            console.log('Failed to save Visitor num, with error message: ' + error.message);
+          }
+        });
+      } else {
+        var newcounter = new Counter();
+        newcounter.set("title", title);
+        newcounter.set("url", url);
+        newcounter.set("time", 1);
+        newcounter.save(null, {
+          success: function(newcounter) {
+              console.log("newcounter.get('time')="+newcounter.get('time'));
+            var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(newcounter, error) {
+            console.log('Failed to create');
+          }
+        });
+      }
+    },
+    error: function(error) {
+      console.log('Error:' + error.code + " " + error.message);
+    }
+  });
+}
+$(function() {
+  var Counter = AV.Object.extend("Counter");
+  if ($('.leancloud_visitors').length == 1) {
+    addCount(Counter);
+  } else if ($('.post-title-link').length > 1) {
+    showTime(Counter);
+  }
+}); 
+</script>
+
+  
+</body>
+</html>

@@ -1,0 +1,880 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+  
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2">
+
+
+    <meta name="description" content="记录时间">
+
+
+
+  <meta name="keywords" content="mysql工具,">
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
+
+
+<meta name="description" content="简单sql1234567891011121314151617创建数据库create database name; 选择数据库use databasename; 直接删除数据库，不提醒drop databasename; 在shell中执行，删除数据库前，有提示。mysqladmin drop database name 显示表show tables; 表的详细描述describe tablenam">
+<meta name="keywords" content="mysql工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql工具">
+<meta property="og:url" content="http://leichongxiang.github.io/2016/01/26/mysql_tool/index.html">
+<meta property="og:site_name" content="Vike&#39;s Blog">
+<meta property="og:description" content="简单sql1234567891011121314151617创建数据库create database name; 选择数据库use databasename; 直接删除数据库，不提醒drop databasename; 在shell中执行，删除数据库前，有提示。mysqladmin drop database name 显示表show tables; 表的详细描述describe tablenam">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-26T03:23:15.318Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql工具">
+<meta name="twitter:description" content="简单sql1234567891011121314151617创建数据库create database name; 选择数据库use databasename; 直接删除数据库，不提醒drop databasename; 在shell中执行，删除数据库前，有提示。mysqladmin drop database name 显示表show tables; 表的详细描述describe tablenam">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> mysql工具 | Vike's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f77b20a6d14f2ad51ff2830ef9fbf36d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vike's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">人生苦短，我用python</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+		
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '6ywXKaDWo7MbiWzbPCVP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mysql工具
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-26T11:30:35+08:00" content="2016-01-26">
+              2016-01-26
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/26/mysql_tool/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/mysql_tool/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2016/01/26/mysql_tool/" class="leancloud_visitors" data-flag-title="mysql工具">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="简单sql"><a href="#简单sql" class="headerlink" title="简单sql"></a>简单sql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">创建数据库</span><br><span class="line">create database name; </span><br><span class="line">选择数据库</span><br><span class="line">use databasename; </span><br><span class="line">直接删除数据库，不提醒</span><br><span class="line">drop databasename; </span><br><span class="line">在shell中执行，删除数据库前，有提示。</span><br><span class="line">mysqladmin drop database name </span><br><span class="line">显示表</span><br><span class="line">show tables; </span><br><span class="line">表的详细描述</span><br><span class="line">describe tablename; </span><br><span class="line"></span><br><span class="line">select 中加上distinct去除重复字段</span><br><span class="line"></span><br><span class="line">显示当前mysql版本和当前日期和当前用户</span><br><span class="line"> select version(),current_date,current_user();</span><br></pre></td></tr></table></figure>
+<p>注意<br>如下脚本创建数据库yourdbname，并制定默认的字符集是utf8。<br><code>CREATE DATABASE IF NOT EXISTS yourdbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</code></p>
+<p>如果要创建默认gbk字符集的数据库可以用下面的sql:<br><code>create database yourdb DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;</code><br><a id="more"></a></p>
+<h1 id="mysql客户端连接"><a href="#mysql客户端连接" class="headerlink" title="mysql客户端连接"></a>mysql客户端连接</h1><h2 id="mysql在连接的时候，可以设置字符集去连接"><a href="#mysql在连接的时候，可以设置字符集去连接" class="headerlink" title="mysql在连接的时候，可以设置字符集去连接"></a>mysql在连接的时候，可以设置字符集去连接</h2><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@templet ~]# mysql -uroot -p</span><br><span class="line">mysql&gt; show variables where variable<span class="emphasis">_name like 'chara%_</span>client';</span><br><span class="line"><span class="code">+----------------------+</span>--------+</span><br><span class="line">| Variable<span class="emphasis">_name        | Value  |</span></span><br><span class="line"><span class="emphasis">+----------------------+--------+</span></span><br><span class="line"><span class="emphasis">| character_</span>set<span class="emphasis">_client | latin1 |</span></span><br><span class="line"><span class="emphasis">+----------------------+--------+</span></span><br><span class="line"><span class="emphasis"></span></span><br><span class="line"><span class="emphasis">[root@templet ~]# mysql -uroot -p --default-character-set=utf8</span></span><br><span class="line"><span class="emphasis">mysql&gt; show variables where variable_</span>name like <span class="emphasis">'chara%_client'</span>;</span><br><span class="line"><span class="code">+----------------------+</span>-------+</span><br><span class="line">| Variable<span class="emphasis">_name        | Value |</span></span><br><span class="line"><span class="emphasis">+----------------------+-------+</span></span><br><span class="line"><span class="emphasis">| character_</span>set<span class="emphasis">_client | utf8  |</span></span><br><span class="line"><span class="emphasis">+----------------------+-------+</span></span><br></pre></td></tr></table></figure>
+<h2 id="shell中直接执行mysql语句用-e"><a href="#shell中直接执行mysql语句用-e" class="headerlink" title="shell中直接执行mysql语句用-e"></a>shell中直接执行mysql语句用-e</h2><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@templet ~]# mysql -uroot -p -e "select user,host from mysql.user"</span><br><span class="line"><span class="code">+------+</span>-----------+</span><br><span class="line">| user | host      |</span><br><span class="line"><span class="code">+------+</span>-----------+</span><br><span class="line">| root | 127.0.0.1 |</span><br><span class="line">| root | ::1       |</span><br><span class="line">| root | localhost |</span><br><span class="line"><span class="code">+------+</span>-----------+</span><br></pre></td></tr></table></figure>
+<h2 id="格式化选项"><a href="#格式化选项" class="headerlink" title="格式化选项"></a>格式化选项</h2><p>-E，–vertical 将输出按照字母顺序竖着排列<br>-s, –silent 去掉mysql中的框线<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@templet ~]# mysql -uroot -p -e "select user,host from mysql.user" -E</span><br><span class="line">或者</span><br><span class="line">[root@templet ~]# mysql -uroot -p -E </span><br><span class="line"> <span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">** 1. row **</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span><br><span class="line">user: root</span><br><span class="line">host: 127.0.0.1</span><br><span class="line"><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">** 2. row **</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span><br><span class="line">user: root</span><br><span class="line">host: ::1</span><br><span class="line"><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">** 3. row **</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span><br><span class="line">user: root</span><br><span class="line">host: localhost</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@templet ~]# mysql -uroot -p -s</span><br><span class="line">Enter password: </span><br><span class="line">mysql&gt;  select user,host from mysql.user;</span><br><span class="line">user    host</span><br><span class="line">root    127.0.0.1</span><br><span class="line">root    ::1</span><br><span class="line">root    localhost</span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>-f –force         强制执行sql<br>-v –verbose    显示更多信息<br>–show-warnings 显示警告信息</p>
+<p>在批量执行sql中，如果其中一个错误，正常情况下是，该批处理会停止退出。加上-f，则会跳过出差的sql，强制执行后边的sql；-v显示错误的sql语句；–show-warnings,显示全部错误告警信息，一般会一起使用</p>
+<h1 id="mysql管理工具"><a href="#mysql管理工具" class="headerlink" title="mysql管理工具"></a>mysql管理工具</h1><ul>
+<li>mysqladmin是一个用于执行管理性操作，检查服务器的配置和当前的状态、创建并删除数据库等。</li>
+<li>mysqlbinlog程序的主要功能就是分析MySQLServer所产生的二进制日志</li>
+<li>mysqlcheck客户端可以检查和修复MyISAM表。它还可以优化和分析表。 </li>
+<li>mysqldump</li>
+<li>mysqlhotcopy只能备份MyISAM，而且运行在linux/unix环境中</li>
+<li>mysqlimport数据导入工具</li>
+<li>perror错误代码查看工具<br>*safe_mysqld 一个脚本，用某些更安全的特征启动mysqld守护进程，例如当一个错误发生时，重启服务器并且记载运行时刻信息到一个日志文件中。</li>
+</ul>
+<p>mysqlbinlog程序的主要功能就是分析MySQLServer所产生的二进制日志。当我们希望通过之前备份的binlog做一些指定时间之类的恢复的时候，mysqlbinlog就可以帮助我们找到恢复操作需要做哪些事情。通过mysqlbinlog，我们可以解析出binlog中指定时间段或者指定日志起始和结束位的内容解析成SQL 语句，并导出到指定的文件中，在解析过程中，还可以通过指定数据库名称来过滤输出内容<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="built_in">binary</span> <span class="keyword">logs</span>;    <span class="comment">#显示binlog文件</span></span><br><span class="line"><span class="keyword">purge</span> <span class="built_in">binary</span> logsto <span class="string">'mysql-bin.**'</span>  <span class="comment">#删除到**文件</span></span><br><span class="line"><span class="keyword">bin</span>/mysqlbinlog binlogfile    <span class="comment">#解析binlog文件</span></span><br><span class="line"> </span><br><span class="line">利用<span class="keyword">binlog</span>恢复数据：</span><br><span class="line"><span class="keyword">bin</span>/mysqlbinlog  <span class="comment">--start-datetime='2011-7-7 18:0:0'--stop-datetime='2011-7-7 20:07:13' data/mysql-bin.000008|mysql -u root</span></span><br></pre></td></tr></table></figure></p>
+<p>mysqlcheck的功能类似myisamchk，但其工作不同。主要差别是当mysqld服务器在运行时必须使用mysqlcheck，而myisamchk应用于服务器没有运行时。使用mysqlcheck的好处是不需要停止服务器来检查或修复表。使用myisamchk修复失败是不可逆的。<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">shell&gt; mysqlcheck[options] db_name [tables] </span><br><span class="line">shell&gt; mysqlcheck[options] <span class="comment">---database DB1 [DB2 DB3...] </span></span><br><span class="line">shell&gt; mysqlcheck[options] <span class="comment">--all--database</span></span><br><span class="line"></span><br><span class="line">-a = Analyse <span class="keyword">given</span> tables. </span><br><span class="line">-c = Check table <span class="keyword">for</span> errors </span><br><span class="line">-o = Optimise table </span><br><span class="line">-r = Can fix almost anything except unique keys <span class="keyword">that</span> aren't unique </span><br><span class="line">-m = <span class="comment">--medium-check</span></span><br></pre></td></tr></table></figure></p>
+<p>mysqlimport用来导入，mysqldump加-T之后导出的文本文件。和load data datainfile子句类似。<br><figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 数据文件的位置</span><br><span class="line"></span><br><span class="line"><span class="built_in">load</span> data的文件位置：</span><br><span class="line">    如果为绝对路径，则直接访问绝对路径下的文件。</span><br><span class="line">    如果为相对路径（只有文件名），则在默认数据库的数据目录中寻找文件。</span><br><span class="line">    如果为相对路径（包含文件夹），则在数据库数据目录下寻找相应文件夹。</span><br><span class="line"></span><br><span class="line"><span class="built_in">load</span> data <span class="keyword">local</span>的文件位置：</span><br><span class="line">    如果为绝对路径，则直接访问绝对路径下的文件。</span><br><span class="line">    如果为相对路径，则在当前目录下寻找。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> <span class="keyword">local</span>的用法</span><br><span class="line">mysqlimport -L database <span class="string">'name.txt'</span></span><br><span class="line">mysql&gt; <span class="built_in">load</span> data <span class="keyword">local</span> infile <span class="string">'name.txt'</span> into <span class="built_in">table</span> talbe_name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> 指定文件格式</span><br><span class="line">fields-terminated-by </span><br><span class="line">fields-enclosed-by</span><br><span class="line">fields-escaped-by</span><br><span class="line">lines-terminated-by</span><br><span class="line">可用转义符，也可用ASCII码</span><br><span class="line">\t = <span class="number">0x09</span></span><br><span class="line">\n = <span class="number">0x0a</span></span><br><span class="line">\r = <span class="number">0x0d</span></span><br><span class="line"></span><br><span class="line"><span class="number">4.</span> 不同操作系统的行结束符</span><br><span class="line">Unix : \n</span><br><span class="line"><span class="name">Windows</span>: \r\n</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span> 处理重复的值</span><br><span class="line"><span class="built_in">load</span> data <span class="keyword">local</span> infile <span class="string">'name.txt'</span> replace into <span class="built_in">table</span> table_name</span><br><span class="line">或者使用mysqlimport的<span class="comment">--replace选项</span></span><br><span class="line"></span><br><span class="line"><span class="number">6.</span> 跳过文件头几行</span><br><span class="line"><span class="built_in">load</span> data infile <span class="string">'name.txt'</span> into <span class="built_in">table</span> table_name ignore <span class="number">1</span> lines;</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span> 修改文件数据和列值的对应关系</span><br><span class="line"><span class="built_in">load</span> data infile <span class="string">'name.txt'</span> into <span class="built_in">table</span> table_name (col1,col3,col2);</span><br><span class="line"></span><br><span class="line"><span class="number">8.</span> 插入前对数据进行预处理</span><br><span class="line"><span class="built_in">load</span> data infile <span class="string">'name.txt'</span> into <span class="built_in">table</span> table_name (@col1,@col2,@col3)</span><br><span class="line">set </span><br><span class="line">col1 = substr(@col1,<span class="number">2</span>),</span><br><span class="line">col2 = concat(@col2,<span class="string">'_suffix'</span>),</span><br><span class="line">col3 = @col3 *<span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="number">9.</span> 忽略某一列</span><br><span class="line"><span class="built_in">load</span> data infile <span class="string">'name.txt'</span> into <span class="built_in">table</span> table_name (col1,col2,@dummy,col3);</span><br><span class="line"></span><br><span class="line"><span class="number">10.</span> 用mysqldump导出文件</span><br><span class="line">mysql&gt; <span class="built_in">select</span> * <span class="keyword">from</span> group_map into outfile <span class="string">"/tmp/addresslist2.txt"</span> fields terminated by <span class="string">","</span> enclosed by <span class="string">"'"</span> ;</span><br><span class="line"></span><br><span class="line">fields terminated 为字段終止符</span><br><span class="line">enclosed 为字段封装符</span><br><span class="line">结果：</span><br><span class="line"><span class="string">'a0001'</span>,<span class="string">'e100'</span>,<span class="string">'咨询中心'</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">load</span> data infile <span class="string">''</span>/tmp/addresslist2.txt<span class="string">''</span> into <span class="built_in">table</span> group_map fields terminated by <span class="string">''</span>,<span class="string">''</span> enclosed by <span class="string">''</span><span class="string">''</span><span class="string">';</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">mysqldump -T /tmp --fields-terminated-by=, --fields-enclosed-by=\' adeptechsync emp</span></span><br><span class="line"><span class="string">adeptechsync库中的emp表导出到/tmp/emp.txt,字段之间是用,來分隔,没个字段本身是为'</span>封装的.</span><br><span class="line">mysqlimport <span class="comment">--fields-terminated-by=, --fields-enclosed-by=\' adeptechsync /tmp/emp.txt</span></span><br><span class="line"></span><br><span class="line">perror</span><br><span class="line">[root@templet ~]# perror <span class="number">30</span></span><br><span class="line">OS <span class="built_in">error</span> code  <span class="number">30</span>:  Read-only file system</span><br></pre></td></tr></table></figure></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql工具/" rel="tag">#mysql工具</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/17/python生成器/" rel="prev">
+                <i class="fa fa-chevron-left"></i> python生成器
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/25/mysql_variable/" rel="next">
+                mysql的变量查看 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/01/26/mysql_tool/" data-title="mysql工具" data-url="http://leichongxiang.github.io/2016/01/26/mysql_tool/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://ww3.sinaimg.cn/large/8e712944jw1exen95p8hej208c08cq4u.jpg" alt="Vike Lee" itemprop="image">
+          <p class="site-author-name" itemprop="name">Vike Lee</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">记录时间</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+<! -- 添加微信图标 -->
+    
+<! -- 完成 -->
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/leichongxiang/" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://macshuo.com/" target="_blank">MacTalk</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单sql"><span class="nav-number">1.</span> <span class="nav-text">简单sql</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mysql客户端连接"><span class="nav-number">2.</span> <span class="nav-text">mysql客户端连接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql在连接的时候，可以设置字符集去连接"><span class="nav-number">2.1.</span> <span class="nav-text">mysql在连接的时候，可以设置字符集去连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell中直接执行mysql语句用-e"><span class="nav-number">2.2.</span> <span class="nav-text">shell中直接执行mysql语句用-e</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#格式化选项"><span class="nav-number">2.3.</span> <span class="nav-text">格式化选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误处理"><span class="nav-number">2.4.</span> <span class="nav-text">错误处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mysql管理工具"><span class="nav-number">3.</span> <span class="nav-text">mysql管理工具</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vike Lee</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"leicx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+  
+    	 <!-- custom analytics part  --> 
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("mWA1nE7gcYVszHzU3BxSMc1a-gzGzoHsz", "4zH2GdGce6gOiDRfhcomjPBU");</script>
+<script>
+function showTime(Counter) {
+  var query = new AV.Query(Counter);
+  $(".leancloud_visitors").each(function() {
+    var url = $(this).attr("id").trim();
+    query.equalTo("url", url);
+    query.find({
+      success: function(results) {
+        if (results.length == 0) {
+          var content = $(document.getElementById(url)).text() + ': 0';
+          $(document.getElementById(url)).text(content);
+          return;
+        }
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+          $(document.getElementById(url)).text(content);
+        }
+      },
+      error: function(object, error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+
+  });
+}
+
+function addCount(Counter) {
+  var Counter = AV.Object.extend("Counter");
+  url = $(".leancloud_visitors").attr('id').trim();
+  title = $(".leancloud_visitors").attr('data-flag-title').trim();
+  var query = new AV.Query(Counter);
+  query.equalTo("url", url);
+  query.find({
+    success: function(results) {
+      if (results.length > 0) {
+        var counter = results[0];
+        counter.fetchWhenSave(true);
+        counter.increment("time");
+        counter.save(null, {
+          success: function(counter) {
+            var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(counter, error) {
+            console.log('Failed to save Visitor num, with error message: ' + error.message);
+          }
+        });
+      } else {
+        var newcounter = new Counter();
+        newcounter.set("title", title);
+        newcounter.set("url", url);
+        newcounter.set("time", 1);
+        newcounter.save(null, {
+          success: function(newcounter) {
+              console.log("newcounter.get('time')="+newcounter.get('time'));
+            var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(newcounter, error) {
+            console.log('Failed to create');
+          }
+        });
+      }
+    },
+    error: function(error) {
+      console.log('Error:' + error.code + " " + error.message);
+    }
+  });
+}
+$(function() {
+  var Counter = AV.Object.extend("Counter");
+  if ($('.leancloud_visitors').length == 1) {
+    addCount(Counter);
+  } else if ($('.post-title-link').length > 1) {
+    showTime(Counter);
+  }
+}); 
+</script>
+
+  
+</body>
+</html>

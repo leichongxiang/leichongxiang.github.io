@@ -1,0 +1,917 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+  
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2">
+
+
+    <meta name="description" content="记录时间">
+
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
+
+
+<meta name="description" content="多网卡绑定Bonding生产实战一、什么是网卡绑定及简单原理   网卡绑定也称作”网卡捆绑”，就是使用多块物理网卡虚拟成为一块网卡，以提供负载均衡或者冗余，增加带宽的作用。当一个网卡坏掉时，不会影响业务。这个聚合起来的设备看起来是一个单独的以太网接口设备，也就是这几块网卡具有相同的IP地址而并行链接聚合成一个逻辑链路工作。这种技术在Cisco等网络公司中，被称为Trunking和Etherchan">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多网卡绑定">
+<meta property="og:url" content="http://leichongxiang.github.io/2016/04/05/linux_bonding/index.html">
+<meta property="og:site_name" content="Vike&#39;s Blog">
+<meta property="og:description" content="多网卡绑定Bonding生产实战一、什么是网卡绑定及简单原理   网卡绑定也称作”网卡捆绑”，就是使用多块物理网卡虚拟成为一块网卡，以提供负载均衡或者冗余，增加带宽的作用。当一个网卡坏掉时，不会影响业务。这个聚合起来的设备看起来是一个单独的以太网接口设备，也就是这几块网卡具有相同的IP地址而并行链接聚合成一个逻辑链路工作。这种技术在Cisco等网络公司中，被称为Trunking和Etherchan">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-26T03:23:15.347Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多网卡绑定">
+<meta name="twitter:description" content="多网卡绑定Bonding生产实战一、什么是网卡绑定及简单原理   网卡绑定也称作”网卡捆绑”，就是使用多块物理网卡虚拟成为一块网卡，以提供负载均衡或者冗余，增加带宽的作用。当一个网卡坏掉时，不会影响业务。这个聚合起来的设备看起来是一个单独的以太网接口设备，也就是这几块网卡具有相同的IP地址而并行链接聚合成一个逻辑链路工作。这种技术在Cisco等网络公司中，被称为Trunking和Etherchan">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> 多网卡绑定 | Vike's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f77b20a6d14f2ad51ff2830ef9fbf36d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vike's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">人生苦短，我用python</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+		
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '6ywXKaDWo7MbiWzbPCVP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                多网卡绑定
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-05T17:30:35+08:00" content="2016-04-05">
+              2016-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/05/linux_bonding/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/05/linux_bonding/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2016/04/05/linux_bonding/" class="leancloud_visitors" data-flag-title="多网卡绑定">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="多网卡绑定Bonding生产实战"><a href="#多网卡绑定Bonding生产实战" class="headerlink" title="多网卡绑定Bonding生产实战"></a>多网卡绑定Bonding生产实战</h2><h4 id="一、什么是网卡绑定及简单原理"><a href="#一、什么是网卡绑定及简单原理" class="headerlink" title="一、什么是网卡绑定及简单原理"></a>一、什么是网卡绑定及简单原理</h4><p>   网卡绑定也称作”网卡捆绑”，就是使用多块物理网卡虚拟成为一块网卡，以提供负载均衡或者冗余，增加带宽的作用。当一个网卡坏掉时，不会影响业务。这个聚合起来的设备看起来是一个单独的以太网接口设备，也就是这几块网卡具有相同的IP地址而并行链接聚合成一个逻辑链路工作。这种技术在Cisco等网络公司中，被称为Trunking和Etherchannel 技术，在Linux的2.4.x的内核中把这种技术称为bonding。</p>
+<a id="more"></a>   
+<h4 id="二、技术分类"><a href="#二、技术分类" class="headerlink" title="二、技术分类"></a>二、技术分类</h4><ol>
+<li>负载均衡<br>对于bonding的网络负载均衡是我们在文件服务器中常用到的，比如把三块网卡，当做一块来用，解决一个IP地址，流量过大，服务器网络压力过大的问题。 对于文件服务器来说，比如NFS或SAMBA文件服务器，没有任何一个管理员会把内部网的文件服务器的IP地址弄很多个来解决网络负载的问题。如果在内网中，文件服务器为了管理和应用上的方便，大多是用同一个IP地址。对于一个百M的本地网络来说，文件服务器在多 个用户同时使用的情况下，网络压力是极大的，特别是SAMABA和NFS服务器。为了解决同一个IP地址，突破流量的限制，毕竟网线和网卡对数据的吞吐量是有限制的。如果在有限的资源的情况下，实现网络负载均衡，最好的办法就是 bonding。</li>
+<li>网络冗余<br>对于服务器来说，网络设备的稳定也是比较重要的，特别是网卡。在生产型的系统中，网卡的可靠性就更为重要了。在生产型的系统中，大多通过硬件设备的冗余来提供服务器的可靠性和安全性，比如电源。bonding 也能为网卡提供冗余的支持。把多块网卡绑定到一个IP地址，当一块网卡发生物理性损坏的情况下，另一块网卡自动启用，并提供正常的服务，即：默认情况下只有一块网卡工作，其它网卡做备份。</li>
+</ol>
+<h4 id="三、bonding负载均衡和网络冗余技术的现实"><a href="#三、bonding负载均衡和网络冗余技术的现实" class="headerlink" title="三、bonding负载均衡和网络冗余技术的现实"></a>三、bonding负载均衡和网络冗余技术的现实</h4><ol>
+<li><p>网络环境</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@web-<span class="number">31</span> ~]<span class="comment"># cat /etc/issue</span></span><br><span class="line">CentOS release <span class="number">6.3</span> (Final)</span><br><span class="line">Kernel \r <span class="keyword">on</span> an \m</span><br><span class="line">[root@web-<span class="number">31</span> ~]<span class="comment"># getconf LONG_BIT</span></span><br><span class="line"><span class="number">64</span></span><br><span class="line">[root@web-<span class="number">31</span> ~]<span class="comment"># ip a |grep -v lo</span></span><br><span class="line"><span class="number">2</span>: em1: <span class="variable">&lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;</span> mtu <span class="number">1500</span> qdisc mq <span class="keyword">state</span> UP qlen <span class="number">1000</span></span><br><span class="line">   link/ether f0:<span class="number">4</span>d:a2:<span class="number">3</span>e:<span class="number">57</span>:<span class="number">00</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line">   <span class="keyword">inet</span> <span class="number">172.28</span>.<span class="number">2.31</span>/<span class="number">24</span> brd <span class="number">172.28</span>.<span class="number">2.255</span> scope <span class="keyword">global</span> em1</span><br><span class="line"><span class="number">3</span>: em2: <span class="variable">&lt;BROADCAST,MULTICAST&gt;</span> mtu <span class="number">1500</span> qdisc noop <span class="keyword">state</span> DOWN qlen <span class="number">1000</span></span><br><span class="line">   link/ether f0:<span class="number">4</span>d:a2:<span class="number">3</span>e:<span class="number">57</span>:<span class="number">02</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="number">4</span>: em3: <span class="variable">&lt;BROADCAST,MULTICAST&gt;</span> mtu <span class="number">1500</span> qdisc noop <span class="keyword">state</span> DOWN qlen <span class="number">1000</span></span><br><span class="line">   link/ether f0:<span class="number">4</span>d:a2:<span class="number">3</span>e:<span class="number">57</span>:<span class="number">04</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="number">5</span>: em4: <span class="variable">&lt;BROADCAST,MULTICAST&gt;</span> mtu <span class="number">1500</span> qdisc noop <span class="keyword">state</span> DOWN qlen <span class="number">1000</span></span><br><span class="line">   link/ether f0:<span class="number">4</span>d:a2:<span class="number">3</span>e:<span class="number">57</span>:<span class="number">06</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line">PS : 使用四块网卡进行bonding绑定：em1、em2、em3、em4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>检查bonding环境<br>有如下方法检测：</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@web-<span class="number">31</span> ~]<span class="comment"># modinfo bonding |grep bonding.ko</span></span><br><span class="line"><span class="symbol">filename:</span>       /<span class="class"><span class="keyword">lib</span>/<span class="title">modules</span>/2.6.32-279.5.2.<span class="title">el6</span>.<span class="title">centos</span>.<span class="title">plus</span>.<span class="title">x86_64</span>/<span class="title">kernel</span>/<span class="title">drivers</span>/<span class="title">net</span>/<span class="title">bonding</span>/<span class="title">bonding</span>.<span class="title">ko</span></span></span><br><span class="line">[root@web-<span class="number">31</span> ~]<span class="comment"># modprobe -l bond*</span></span><br><span class="line">kernel/drivers/net/bonding/bonding.ko</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>加载bonding模块</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@web-31 ~]# lsmod | grep <span class="string">'bonding'</span></span><br><span class="line">[root@web-31 ~]# modprobe bonding</span><br><span class="line">WARNING: Deprecated<span class="built_in"> config </span>file /etc/modprobe.conf, all<span class="built_in"> config </span>files belong into /etc/modprobe.d/.</span><br><span class="line">PS: 加载模块时，发出警告，意思是：当前内核版本已经弃用配置文件/etc/modprobe.conf，所有的配置文件属于/etc/modprobe.d，也就是说，以后的加载模块要写入到配置文件时要写到/etc/modprobe.conf这个配置文件中！因此，这里bonding的模块配置文件也要独立一个配置文件！</span><br><span class="line">[root@web-31 ~]# lsmod | grep <span class="string">'bonding'</span></span><br><span class="line">bonding               127806  0</span><br><span class="line">ipv6                  322637  167 bonding</span><br><span class="line">8021q                  25941  1 bonding</span><br><span class="line">开机自动加载模块到内核：</span><br><span class="line">echo <span class="string">'modprobe bonding &amp;&gt; /dev/null'</span> &gt;&gt; /etc/rc.local</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建虚拟网卡配置文件</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/sysconfig/network-scripts</span><br><span class="line">cat &gt;&gt; ifcfg-bond0 &lt;&lt; EOF</span><br><span class="line"><span class="attribute">DEVICE</span>=bond0</span><br><span class="line"><span class="attribute">ONBOOT</span>=<span class="literal">yes</span></span><br><span class="line"><span class="attribute">BOOTPROTO</span>=static</span><br><span class="line"><span class="attribute">IPADDR</span>=172.28.2.31</span><br><span class="line"><span class="attribute">BROADCAST</span>=172.28.2.255</span><br><span class="line"><span class="attribute">NETMASK</span>=255.255.255.0</span><br><span class="line"><span class="attribute">GATEWAY</span>=172.28.2.1</span><br><span class="line"><span class="attribute">USERCTL</span>=<span class="literal">no</span></span><br><span class="line"><span class="attribute">TYPE</span>=Ethernet</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改真实网卡配置文件</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">mv ifcfg-em&#123;1,2,3,4&#125; /tmp/bakcup</span><br><span class="line">em1配置文件内容：</span><br><span class="line">cat &gt;&gt; ifcfg-em1 &lt;&lt; EOF</span><br><span class="line">DEVICE=<span class="string">"em1"</span></span><br><span class="line">ONBOOT=<span class="string">"yes"</span></span><br><span class="line">BOOTPROTO=<span class="string">"none"</span></span><br><span class="line">USERCTL=<span class="string">"no"</span></span><br><span class="line">MASTER=<span class="string">"bond0"</span></span><br><span class="line">SLAVE=<span class="string">"yes"</span></span><br><span class="line">EOF</span><br><span class="line">em2配置文件内容：</span><br><span class="line">cat &gt;&gt; ifcfg-em2 &lt;&lt; EOF</span><br><span class="line">DEVICE=<span class="string">"em2"</span></span><br><span class="line">ONBOOT=<span class="string">"yes"</span></span><br><span class="line">BOOTPROTO=<span class="string">"none"</span></span><br><span class="line">USERCTL=<span class="string">"no"</span></span><br><span class="line">MASTER=<span class="string">"bond0"</span></span><br><span class="line">SLAVE=<span class="string">"yes"</span></span><br><span class="line">EOF</span><br><span class="line">em3配置文件内容：</span><br><span class="line">cat &gt;&gt; ifcfg-em3 &lt;&lt; EOF</span><br><span class="line">DEVICE=<span class="string">"em3"</span></span><br><span class="line">ONBOOT=<span class="string">"yes"</span></span><br><span class="line">BOOTPROTO=<span class="string">"none"</span></span><br><span class="line">USERCTL=<span class="string">"no"</span></span><br><span class="line">MASTER=<span class="string">"bond0"</span></span><br><span class="line">SLAVE=<span class="string">"yes"</span></span><br><span class="line">EOF</span><br><span class="line">em4配置文件内容：</span><br><span class="line">cat &gt;&gt; ifcfg-em4 &lt;&lt; EOF</span><br><span class="line">DEVICE=<span class="string">"em4"</span></span><br><span class="line">ONBOOT=<span class="string">"yes"</span></span><br><span class="line">BOOTPROTO=<span class="string">"none"</span></span><br><span class="line">USERCTL=<span class="string">"no"</span></span><br><span class="line">MASTER=<span class="string">"bond0"</span></span><br><span class="line">SLAVE=<span class="string">"yes"</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑模块载入配置文件，让系统支持bonding</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt; /etc/modprobe.d/bonding.conf &lt;&lt;EOF</span><br><span class="line"><span class="comment">#/etc/modprobe.conf</span></span><br><span class="line">alias bond0 bonding</span><br><span class="line">options bond0 <span class="attribute">miimon</span>=100 <span class="attribute">mode</span>=4 <span class="attribute">lacp_rate</span>=1</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>PS :</p>
+<blockquote>
+<p>a. mode=4 这里我采用这种模式，总共有0，1，2，3，4，5，6七种模式，文章后面会详细介绍这七种模式！<br>此模式下所以网卡共用一个MAC地址，后面结果会有验证！<br>b. miimon是用来进行链路监测的，如:miimon=100，那么系统每100ms监测一次链路连接状态，如果有一条线路不通就转入另一条线路；<br>c. bonding只能提供链路监测，即从主机到交换机的链路是否接通。如果只是交换机对外的链路down掉了，而交换机本身并没有故障，那么bonding会认为链路没有问题而继续使用。</p>
+</blockquote>
+<ol start="7">
+<li>重启服务器或重启网络进行测试<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@web-<span class="number">31</span> ~]<span class="comment"># service network restart</span></span><br><span class="line">[root@web-<span class="number">31</span> ~]<span class="comment"># ip a |grep -v lo</span></span><br><span class="line"><span class="number">2</span>: em1: <span class="variable">&lt;BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP&gt;</span> mtu <span class="number">1500</span> qdisc mq master bond0 <span class="keyword">state</span> UP qlen <span class="number">1000</span></span><br><span class="line">   link/ether f0:<span class="number">4</span>d:a2:<span class="number">3</span>e:<span class="number">57</span>:<span class="number">00</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="number">3</span>: em2: <span class="variable">&lt;BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP&gt;</span> mtu <span class="number">1500</span> qdisc mq master bond0 <span class="keyword">state</span> UP qlen <span class="number">1000</span></span><br><span class="line">   link/ether f0:<span class="number">4</span>d:a2:<span class="number">3</span>e:<span class="number">57</span>:<span class="number">00</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="number">4</span>: em3: <span class="variable">&lt;BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP&gt;</span> mtu <span class="number">1500</span> qdisc mq master bond0 <span class="keyword">state</span> UP qlen <span class="number">1000</span></span><br><span class="line">   link/ether f0:<span class="number">4</span>d:a2:<span class="number">3</span>e:<span class="number">57</span>:<span class="number">00</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="number">5</span>: em4: <span class="variable">&lt;BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP&gt;</span> mtu <span class="number">1500</span> qdisc mq master bond0 <span class="keyword">state</span> UP qlen <span class="number">1000</span></span><br><span class="line">   link/ether f0:<span class="number">4</span>d:a2:<span class="number">3</span>e:<span class="number">57</span>:<span class="number">00</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="number">6</span>: bond0: <span class="variable">&lt;BROADCAST,MULTICAST,MASTER,UP,LOWER_UP&gt;</span> mtu <span class="number">1500</span> qdisc noqueue <span class="keyword">state</span> UP</span><br><span class="line">   link/ether f0:<span class="number">4</span>d:a2:<span class="number">3</span>e:<span class="number">57</span>:<span class="number">00</span> brd ff:ff:ff:ff:ff:ff</span><br><span class="line">   <span class="keyword">inet</span> <span class="number">172.28</span>.<span class="number">2.38</span>/<span class="number">24</span> brd <span class="number">172.28</span>.<span class="number">2.255</span> scope <span class="keyword">global</span> bond0</span><br><span class="line">   <span class="keyword">inet6</span> fe80::f24d:a2ff:fe3f:<span class="number">23</span>c0/<span class="number">64</span> scope link</span><br><span class="line">      valid_lft forever preferred_lft forever</span><br><span class="line">[root@liuhe038 ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>PS: 生产服务器下，测试略！mode=4这种模式要配置交换机相应端口开启链路聚合！</p>
+<h4 id="四、对于mode七种模式的简单介绍"><a href="#四、对于mode七种模式的简单介绍" class="headerlink" title="四、对于mode七种模式的简单介绍"></a>四、对于mode七种模式的简单介绍</h4><blockquote>
+<p>mode=0 : 可实现网络负载均衡和网络冗余，采用平衡轮循策略(balance-rr)。<br>此模式的特点：<br>a. 所以网卡都工作，传输数据包顺序是依次传输，也就是说第1个包经过eth0，下一个包就经过eth1，一直循环下去，直到最后一个包传输完毕。<br>b. 此模式对于同一连接从不同的接口发出的包，中途传输过程中再经过不同的链接，在客户端很有可能会出现数据包无序到达的问题，而无序到达的数据包需要重新要求被发送，这样网络的吞吐量就会下降。<br>c. 与网卡相连的交换必须做特殊配置（这两个端口应该采取聚合方式），因为做bonding的这两块网卡是使用同一个MAC地址</p>
+</blockquote>
+<blockquote>
+<p>mode=1：只实现网络冗余，采用主-备份策略(active/backup)。<br>此模式的特点：<br>a. 此模式下只有一块网卡正常工作，另外的网卡都是备份用状态，当另外一块网卡坏掉后另一块网卡马上由备份转换为主。<br>b. 此模式好处是可以提供高网络连接的可用性，但是它的资源利用率较低，只有一个接口处于工作状态。</p>
+</blockquote>
+<blockquote>
+<p>mode=2：可模式提供负载平衡和容错能力，采用平衡策略(balance-xor)。<br>此模式的特点：基于指定的传输HASH策略传输数据包，这种模式用得相对少！</p>
+</blockquote>
+<blockquote>
+<p>mode=3：只提供容错能力，采用广播策略。<br>此模式特点：在每个slave接口上传输每个数据包。</p>
+</blockquote>
+<blockquote>
+<p>mode=4：IEEE 802.3ad 动态链接聚合，使用lagp协议，可以带宽翻倍增加！<br>此模式的特点：<br>创建一个聚合组，它们共享同样的速率和双工设定。根据802.3ad规范将多个slave工作在同一个激活的聚合体下。<br>外出流量的slave选举是基于传输hash策略，该策略可以通过xmit_hash_policy选项从缺省的XOR策略改变到其他策略。<br>用此模式必要条件：<br>条件1：ethtool支持获取每个slave的速率和双工设定<br>条件2：switch(交换机)支持IEEE 802.3ad Dynamic link aggregation<br>条件3：大多数switch(交换机)需要经过特定配置才能支持802.3ad模式</p>
+</blockquote>
+<blockquote>
+<p>mode=5：采用适配器传输负载均衡(balance-tlb)<br>此模式特点：<br>特点：不需要任何特别的switch(交换机)支持的通道bonding。在每个slave上根据当前的负载（根据速度计算）分配外出流量。如果正在接受数据的slave出故障了，另一个slave接管失败的slave的MAC地址。<br>该模式的必要条件：ethtool支持获取每个slave的速率</p>
+</blockquote>
+<blockquote>
+<p>mode=6：可实现网络负载均衡和网络冗余,采用load balancing (round-robin)方式。<br>此模式的特点：<br>a. 两块网卡都处于工作状态，但各网卡的MAC地址是不一样<br>b. 该模式下无需配置交换机，因为做bonding的这两块网卡是使用不同的MAC地址。<br>这种模式是所最复杂的，不再详细介绍！</p>
+</blockquote>
+<h4 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h4><p>生产中常用的是第 0，1，6，4这几中模式<br>如果实现简单的负载均衡可以采用 mode=0或mode=6（注意区别mode=0和mode=6两种模式的区别）<br>如果实现简单的网络冗余可以采用 mode=1（此模式可以用VM虚拟机模拟）</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/14/linux_ss/" rel="prev">
+                <i class="fa fa-chevron-left"></i> ss命令替代netstat
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/14/linux_01/" rel="next">
+                linux小知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/04/05/linux_bonding/" data-title="多网卡绑定" data-url="http://leichongxiang.github.io/2016/04/05/linux_bonding/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://ww3.sinaimg.cn/large/8e712944jw1exen95p8hej208c08cq4u.jpg" alt="Vike Lee" itemprop="image">
+          <p class="site-author-name" itemprop="name">Vike Lee</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">记录时间</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+<! -- 添加微信图标 -->
+    
+<! -- 完成 -->
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/leichongxiang/" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://macshuo.com/" target="_blank">MacTalk</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多网卡绑定Bonding生产实战"><span class="nav-number">1.</span> <span class="nav-text">多网卡绑定Bonding生产实战</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、什么是网卡绑定及简单原理"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、什么是网卡绑定及简单原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、技术分类"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、技术分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、bonding负载均衡和网络冗余技术的现实"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、bonding负载均衡和网络冗余技术的现实</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、对于mode七种模式的简单介绍"><span class="nav-number">1.0.4.</span> <span class="nav-text">四、对于mode七种模式的简单介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五、总结"><span class="nav-number">1.0.5.</span> <span class="nav-text">五、总结</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vike Lee</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"leicx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+  
+    	 <!-- custom analytics part  --> 
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("mWA1nE7gcYVszHzU3BxSMc1a-gzGzoHsz", "4zH2GdGce6gOiDRfhcomjPBU");</script>
+<script>
+function showTime(Counter) {
+  var query = new AV.Query(Counter);
+  $(".leancloud_visitors").each(function() {
+    var url = $(this).attr("id").trim();
+    query.equalTo("url", url);
+    query.find({
+      success: function(results) {
+        if (results.length == 0) {
+          var content = $(document.getElementById(url)).text() + ': 0';
+          $(document.getElementById(url)).text(content);
+          return;
+        }
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+          $(document.getElementById(url)).text(content);
+        }
+      },
+      error: function(object, error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+
+  });
+}
+
+function addCount(Counter) {
+  var Counter = AV.Object.extend("Counter");
+  url = $(".leancloud_visitors").attr('id').trim();
+  title = $(".leancloud_visitors").attr('data-flag-title').trim();
+  var query = new AV.Query(Counter);
+  query.equalTo("url", url);
+  query.find({
+    success: function(results) {
+      if (results.length > 0) {
+        var counter = results[0];
+        counter.fetchWhenSave(true);
+        counter.increment("time");
+        counter.save(null, {
+          success: function(counter) {
+            var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(counter, error) {
+            console.log('Failed to save Visitor num, with error message: ' + error.message);
+          }
+        });
+      } else {
+        var newcounter = new Counter();
+        newcounter.set("title", title);
+        newcounter.set("url", url);
+        newcounter.set("time", 1);
+        newcounter.save(null, {
+          success: function(newcounter) {
+              console.log("newcounter.get('time')="+newcounter.get('time'));
+            var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(newcounter, error) {
+            console.log('Failed to create');
+          }
+        });
+      }
+    },
+    error: function(error) {
+      console.log('Error:' + error.code + " " + error.message);
+    }
+  });
+}
+$(function() {
+  var Counter = AV.Object.extend("Counter");
+  if ($('.leancloud_visitors').length == 1) {
+    addCount(Counter);
+  } else if ($('.post-title-link').length > 1) {
+    showTime(Counter);
+  }
+}); 
+</script>
+
+  
+</body>
+</html>

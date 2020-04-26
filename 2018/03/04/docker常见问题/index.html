@@ -1,0 +1,1042 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+  
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2">
+
+
+    <meta name="description" content="记录时间">
+
+
+
+  <meta name="keywords" content="docker,">
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
+
+
+<meta name="description" content="说明Docker 不是虚拟机，容器只是受限进程，而一个容器只应该跑一个主进程。整理了docker中常见的问题。">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker常见问题">
+<meta property="og:url" content="http://leichongxiang.github.io/2018/03/04/docker常见问题/index.html">
+<meta property="og:site_name" content="Vike&#39;s Blog">
+<meta property="og:description" content="说明Docker 不是虚拟机，容器只是受限进程，而一个容器只应该跑一个主进程。整理了docker中常见的问题。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-26T03:23:15.327Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker常见问题">
+<meta name="twitter:description" content="说明Docker 不是虚拟机，容器只是受限进程，而一个容器只应该跑一个主进程。整理了docker中常见的问题。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> docker常见问题 | Vike's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f77b20a6d14f2ad51ff2830ef9fbf36d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vike's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">人生苦短，我用python</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+		
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '6ywXKaDWo7MbiWzbPCVP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                docker常见问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2018-03-04T11:30:35+08:00" content="2018-03-04">
+              2018-03-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/docker/" itemprop="url" rel="index">
+                    <span itemprop="name">docker</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/03/04/docker常见问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/04/docker常见问题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2018/03/04/docker常见问题/" class="leancloud_visitors" data-flag-title="docker常见问题">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><div style="border-radius:10px; width: 90%; border:10px solid #AFEEEE;font-size:16px;align=left;  background:#AFEEEE">Docker 不是虚拟机，容器只是受限进程，而一个容器只应该跑一个主进程。整理了docker中常见的问题。</div>
+
+<a id="more"></a>
+<h2 id="0-概述"><a href="#0-概述" class="headerlink" title="0. 概述"></a>0. 概述</h2><p><strong>Docker 不是虚拟机，容器只是受限进程，而一个容器只应该跑一个主进程</strong></p>
+<h2 id="1-docker容器中root用户无法查看其它用户运行进程的PID"><a href="#1-docker容器中root用户无法查看其它用户运行进程的PID" class="headerlink" title="1. docker容器中root用户无法查看其它用户运行进程的PID"></a>1. docker容器中root用户无法查看其它用户运行进程的PID</h2><p>docker为了容器的安全，容器中的root权限有限制，与宿主机上root权限是不一样的，启动容器加上–cap-add=SYS_PTRACE，即可看到PID<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">--<span class="built_in">cap</span>-add: Add Linux capabilities</span><br><span class="line">--<span class="built_in">cap</span>-drop: Drop Linux capabilities</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-docker容器使用su切换用户时出错"><a href="#2-docker容器使用su切换用户时出错" class="headerlink" title="2. docker容器使用su切换用户时出错"></a>2. docker容器使用su切换用户时出错</h2><p>报错信息：</p>
+<pre><code>su: /bin/bash: Resource temporarily unavailable
+</code></pre><p>打Dockerfile时执行如下命令即可:</p>
+<pre><code>sed -i &apos;s/^*/#*/g&apos; /etc/security/limits.d/90-nproc.conf
+echo &quot;*        soft    core    1024000&quot; &gt;&gt; /etc/security/limits.conf
+</code></pre><p>如果* soft nproc 1024这一行不注释，/etc/security/limits.conf中的配置就不会生效<br>centos7下需注释的文件为/etc/security/limits.d/20-nproc.conf</p>
+<h2 id="3-容器如何保证内部时间和主机时间一致"><a href="#3-容器如何保证内部时间和主机时间一致" class="headerlink" title="3.容器如何保证内部时间和主机时间一致"></a>3.容器如何保证内部时间和主机时间一致</h2><p>方式一：</p>
+<pre><code>RUN echo &quot;Asia/Shanghai&quot; &gt; /etc/timezone &amp;&amp; \
+    dpkg-reconfigure -f noninteractie tzdata
+</code></pre><p>方式二：</p>
+<pre><code>volumes:
+  - &quot;/etc/timezone:/etc/timezone:ro&quot;
+  - &quot;/etc/localtime:/etc/localtime:ro&quot;
+</code></pre><p>以alpine镜像为例：</p>
+<pre><code>#定义环境变量
+ENV  TIME_ZONE Asia/Shanghai
+RUN \
+...
+#安装tzdata安装包
+&amp;&amp; apk add --no-cache tzdata \  
+#设置时区
+&amp;&amp; echo &quot;${TIME_ZONE}&quot; &gt; /etc/timezone \
+&amp;&amp; ln -sf /usr/share/zoneinfo/${TIME_ZONE} /etc/localtime \
+</code></pre><p>最推荐的做法：<br>一般应用、服务的配置文件里一般都有时区选项，应该根据自己需求把中国时区配上。<br>比如 mysqld 中的参数 –timezone=Asia/Shanghai；Java 的 -Duser.timezone=Asia/Shanghai JVM 参数，都可以指定上层应用时区，而不依赖于系统默认时区，这也是推荐的做法。</p>
+<h2 id="4-怎么绑定一个容器名字和镜像的名字"><a href="#4-怎么绑定一个容器名字和镜像的名字" class="headerlink" title="4.怎么绑定一个容器名字和镜像的名字"></a>4.怎么绑定一个容器名字和镜像的名字</h2><p>需要在compose.yml文件中设置：</p>
+<pre><code>#镜像的名字
+image: &quot;myahi.v1&quot;
+#容器名字
+container_name: mydns
+</code></pre><p>或者用：</p>
+<pre><code>docker-compose -p 容器名字 up
+</code></pre><h2 id="5-批量清理临时镜像文件"><a href="#5-批量清理临时镜像文件" class="headerlink" title="5.批量清理临时镜像文件"></a>5.批量清理临时镜像文件</h2><pre><code>docker rmi $(docker images -q -f dangling=true)
+docker image prune
+</code></pre><h2 id="6-批量清理后台停止的容器"><a href="#6-批量清理后台停止的容器" class="headerlink" title="6.批量清理后台停止的容器"></a>6.批量清理后台停止的容器</h2><pre><code>docker rm $(docker ps -aq)
+</code></pre><h2 id="7-docker和虚拟机的区别？"><a href="#7-docker和虚拟机的区别？" class="headerlink" title="7.docker和虚拟机的区别？"></a>7.docker和虚拟机的区别？</h2><p>详细见：<a href="https://blog.lab99.org/post/docker-2016-07-14-faq.html#docker-yin-qing-xiang-guan-wen-ti-67" target="_blank" rel="noopener">链接地址</a><br>简单点说：<br>不要把 Docker 和虚拟机弄混，Docker 容器只是一个进程而已，只不过利用镜像提供的 rootfs 提供了调用所需的 userland 库支持，使得进程可以在受控环境下运行而已，它并没有虚拟出一个机器出来。</p>
+<h2 id="8-卸载docker"><a href="#8-卸载docker" class="headerlink" title="8. 卸载docker"></a>8. 卸载docker</h2><p>sudo apt-get remove docker* -y<br>sudo pip uninstall docker-compose -y<br>sudo apt-get autoremove -y<br>sudo apt-get autoclean -y</p>
+<h2 id="9-怎么映射宿主端口？Dockerfile-中的EXPOSE和-docker-run-p-有啥区别？"><a href="#9-怎么映射宿主端口？Dockerfile-中的EXPOSE和-docker-run-p-有啥区别？" class="headerlink" title="9. 怎么映射宿主端口？Dockerfile 中的EXPOSE和 docker run -p 有啥区别？"></a>9. 怎么映射宿主端口？Dockerfile 中的EXPOSE和 docker run -p 有啥区别？</h2><p>Docker中有两个概念，一个叫做 EXPOSE ，一个叫做 PUBLISH 。</p>
+<p>EXPOSE 是镜像/容器声明要暴露该端口，可以供其他容器使用。这种声明，在没有设定 –icc=false的时候，实际上只是一种标注，并不强制。也就是说，没有声明 EXPOSE 的端口，其它容器也可以访问。但是当强制 –icc=false 的时候，那么只有 EXPOSE 的端口，其它容器才可以访问。<br>PUBLISH 则是通过映射宿主端口，将容器的端口公开于外界，也就是说宿主之外的机器，可以通过访问宿主IP及对应的该映射端口，访问到容器对应端口，从而使用容器服务。<br>EXPOSE 的端口可以不 PUBLISH，这样只有容器间可以访问，宿主之外无法访问。而 PUBLISH 的端口，可以不事先 EXPOSE，换句话说 PUBLISH 等于同时隐式定义了该端口要 EXPOSE。</p>
+<p>docker run 命令中的 -p, -P 参数，以及 docker-compose.yml 中的  ports 部分，实际上均是指 PUBLISH。</p>
+<p>小写 -p 是端口映射，格式为 [宿主IP:]&lt;宿主端口&gt;:&lt;容器端口&gt;，其中宿主端口和容器端口，既可以是一个数字，也可以是一个范围，比如：1000-2000:1000-2000。对于多宿主的机器，可以指定宿主IP，不指定宿主IP时，守护所有接口。</p>
+<p>大写 -P 则是自动映射，将所有定义 EXPOSE 的端口，随机映射到宿主的某个端口。</p>
+<h2 id="10-要映射好几百个端口"><a href="#10-要映射好几百个端口" class="headerlink" title="10. 要映射好几百个端口"></a>10. 要映射好几百个端口</h2><p>-p 是可以用范围的：<br>-p 8001-8010:8001-8010</p>
+<h2 id="11-p-后还是无法通过映射端口访问容器里面的服务"><a href="#11-p-后还是无法通过映射端口访问容器里面的服务" class="headerlink" title="11. -p 后还是无法通过映射端口访问容器里面的服务"></a>11. -p 后还是无法通过映射端口访问容器里面的服务</h2><p>容器排查：<br>首先，当然是检查这个 docker 的容器是否启动正常： docker ps、docker top &lt;容器ID&gt;、docker logs &lt;容器ID&gt;、docker exec -it &lt;容器ID&gt; bash等，这是比较常用的排障的命令；如果是 docker-compose 也有其对应的这一组命令，所以排障很容易。</p>
+<p>如果确保服务一切正常，甚至在容器里，可以访问到这些服务，docker ps 也显示出了端口映射成功，那么就需要检查防火墙了。</p>
+<h2 id="12-如何让一个容器连接两个网络？"><a href="#12-如何让一个容器连接两个网络？" class="headerlink" title="12. 如何让一个容器连接两个网络？"></a>12. 如何让一个容器连接两个网络？</h2><p>如果是使用 docker run，那很不幸，一次只可以连接一个网络，因为 docker run 的 –network 参数只可以出现一次（如果出现多次，最后的会覆盖之前的）。不过容器运行后，可以用命令 docker network connect 连接多个网络。</p>
+<p>假设我们创建了两个网络：</p>
+<pre><code>$ docker network create mynet1
+$ docker network create mynet2
+</code></pre><p>然后，我们运行容器，并连接这两个网络。</p>
+<pre><code>$ docker run -d --name web --network mynet1 nginx
+$ docker network connect mynet2 web
+</code></pre><p>但是如果使用 docker-compose 那就没这个问题了。因为实际上，Docker Remote API 是支持一次性指定多个网络的，但是估计是命令行上不方便，所以 docker run 限定为只可以一次连一个。docker-compose 直接就可以将服务的容器连入多个网络，没有问题。<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">version:</span> <span class="string">'2'</span></span><br><span class="line"><span class="symbol">services:</span></span><br><span class="line"><span class="symbol">    web:</span></span><br><span class="line"><span class="symbol">        image:</span> nginx</span><br><span class="line"><span class="symbol">        networks:</span></span><br><span class="line">            - mynet1</span><br><span class="line">            - mynet2</span><br><span class="line"><span class="symbol">networks:</span></span><br><span class="line"><span class="symbol">    mynet1:</span></span><br><span class="line"><span class="symbol">    mynet2:</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="13-–link-过时不再用了？那容器互联、服务发现怎么办？"><a href="#13-–link-过时不再用了？那容器互联、服务发现怎么办？" class="headerlink" title="13. –link 过时不再用了？那容器互联、服务发现怎么办？"></a>13. –link 过时不再用了？那容器互联、服务发现怎么办？</h2><p>不要再使用 –link 以及 docker-compose.yml 中的 links 了。应该使用 docker network，建立网络，而 docker run –network 来连接特定网络。或者使用 version: ‘2’ 的 docker-compose.yml 直接定义自定义网络并使用。</p>
+<h2 id="14-使用-HBase-Hadoop-的时候，反向解析总是不对，怎么办？"><a href="#14-使用-HBase-Hadoop-的时候，反向解析总是不对，怎么办？" class="headerlink" title="14. 使用 HBase/Hadoop 的时候，反向解析总是不对，怎么办？"></a>14. 使用 HBase/Hadoop 的时候，反向解析总是不对，怎么办？</h2><p>正向解析会从 /etc/hosts 中取得，而反向解析则更可能走 DNS，于是出现了不一致。</p>
+<p>反向解析则不会返回所有结果，而只返回&lt;容器名&gt;.&lt;网络名&gt;。</p>
+<p>解决办法很简单，我们现在知道反向域名解析的格式为 &lt;容器名&gt;.&lt;网络名&gt;。那么我们只需要将网络名设为域名就可以了。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ docker<span class="built_in"> network </span>create example.com</span><br><span class="line">$ docker <span class="builtin-name">run</span> -it --rm \</span><br><span class="line">    --name wombat \</span><br><span class="line">    --hostname wombat.example.com \</span><br><span class="line">    --network example.com \</span><br><span class="line">    m3adow/nettools</span><br><span class="line"><span class="comment">#结果，--name是容器名    </span></span><br><span class="line">host 172.21.0.2</span><br><span class="line">2.0.21.172.in-addr.arpa domain name pointer wombat.example.com.</span><br></pre></td></tr></table></figure>
+<p><strong>需要注意的是，服务名、主机名、容器名这类可用于服务发现的名称，应该尽量使用 非 FQDN，也就是不包含 . 的单一名字，否则在某些情况下会出错。</strong></p>
+<h2 id="15-数据容器、数据卷、命名卷、匿名卷、挂载目录这些都有什么区别？"><a href="#15-数据容器、数据卷、命名卷、匿名卷、挂载目录这些都有什么区别？" class="headerlink" title="15. 数据容器、数据卷、命名卷、匿名卷、挂载目录这些都有什么区别？"></a>15. 数据容器、数据卷、命名卷、匿名卷、挂载目录这些都有什么区别？</h2><p>首先，挂载分为挂载本地宿主目录 和 挂载数据卷(Volume)。而数据卷又分为匿名数据卷和命名数据卷。</p>
+<p>绑定宿主目录的概念很容易理解，就是将宿主目录绑定到容器中的某个目录位置。这样容器可以直接访问宿主目录的文件。其形式是</p>
+<p><code>docker run -d -v /var/www:/app nginx</code><br>这里注意到 -v 的参数中，前半部分是绝对路径。在 docker run 中必须是绝对路径，而在 docker-compose 中，可以是相对路径，因为 docker-compose 会帮你补全路径。</p>
+<p>另一种形式是使用 Docker Volume，也就是数据卷。这是很多看古董书的人不了解的概念，不要跟数据容器（Data Container）弄混。数据卷是 Docker 引擎维护的存储方式，使用 docker volume create 命令创建，可以利用卷驱动支持多种存储方案。其默认的驱动为 local，也就是本地卷驱动。本地驱动支持命名卷和匿名卷。</p>
+<p>顾名思义，命名卷就是有名字的卷，使用 docker volume create –name xxx 形式创建并命名的卷；而匿名卷就是没名字的卷，一般是 docker run -v /data 这种不指定卷名的时候所产生，或者 Dockerfile 里面的定义直接使用的。</p>
+<p>有名字的卷，在用过一次后，以后挂载容器的时候还可以使用，因为有名字可以指定。所以一般需要保存的数据使用命名卷保存。</p>
+<p>而匿名卷则是随着容器建立而建立，随着容器消亡而淹没于卷列表中（对于 docker run 匿名卷不会被自动删除）。对于二代 Swarm 服务而言，匿名卷会随着服务删除而自动删除。 因此匿名卷只存放无关紧要的临时数据，随着容器消亡，这些数据将失去存在的意义。</p>
+<p>此外，还有一个叫数据容器 (Data Container) 的概念，也就是使用 –volumes-from 的东西。这早就不用了，如果看了书还在说这种方式，那说明书已经过时了。按照今天的理解，这类数据容器，无非就是挂了个匿名卷的容器罢了。</p>
+<p>在 Dockerfile 中定义的挂载，是指 匿名数据卷。Dockerfile 中指定 VOLUME 的目的，只是为了将某个路径确定为卷。</p>
+<p>我们知道，按照最佳实践的要求，不应该在容器存储层内进行数据写入操作，所有写入应该使用卷。如果定制镜像的时候，就可以确定某些目录会发生频繁大量的读写操作，那么为了避免在运行时由于用户疏忽而忘记指定卷，导致容器发生存储层写入的问题，就可以在 Dockerfile 中使用 VOLUME 来指定某些目录为匿名卷。这样即使用户忘记了指定卷，也不会产生不良的后果。</p>
+<p>这个设置可以在运行时覆盖。通过 docker run 的 -v 参数或者 docker-compose.yml 的 volumes 指定。使用命名卷的好处是可以复用，其它容器可以通过这个命名数据卷的名字来指定挂载，共享其内容（不过要注意并发访问的竞争问题）。</p>
+<p>比如，Dockerfile 中说 VOLUME /data，那么如果直接 docker run，其 /data 就会被挂载为匿名卷，向 /data 写入的操作不会写入到容器存储层，而是写入到了匿名卷中。但是如果运行时 docker run -v mydata:/data，这就覆盖了 /data 的挂载设置，要求将 /data 挂载到名为 mydata 的命名卷中。所以说 Dockerfile 中的 VOLUME 实际上是一层保险，确保镜像运行可以更好的遵循最佳实践，不向容器存储层内进行写入操作。</p>
+<p>数据卷默认可能会保存于 /var/lib/docker/volumes，不过一般不需要、也不应该访问这个位置。</p>
+<h2 id="16-为什么绑定了宿主的文件到容器，宿主修改了文件，容器内看到的还是旧的内容啊？"><a href="#16-为什么绑定了宿主的文件到容器，宿主修改了文件，容器内看到的还是旧的内容啊？" class="headerlink" title="16. 为什么绑定了宿主的文件到容器，宿主修改了文件，容器内看到的还是旧的内容啊？"></a>16. 为什么绑定了宿主的文件到容器，宿主修改了文件，容器内看到的还是旧的内容啊？</h2><p>在绑定宿主内容的形式中，有一种特殊的形式，就是绑定宿主文件，既：</p>
+<p><code>docker run -d -v $PWD/myapp.ini:/app/app.ini myapp</code><br>在 myapp.ini 文件不发生改变的情况下，这样的绑定是和绑定宿主目录性质一样，同样是将宿主文件绑定到容器内部，容器内可以看到这个文件。但是，一旦文件发生改变，情况则有不同。</p>
+<p>简单的文件修改，比如 echo “name = jessie” &gt;&gt; myapp.ini，这类修改依旧还是原来的文件，宿主（或容器）对文件进行的改动，另一方是可以看到的。</p>
+<p>而复杂的文件操作，比如使用 vim，或者其它编辑器编辑文件，则很有可能会导致一方的修改，另一方看不到。</p>
+<p>其原因是这类编辑器在保存文件的时候，经常会采用一种避免写入过程中发生故障而导致文件丢失的策略，既先把内容写到一个新的文件中去，写好了后，再删除旧的文件，然后把新文件改名为旧的文件名，从而完成保存的操作。从这个操作流程可以看出，虽然修改后的文件的名字和过去一样，但对于文件系统而言是一个新的文件了。换句话说，虽然是同名文件，但是旧的文件的 inode 和修改后的文件的 inode 不同。</p>
+<pre><code>$ ls -i
+268541 hello.txt
+$ vi hello.txt
+$ ls -i
+268716 hello.txt
+</code></pre><p>如上面的例子可以看到，经过 vim 编辑文件后，inode 从 268541 变为了 268716，这就是刚才说的，名字还是那个名字，文件已不是原来的文件了。</p>
+<p>而 Docker 的 绑定宿主文件，实际上在文件系统眼里，针对的是 inode，而不是文件名。因此容器内所看到的，依旧是之前旧的 inode 对应的那个文件，也就是旧的内容。</p>
+<p>这就出现了之前的那个问题，在宿主内修改绑定文件的内容，结果发现容器内看不到改变，其原因就在于宿主的那个文件已不是原来的文件了😂。</p>
+<p>这类问题解决办法很简单，如果文件可能改变，<strong>那么就不要绑定宿主文件，而是绑定一个宿主目录，这样只要目录不跑，里面文件爱咋改就咋改😁。</strong></p>
+<h2 id="17-多个-Docker-容器之间共享数据怎么办？NFS-？"><a href="#17-多个-Docker-容器之间共享数据怎么办？NFS-？" class="headerlink" title="17. 多个 Docker 容器之间共享数据怎么办？NFS ？"></a>17. 多个 Docker 容器之间共享数据怎么办？NFS ？</h2><p>如果是同一个宿主，那么可以绑定同一个数据卷，当然，程序上要处理好并发问题。</p>
+<p>如果是不同宿主，则可以使用分布式数据卷驱动，让分布在不同宿主的容器都可以访问到的分布式存储的位置。如S3之类：</p>
+<p><a href="https://docs.docker.com/engine/extend/plugins/#volume-plugins" target="_blank" rel="noopener">https://docs.docker.com/engine/extend/plugins/#volume-plugins</a></p>
+<h2 id="18-既然一个容器一个应用，那么我想在该容器中用计划任务-cron-怎么办？"><a href="#18-既然一个容器一个应用，那么我想在该容器中用计划任务-cron-怎么办？" class="headerlink" title="18. 既然一个容器一个应用，那么我想在该容器中用计划任务 cron 怎么办？"></a>18. 既然一个容器一个应用，那么我想在该容器中用计划任务 cron 怎么办？</h2><p>cron 其实是另一个服务了，所以应该另起一个容器来进行，如需访问该应用的数据文件，那么可以共享该应用的数据卷即可。而 cron 的容器中，cron 以前台运行即可。</p>
+<p>比如，我们希望有个 python 脚本可以定时执行。那么可以这样构建这个容器。</p>
+<p>首先基于 python 的镜像定制：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:3.5.2</span><br><span class="line">ENV <span class="attribute">TZ</span>=Asia/Shanghai</span><br><span class="line"><span class="builtin-name">RUN</span> apt-<span class="builtin-name">get</span> update \</span><br><span class="line">    &amp;&amp; apt-<span class="builtin-name">get</span> install -y cron \</span><br><span class="line">    &amp;&amp; apt-<span class="builtin-name">get</span> autoremove -y</span><br><span class="line">COPY ./cronpy /etc/cron.d/cronpy</span><br><span class="line">CMD [<span class="string">"cron"</span>, <span class="string">"-f"</span>]</span><br></pre></td></tr></table></figure></p>
+<p>其中所提及的 cronpy 就是我们需要计划执行的 cron 脚本。</p>
+<p><code>* * * * * root /app/task.py &gt;&gt; /var/log/task.log 2&gt;&amp;1</code><br>在这个计划中，我们希望定时执行 /app/task.py 文件，日志记录在 /var/log/task.log 中。这个 task.py 是一个非常简单的文件，其内容只是输出个时间而已。<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/local/bin/python</span></span><br><span class="line">from datetime import datetime</span><br><span class="line">print(<span class="string">"Cron job has run at &#123;0&#125; with environment variable "</span>.format(<span class="name">str</span>(<span class="name">datetime</span>.now())))</span><br></pre></td></tr></table></figure></p>
+<p>这 task.py 可以在构建镜像时放进去，也可以挂载宿主目录。在这里，我以挂载宿主目录举例。<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 构建镜像</span><br><span class="line">docker build -t cronjob:latest .</span><br><span class="line"># 运行镜像</span><br><span class="line">docker run \</span><br><span class="line">    -<span class="ruby">-name cronjob \</span></span><br><span class="line"><span class="ruby">    -d \</span></span><br><span class="line"><span class="ruby">    -v $(pwd)/task.<span class="symbol">py:</span>/app/task.py \</span></span><br><span class="line"><span class="ruby">    -v $(pwd)/log/<span class="symbol">:/var/log/</span> \</span></span><br><span class="line"><span class="ruby">    <span class="symbol">cronjob:</span>latest</span></span><br><span class="line"><span class="ruby">需要注意的是，应该在构建主机上赋予 task.py 文件可执行权限。</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="19-如何初始化卷？"><a href="#19-如何初始化卷？" class="headerlink" title="19. 如何初始化卷？"></a>19. 如何初始化卷？</h2><p>卷（Volume），是用于动态数据持久化的。因此其内存储的都是动态数据，运行时会变化。如果这里面需要初始化里面的数据，需要在运行时进行。或者在镜像里加入初始化的脚本，比如 mysql 镜像中的初始化目录中的脚本；或者自己单独制作纯粹用于初始化卷用的镜像，单独一次性运行以将初始化数据灌入卷中。</p>
+<p>举个例子来说，假设你需要个卷 mydata，然后里面需要有个 hello.txt 文件是必须存在的，否则容器运行就要出大事儿了……（这需求很傻我知道……😅好吧，假设如此）。</p>
+<p>当然，我们得先有这个卷。</p>
+<p><code>docker volume create --name mydata</code><br>那怎么把这个超重要的 hello.txt 文件放入卷中呢？有几种办法。</p>
+<p>正常挂载该 mydata 卷，然后 docker cp 进去<br>这是个很傻的办法，不过如果容器运行并不依赖于 hello.txt 的话，这样做是可以的。<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d <span class="params">--name</span> web -v mydata:<span class="string">/data</span> nginx</span><br><span class="line">$ docker cp <span class="string">./hello.txt</span> web:<span class="string">/data/</span></span><br></pre></td></tr></table></figure></p>
+<p>这样是先让容器启动，启动后，再把所需数据导入卷里面去。以后容器就可以使用 /data/hello.txt 文件了。</p>
+<p>但是，如果容器是严重依赖于这个 hello.txt 文件的话，这样做就会出问题。容器会因为 hello.txt 文件不存在，而报错退出，导致根本没有 docker cp 的机会。</p>
+<p>这种情况，我们可以变通一下。<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">run</span><span class="bash"> --rm \</span></span><br><span class="line"><span class="bash">    -v <span class="variable">$PWD</span>:/<span class="built_in">source</span> \</span></span><br><span class="line"><span class="bash">    -v mydata:/data \</span></span><br><span class="line"><span class="bash">    busybox \</span></span><br><span class="line"><span class="bash">    cp /<span class="built_in">source</span>/hello.txt /data/</span></span><br><span class="line"></span><br><span class="line">$ docker <span class="keyword">run</span><span class="bash"> -d --name web -v mydata:/data nginx</span></span><br></pre></td></tr></table></figure></p>
+<p>这里我们先启动了一个 busybox 容器，分别挂载要复制的源以及目标的 mydata 卷，然后用 cp 命令将 hello.txt 复制到 mydata 中去。数据导入结束后，我们再正式挂载 mydata 卷到正式的容器上并启动。这个时候严重依赖 /data/hello.txt 的这个容器就可以顺利运行了。</p>
+<p>专门制作初始化镜像<br>手动的去执行 docker cp，或者 docker run … cp … 并不是很正规。可以写个脚本让一切都标准化，但是，除了流程外，还需要确保当前环境中的初始化数据的版本必须是所期望的，否则初始化了错误的数据，也会让运行时状态达不到预期的效果。</p>
+<p>因此，另一种办法是专门制作一个初始化卷的镜像，这样的做法也比较方便在 CI/CD 流程中对初始化数据的过程进行测试确认。<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> busybox</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> hello.txt /<span class="built_in">source</span>/</span></span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /data</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"cp"</span>, <span class="string">"/source/hello.txt"</span>, <span class="string">"/data/"</span>]</span></span><br></pre></td></tr></table></figure></p>
+<p>这样的镜像只有一个生存目的，就是挂载 mydata 卷，并且把数据导入进去。假设构建好的镜像名为 volume-prepare，只需要执行下面的命令就可以完成导入：</p>
+<p><code>$ docker run --rm -v mydata:/data volume-prepare</code><br>在镜像的 Dockerfile 制作中，加入初始化部分<br>在之前的问答中我们已经了解到，官方镜像 mysql 中可以使用 Dockerfile 来添加初始化脚本，并且会在运行时判断是否为第一次运行，如果确实需要初始化，则执行定制的初始化脚本。</p>
+<p>我们也可以使用这种方法将 hello.txt 在初始化的时候加入到 mydata 卷中去。</p>
+<p>首先我们需要写一个进入点的脚本，用以确保在容器执行的时候都会运行，而这个脚本将判断是否需要数据初始化，并且进行初始化操作。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># entrypoint.sh</span></span><br><span class="line"><span class="keyword">if</span> [ ! -f <span class="string">"/data/hello.txt"</span> ]; <span class="keyword">then</span></span><br><span class="line">    cp /<span class="built_in">source</span>/hello.txt /data/</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">exec</span> <span class="string">"<span class="variable">$@</span>"</span></span><br></pre></td></tr></table></figure></p>
+<p>名为 entrypoint.sh 的这个脚本很简单，判断一下 /data/hello.txt 是否存在，如果不存在就需要初始化。初始化行为也很简单，将实现准备好的 /source/hello.txt 复制到 /data/ 目录中去，以完成初始化。程序的最后，将执行送入的命令。</p>
+<p>我们可以这样写 Dockerfile：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> nginx</span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> hello.txt /<span class="built_in">source</span>/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> entrypoint.sh /</span></span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /data</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"/entrypoint.sh"</span>]</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"nginx"</span>, <span class="string">"-g"</span>, <span class="string">"daemon off;"</span>]</span></span><br></pre></td></tr></table></figure></p>
+<p>当我们构建镜像、启动容器后，就会发现 /data 目录下已经存在了 hello.txt 文件了，初始化成功了。</p>
+<h2 id="20-如何列出容器和所使用的卷的关系？"><a href="#20-如何列出容器和所使用的卷的关系？" class="headerlink" title="20. 如何列出容器和所使用的卷的关系？"></a>20. 如何列出容器和所使用的卷的关系？</h2><p>要感谢强大的 Go Template，可以使用下面的命令来显示：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker inspect --format '&#123;<span class="meta">&#123;.Name&#125;&#125; =&gt; &#123;&#123;with .Mounts&#125;&#125;&#123;&#123;range .&#125;</span>&#125;</span><br><span class="line">    &#123;<span class="meta">&#123;.Name&#125;&#125;,&#123;&#123;end&#125;&#125;&#123;&#123;end&#125;&#125;' $(docker ps -aq)</span></span><br></pre></td></tr></table></figure></p>
+<p>注意这里的换行和空格是有意如此的，这样就可以再返回结果控制缩进格式。其结果将是如下形式：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ docker inspect --format '&#123;<span class="meta">&#123;.Name&#125;&#125; =&gt; &#123;&#123;with .Mounts&#125;&#125;&#123;&#123;range .&#125;</span>&#125;</span><br><span class="line">    &#123;<span class="meta">&#123;.Name&#125;&#125;&#123;&#123;end&#125;&#125;&#123;&#123;end&#125;&#125;' $(docker ps -aq)</span></span><br><span class="line"><span class="meta">/device_api_1 =&gt;</span></span><br><span class="line"><span class="meta">/device_dashboard-debug_1 =&gt;</span></span><br><span class="line"><span class="meta">/device_redis_1 =&gt;</span></span><br><span class="line"><span class="meta">    device_redis-data</span></span><br><span class="line"><span class="meta">/device_mongo_1 =&gt;</span></span><br><span class="line"><span class="meta">    device_mongo-data</span></span><br><span class="line"><span class="meta">    61453e46c3409f42e938324d7feffc6aeb6b7ce16d2080566e3b128c910c9570</span></span><br><span class="line"><span class="meta">/prometheus_prometheus_1 =&gt;</span></span><br><span class="line"><span class="meta">    fc0185ed3fc637295de810efaff7333e8ff2f6050d7f9368a22e19fb2c1e3c3f</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="21-那我把所有命令都合并到一个-RUN-就对了吧？"><a href="#21-那我把所有命令都合并到一个-RUN-就对了吧？" class="headerlink" title="21.那我把所有命令都合并到一个 RUN 就对了吧？"></a>21.那我把所有命令都合并到一个 RUN 就对了吧？</h2><p>不是把所有命令都合为一个 RUN，要合理分层，以加快构建和部署。</p>
+<p><strong>合理分层就是将具有不同变更频繁程度的层，进行拆分，让稳定的部分在基础，更容易变更的部分在表层，使得资源可以重复利用，以增加构建和部署的速度。</strong></p>
+<p>以 node.js 的应用示例镜像为例，其中的复制应用和安装依赖的部分，如果都合并一起，会写成这样：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="bash"> . /usr/src/app</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install</span></span><br></pre></td></tr></table></figure></p>
+<p>但是，在 node.js 应用镜像示例中，则是这么写的：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="bash"> package.json /usr/src/app/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> . /usr/src/app</span></span><br></pre></td></tr></table></figure></p>
+<p>从层数上看，确实多了一层。但实际上，这三行分开是故意这样做的，其目的就是合理分层，充分利用 Docker 分层存储的概念，以增加构建、部署的效率。</p>
+<p>在 docker build 的构建过程中，如果某层之前构建过，而且该层未发生改变的情况下，那么 docker 就会直接使用缓存，不会重复构建。因此，合理分层，充分利用缓存，会显著加速构建速度。</p>
+<p>第一行的目的是将 package.json 复制到应用目录，而不是整个应用代码目录。这样只有 pakcage.json 发生改变后，才会触发第二行 RUN npm install。而只要 package.json 没有变化，那么应用的代码改变就不会引发 npm install，只会引发第三行的 COPY . /usr/src/app，从而加快构建速度。</p>
+<p>而如果按照前面所提到的，合并为两层，那么任何代码改变，都会触发 RUN npm install，从而浪费大量的带宽和时间。</p>
+<p>合理分层除了可以加快构建外，还可以加快部署，要知道，docker pull 的时候，是分层下载的，并且已存在的层就不会重复下载。</p>
+<p>比如，这里的 RUN npm install 这一层，往往会几百 MB 甚至上 GB。而在 package.json 未发生变更的情况下，那么只有 COPY . /usr/src/app 这一层会被重新构建，并且也只有这一层会在各个节点 docker pull 的过程中重新下载，往往这一层的代码量只有几十 MB，甚至更小。这对于大规模的并行部署中，所节约的东西向流量是非常显著的。特别是敏捷开发环境中，代码变更的频繁度要比依赖变更的频繁度高很多，每次重复下载依赖，会导致不必要的流量和时间上的浪费。</p>
+<h2 id="22-context-到底是一个什么概念？"><a href="#22-context-到底是一个什么概念？" class="headerlink" title="22. context 到底是一个什么概念？"></a>22. context 到底是一个什么概念？</h2><p>context，上下文，是 docker build 中很重要的一个概念。构建镜像必须指定 context：</p>
+<p>docker build -t xxx &lt;context路径&gt;<br>或者 docker-compose.yml 中的<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">app:</span></span><br><span class="line"><span class="symbol">    build:</span></span><br><span class="line"><span class="symbol">        context:</span> <span class="params">&lt;context路径&gt;</span></span><br><span class="line"><span class="symbol">        dockerfile:</span> dockerfile</span><br></pre></td></tr></table></figure></p>
+<p>这里都需要指定 context。</p>
+<p>context 是工作目录，但不要和构建镜像的Dockerfile 中的 WORKDIR 弄混，context 是 docker build 命令的工作目录。</p>
+<p>docker build 命令实际上是客户端，真正构建镜像并非由该命令直接完成。docker build 命令将 context 的目录上传给 Docker 引擎，由它负责制作镜像。</p>
+<p>在 Dockerfile 中如果写 COPY ./package.json /app/ 这种命令，实际的意思并不是指执行 docker build 所在的目录下的 package.json，也不是指 Dockerfile 所在目录下的 package.json，而是指 context 目录下的 package.json。</p>
+<p>这就是为什么有人发现 COPY ../package.json /app 或者 COPY /opt/xxxx /app 无法工作的原因，因为它们都在 context 之外，如果真正需要，应该将它们复制到 context 目录下再操作。</p>
+<p>话说，有一些网文甚至搞笑的说要把 Dockerfile 放到磁盘根目录，才能构建如何如何。这都是对 context 完全不了解的表现。想象一下把整个磁盘几十个 GB当做上下文发送给 dockerd 引擎的情况，😱……</p>
+<p><strong>docker build -t xxx . 中的这个.，实际上就是在指定 Context 的目录，而并非是指定 Dockerfile 所在目录。</strong></p>
+<p>默认情况下，如果不额外指定 Dockerfile 的话，会将 Context 下的名为 Dockerfile 的文件作为 Dockerfile。所以很多人会混淆，认为这个 . 是在说 Dockerfile 的位置，其实不然。</p>
+<p>一般项目中，Dockerfile 可能被放置于两个位置。</p>
+<p>一个可能是放置于项目顶级目录，这样的好处是在顶级目录构建时，项目所有内容都在上下文内，方便构建；<br>另一个做法是，将所有 Docker 相关的内容集中于某个目录，比如 docker 目录，里面包含所有不同分支的 Dockerfile，以及 docker-compose.yml 类的文件、entrypoint 的脚本等等。这种情况的上下文所在目录不再是 Dockerfile 所在目录了，因此需要注意指定上下文的位置。<br>此外，项目中可能会包含一些构建不需要的文件，这些文件不应该被发送给 dockerd 引擎，但是它们处于上下文目录下，这种情况，我们需要使用 .dockerignore 文件来过滤不必要的内容。.dockerignore 文件应该放置于上下文顶级目录下，内容格式和 .gitignore 一样。<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tmp</span></span><br><span class="line"><span class="attribute">db</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就过滤了 tmp 和 db 目录，它们不会被作为上下文的一部分发给 dockerd 引擎。</p>
+<p><strong>如果你发现你的 docker build 需要发送庞大的 Context 的时候，就需要来检查是不是 .dockerignore 忘了撰写，或者忘了过滤某些东西了。</strong></p>
+<h2 id="23-ENTRYPOINT-和-CMD-到底有什么不同？"><a href="#23-ENTRYPOINT-和-CMD-到底有什么不同？" class="headerlink" title="23. ENTRYPOINT 和 CMD 到底有什么不同？"></a>23. ENTRYPOINT 和 CMD 到底有什么不同？</h2><p>Dockerfile 的目的是制作镜像，换句话说，实际上是准备的是主进程运行环境。那么准备好后，需要执行一个程序才可以启动主进程，而启动的办法就是调用 ENTRYPOINT，并且把 CMD 作为参数传进去运行。也就是下面的概念：</p>
+<p><code>ENTRYPOINT &quot;CMD&quot;</code><br>假设有个 myubuntu 镜像 ENTRYPOINT 是 sh -c，而我们 docker run -it myubuntu uname -a。那么 uname -a 就是运行时指定的 CMD，那么 Docker 实际运行的就是结合起来的结果：</p>
+<p><code>sh -c &quot;uname -a&quot;</code><br>如果没有指定 ENTRYPOINT，那么就只执行 CMD；<br>如果指定了 ENTRYPOINT 而没有指定 CMD，自然执行 ENTRYPOINT;<br>如果 ENTRYPOINT 和 CMD 都指定了，那么就如同上面所述，执行 ENTRYPOINT “CMD”；<br>如果没有指定 ENTRYPOINT，而 CMD 用的是上述那种 shell 命令的形式，则自动使用 sh -c 作为 ENTRYPOINT。<br>注意最后一点的区别，这个区别导致了同样的命令放到 CMD 和 ENTRYPOINT 下效果不同，因此有可能放在 ENTRYPOINT 下的同样的命令，由于需要 tty 而运行时忘记了给（比如忘记了docker-compose.yml 的 tty:true）导致运行失败。</p>
+<p>这种用法可以很灵活，比如我们做个 git 镜像，可以把 git 命令指定为 ENTRYPOINT，这样我们在 docker run 的时候，直接跟子命令即可。比如 docker run git log 就是显示日志。</p>
+<h2 id="24-应用代码是应该挂载宿主目录还是放入镜像内？"><a href="#24-应用代码是应该挂载宿主目录还是放入镜像内？" class="headerlink" title="24. 应用代码是应该挂载宿主目录还是放入镜像内？"></a>24. 应用代码是应该挂载宿主目录还是放入镜像内？</h2><p>两种方法都可以。</p>
+<p>如果代码变动非常频繁，比如开发阶段，代码几乎每几分钟就需要变动调试，这种情况可以使用 –volume 挂载宿主目录的办法。这样不用每次构建新镜像，直接再次运行就可以加载最新代码，甚至有些工具可以观察文件变化从而动态加载，这样可以提高开发效率。</p>
+<p>如果代码和配置文件没有那么频繁变动，比如发布阶段，这种情况，应该将构建好的应用放入镜像。</p>
+<p><strong>需要注意的一点是，绑定宿主目录虽然方便，但是不利于集群部署，因为集群部署前还需要确保集群各个节点同步存在所挂载的目录及其内容。因此集群部署更倾向于将应用打入镜像，方便部署。</strong></p>
+<h2 id="25-为什么在-Dockerfile-中执行（导入-sql、service-xxx-start）不管用？"><a href="#25-为什么在-Dockerfile-中执行（导入-sql、service-xxx-start）不管用？" class="headerlink" title="25. 为什么在 Dockerfile 中执行（导入 .sql、service xxx start）不管用？"></a>25. 为什么在 Dockerfile 中执行（导入 .sql、service xxx start）不管用？</h2><p>这是典型的对 Dockerfile 以及镜像、容器的基本概念不了解。</p>
+<p>Dockerfile 不是 shell 脚本，而是定制 rootfs 的脚本。它并不是在运行时运行的，而是在构建时运行的。</p>
+<p>导入 .sql 文件到数据库，实际上修改的是数据库数据文件，而数据库的数据文件存储于卷，默认为匿名卷，因此当导入行为结束后，构建该层的容器停止运行，匿名卷被抛弃，所有导入行为都会丢失，因此所谓的导入 .sql 的行为在 Dockerfile 里实际上完全没有意义。</p>
+<p>而 service xxxx start 也完全没有意义，这是启动后台服务，且不说 Docker 中不用后台服务，这种启动行为对文件系统根本没影响，这仅仅是让后台在构建所用的容器中运行一下，完全没有意义。最后运行容器的时候，是另一个进程了，该没启动的东西还是不会启动。</p>
+<p>但是不要因此就盲目的得出 Dockerfile 无法初始化数据库的结论。所有官方镜像都考虑到了定制的问题，去看特定官方镜像的文档，基本都会看到定制、初始化的方法。</p>
+<p>比如官方 mysql 镜像中，可以把初始化的 .sql 脚本文件在 Dockerfile 中 COPY 至 /docker-entrypoint-initdb.d/ 目录中，在容器第一次运行的时候，如果所挂载的卷是空的，那么就会依次执行该目录中的文件，从而完成数据库初始化、导入等功能。<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> mysql:<span class="number">5.7</span></span><br><span class="line"><span class="keyword">COPY</span><span class="bash"> mysql-data-backup.sql /docker-entrypoint-initdb.d/</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="26-Docker-日志都在哪里？怎么收集？"><a href="#26-Docker-日志都在哪里？怎么收集？" class="headerlink" title="26.Docker 日志都在哪里？怎么收集？"></a>26.Docker 日志都在哪里？怎么收集？</h2><p>日志分两类，一类是 Docker 引擎日志；另一类是 容器日志<br>Docker 引擎日志<br>Docker 引擎日志 一般是交给了 Upstart(Ubuntu 14.04) 或者 systemd (CentOS 7, Ubuntu 16.04)。前者一般位于 /var/log/upstart/docker.log 下，后者一般通过 jounarlctl -u docker 来读取。</p>
+<h2 id="27-都说不要用-root-去运行服务，但我看到的-Dockerfile-都是用-root-去运行，这不安全吧？"><a href="#27-都说不要用-root-去运行服务，但我看到的-Dockerfile-都是用-root-去运行，这不安全吧？" class="headerlink" title="27.都说不要用 root 去运行服务，但我看到的 Dockerfile 都是用 root 去运行，这不安全吧？"></a>27.都说不要用 root 去运行服务，但我看到的 Dockerfile 都是用 root 去运行，这不安全吧？</h2><p>并非所有官方镜像的 Dockerfile 都是用 root 用户去执行的。比如 mysql 镜像的执行身份就是 mysql 用户；redis 镜像的服务运行用户就是 redis；mongo 镜像内的服务执行身份是 mongo 用户；jenkins 镜像内是 jenkins 用户启动服务等等。所以说 “都是用 root 去运行” 是不客观的。</p>
+<p>当然，这并不是说在容器内使用 root 就非常危险。容器内的 root 和宿主上的 root 不同，容器内的 root 虽然 uid 也默认为 0，但是却处于一个隔离的命名空间，而且被去掉了大量的特权。容器内的 root 是一个没有什么特权的用户，危险的操作基本都无法执行。</p>
+<p>不过，如果用户可以打破这个安全保护，那就是另外一回事了。比如，如果用户挂载了宿主目录给容器，这就是打通了一个容器内的 root 操控宿主的一个通道，使得容器内的 root 可以修改所挂载的目录下的任何文件。</p>
+<p>因为当前版本的 Docker 中，默认情况下容器的 user namespace 并未开启，所以容器内的用户和宿主用户共享 uid 空间。容器内的 uid 为 0 的 root，就被系统视为 uid=0 的宿主 root，因此磁盘读写时，具有宿主 root 同等读写权限。这也是为什么一般不推荐挂载宿主目录、特别是挂载宿主系统目录的原因之一。这一切只要定制镜像的时候，容器内不使用 root 启动服务就没这个问题了。</p>
+<p>当然，上面说的问题只是默认情况下 user namespace 不会启用的问题。dockerd 有一个 –userns-remap 参数，只要配置了这个参数，就可以确保容器内的 uid 是独立命名空间，容器内的 uid 变到宿主的时候，会被 remap 到另一个范围。因此，容器内的 uid=0 的 root 将完全跟 root 没有任何关系，仅仅是个普通用户而已。</p>
+<h2 id="28"><a href="#28" class="headerlink" title="28."></a>28.</h2><h2 id="如何删除私有-registry-中的镜像？"><a href="#如何删除私有-registry-中的镜像？" class="headerlink" title="如何删除私有 registry 中的镜像？"></a>如何删除私有 registry 中的镜像？</h2><p>首先，在默认情况下，docker registry 是不允许删除镜像的，需要在配置config.yml中启用：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">delete:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<p>然后，使用 API GET /v2/&lt;镜像名&gt;/manifests/<tag> 来取得要删除的镜像:Tag所对应的 digest。</tag></p>
+<p>Registry 2.3 以后，必须加入头 <code>Accept: application/vnd.docker.distribution.manifest.v2+json</code>，否则取到的 digest 是错误的，这是为了防止误删除。</p>
+<p>比如，要删除 myimage:latest 镜像，那么取得 digest 的命令是：<br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl --header <span class="string">"Accept: application/vnd.docker.distribution.manifest.v2+json"</span> \</span><br><span class="line">  -I -X HEAD http://<span class="number">192.168</span>.<span class="number">99.100</span>:<span class="number">5000</span>/v<span class="number">2</span>/myimage/manifests/latest \</span><br><span class="line">  | grep Digest</span><br><span class="line">Docker-Content-Digest: sha<span class="number">256</span>:<span class="number">3</span>a<span class="number">07</span>b<span class="number">4e06</span><span class="keyword">c</span><span class="number">73</span>b<span class="number">2e3924008270</span><span class="keyword">c</span><span class="number">7</span>f<span class="number">3</span><span class="keyword">c</span><span class="number">3</span><span class="keyword">c</span><span class="number">6e3</span>f<span class="number">70</span>d<span class="number">4</span>dbb<span class="number">814</span>ad<span class="number">8</span>bff<span class="number">2697123</span>ca<span class="number">33</span><span class="keyword">c</span></span><br></pre></td></tr></table></figure></p>
+<p>然后调用 <code>API DELETE /v2/&lt;镜像名&gt;/manifests/&lt;digest&gt;</code> 来删除镜像。比如：</p>
+<p><code>curl  -X DELETE http://192.168.99.100:5000/v2/myimage/manifests/sha256:3a07b4e06c73b2e3924008270c7f3c3c6e3f70d4dbb814ad8bff2697123ca33c</code><br>至此，镜像已从 registry 中标记删除，外界访问 pull 不到了。但是 registry 的本地空间并未释放，需要等待垃圾收集才会释放。而垃圾收集不可以在线进行，必须停止 registry，然后执行。比如，假设 registry 是用 Compose 运行的，那么下面命令用来垃圾收集：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker-compose stop</span><br><span class="line">docker run -it <span class="params">--name</span> gc <span class="params">--rm</span> <span class="params">--volumes-from</span> registry_registry_1 registry<span class="function">:2</span> garbage-collect <span class="string">/etc/registry/config.yml</span></span><br><span class="line">docker-compose start</span><br></pre></td></tr></table></figure></p>
+<p>其中 registry_registry_1 可以替换为实际的 registry 的容器名，而 /etc/registry/config.yml 则替换为实际的 registry 配置文件路径。</p>
+<p>##docker push 了很多镜像到私有的 registry 上，怎么才能查看上面都有啥？或者搜索？<br>两种办法，一种是使用 Registry V2 API。可以列出所有镜像：</p>
+<p><code>curl http://&lt;私有registry地址&gt;/v2/_catalog</code><br>如果私有 Registry 尚支持 V1 API（已经废弃），可以使用 docker search</p>
+<p><code>docker search &lt;私有registry地址&gt;/&lt;关键字&gt;</code></p>
+<p>##docker push 到私有 registry 总是不成功，怎么办？<br>如果在报错中看到了 https，那很可能是因为 registry 没有配置证书。</p>
+<p>很多人最开始配置 registry 的时候，为了简单而没有配置 TLS 证书。</p>
+<p>这是不安全的做法，在 Docker 中不推荐使用。因此，刻意的增加了使用这种不安全 registry 的复杂度。使用者必须在 dockerd 配置中，明确声明要使用这些不安全的 registry。</p>
+<p>比如，在 Ubuntu 16.04 中，编辑 /etc/systemd/system/multi-user.target.wants/docker.service 中的 ExecStart= 的结尾，加入 –insecure-registry=192.168.99.100:5000，将 192.168.99.100:5000 替换成你的 registry 地址。如果有很多 registry，可以设置多组。或者如果虚拟机的 IP 总是变化，也可以使用 CIDR 的形式，比如 <strong>–insecure-registry=192.168.99.0/24</strong>。</p>
+<p>不过测试过后，一定要配上 TLS 证书。现在 Let’s Encrpyt 已经支持 DNS 认证了，不需要暴露内部的机器于公网，用其脚本自动取得免费证书是很方便的。<br>获取脚本的网站：<a href="https://certbot.eff.org/" target="_blank" rel="noopener">https://certbot.eff.org/</a></p>
+<p>##自己架的 registry 怎么任何用户都可以取到镜像？这不安全啊？<br>那是因为没有加认证，不加认证的意思就是允许任何人访问的。</p>
+<p>添加认证有两种方式：</p>
+<p>Registry 配置中加入认证： <a href="https://docs.docker.com/registry/configuration/#/auth" target="_blank" rel="noopener">https://docs.docker.com/registry/configuration/#/auth</a><br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">auth:</span></span><br><span class="line"><span class="symbol">  token:</span></span><br><span class="line"><span class="symbol">    realm:</span> token-realm</span><br><span class="line"><span class="symbol">    service:</span> token-service</span><br><span class="line"><span class="symbol">    issuer:</span> registry-token-issuer</span><br><span class="line"><span class="symbol">    rootcertbundle:</span> <span class="meta-keyword">/root/</span>certs/bundle</span><br><span class="line"><span class="symbol">  htpasswd:</span></span><br><span class="line"><span class="symbol">    realm:</span> basic-realm</span><br><span class="line"><span class="symbol">    path:</span> <span class="meta-keyword">/path/</span>to/htpasswd</span><br></pre></td></tr></table></figure></p>
+<p>前端架设 nginx 进行认证：<a href="https://docs.docker.com/registry/recipes/nginx/" target="_blank" rel="noopener">https://docs.docker.com/registry/recipes/nginx/</a><br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location <span class="string">/v2/</span> &#123;</span><br><span class="line">    <span class="string">...</span></span><br><span class="line">    auth_basic <span class="string">"Registry realm"</span>;</span><br><span class="line">    auth_basic_user_file <span class="string">/etc/nginx/conf.d/nginx.htpasswd</span>;</span><br><span class="line">    <span class="string">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag">#docker</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/04/shell脚本知识点汇总/" rel="prev">
+                <i class="fa fa-chevron-left"></i> shell脚本中问题
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/03/新服务器初始化/" rel="next">
+                新服务器初始化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2018/03/04/docker常见问题/" data-title="docker常见问题" data-url="http://leichongxiang.github.io/2018/03/04/docker常见问题/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://ww3.sinaimg.cn/large/8e712944jw1exen95p8hej208c08cq4u.jpg" alt="Vike Lee" itemprop="image">
+          <p class="site-author-name" itemprop="name">Vike Lee</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">记录时间</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+<! -- 添加微信图标 -->
+    
+<! -- 完成 -->
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/leichongxiang/" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://macshuo.com/" target="_blank">MacTalk</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-概述"><span class="nav-number">2.</span> <span class="nav-text">0. 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-docker容器中root用户无法查看其它用户运行进程的PID"><span class="nav-number">3.</span> <span class="nav-text">1. docker容器中root用户无法查看其它用户运行进程的PID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-docker容器使用su切换用户时出错"><span class="nav-number">4.</span> <span class="nav-text">2. docker容器使用su切换用户时出错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-容器如何保证内部时间和主机时间一致"><span class="nav-number">5.</span> <span class="nav-text">3.容器如何保证内部时间和主机时间一致</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-怎么绑定一个容器名字和镜像的名字"><span class="nav-number">6.</span> <span class="nav-text">4.怎么绑定一个容器名字和镜像的名字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-批量清理临时镜像文件"><span class="nav-number">7.</span> <span class="nav-text">5.批量清理临时镜像文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-批量清理后台停止的容器"><span class="nav-number">8.</span> <span class="nav-text">6.批量清理后台停止的容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-docker和虚拟机的区别？"><span class="nav-number">9.</span> <span class="nav-text">7.docker和虚拟机的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-卸载docker"><span class="nav-number">10.</span> <span class="nav-text">8. 卸载docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-怎么映射宿主端口？Dockerfile-中的EXPOSE和-docker-run-p-有啥区别？"><span class="nav-number">11.</span> <span class="nav-text">9. 怎么映射宿主端口？Dockerfile 中的EXPOSE和 docker run -p 有啥区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-要映射好几百个端口"><span class="nav-number">12.</span> <span class="nav-text">10. 要映射好几百个端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-p-后还是无法通过映射端口访问容器里面的服务"><span class="nav-number">13.</span> <span class="nav-text">11. -p 后还是无法通过映射端口访问容器里面的服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-如何让一个容器连接两个网络？"><span class="nav-number">14.</span> <span class="nav-text">12. 如何让一个容器连接两个网络？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-–link-过时不再用了？那容器互联、服务发现怎么办？"><span class="nav-number">15.</span> <span class="nav-text">13. –link 过时不再用了？那容器互联、服务发现怎么办？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-使用-HBase-Hadoop-的时候，反向解析总是不对，怎么办？"><span class="nav-number">16.</span> <span class="nav-text">14. 使用 HBase/Hadoop 的时候，反向解析总是不对，怎么办？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-数据容器、数据卷、命名卷、匿名卷、挂载目录这些都有什么区别？"><span class="nav-number">17.</span> <span class="nav-text">15. 数据容器、数据卷、命名卷、匿名卷、挂载目录这些都有什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-为什么绑定了宿主的文件到容器，宿主修改了文件，容器内看到的还是旧的内容啊？"><span class="nav-number">18.</span> <span class="nav-text">16. 为什么绑定了宿主的文件到容器，宿主修改了文件，容器内看到的还是旧的内容啊？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-多个-Docker-容器之间共享数据怎么办？NFS-？"><span class="nav-number">19.</span> <span class="nav-text">17. 多个 Docker 容器之间共享数据怎么办？NFS ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-既然一个容器一个应用，那么我想在该容器中用计划任务-cron-怎么办？"><span class="nav-number">20.</span> <span class="nav-text">18. 既然一个容器一个应用，那么我想在该容器中用计划任务 cron 怎么办？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-如何初始化卷？"><span class="nav-number">21.</span> <span class="nav-text">19. 如何初始化卷？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-如何列出容器和所使用的卷的关系？"><span class="nav-number">22.</span> <span class="nav-text">20. 如何列出容器和所使用的卷的关系？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-那我把所有命令都合并到一个-RUN-就对了吧？"><span class="nav-number">23.</span> <span class="nav-text">21.那我把所有命令都合并到一个 RUN 就对了吧？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-context-到底是一个什么概念？"><span class="nav-number">24.</span> <span class="nav-text">22. context 到底是一个什么概念？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23-ENTRYPOINT-和-CMD-到底有什么不同？"><span class="nav-number">25.</span> <span class="nav-text">23. ENTRYPOINT 和 CMD 到底有什么不同？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-应用代码是应该挂载宿主目录还是放入镜像内？"><span class="nav-number">26.</span> <span class="nav-text">24. 应用代码是应该挂载宿主目录还是放入镜像内？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#25-为什么在-Dockerfile-中执行（导入-sql、service-xxx-start）不管用？"><span class="nav-number">27.</span> <span class="nav-text">25. 为什么在 Dockerfile 中执行（导入 .sql、service xxx start）不管用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#26-Docker-日志都在哪里？怎么收集？"><span class="nav-number">28.</span> <span class="nav-text">26.Docker 日志都在哪里？怎么收集？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#27-都说不要用-root-去运行服务，但我看到的-Dockerfile-都是用-root-去运行，这不安全吧？"><span class="nav-number">29.</span> <span class="nav-text">27.都说不要用 root 去运行服务，但我看到的 Dockerfile 都是用 root 去运行，这不安全吧？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#28"><span class="nav-number">30.</span> <span class="nav-text">28.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何删除私有-registry-中的镜像？"><span class="nav-number">31.</span> <span class="nav-text">如何删除私有 registry 中的镜像？</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vike Lee</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"leicx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+  
+    	 <!-- custom analytics part  --> 
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("mWA1nE7gcYVszHzU3BxSMc1a-gzGzoHsz", "4zH2GdGce6gOiDRfhcomjPBU");</script>
+<script>
+function showTime(Counter) {
+  var query = new AV.Query(Counter);
+  $(".leancloud_visitors").each(function() {
+    var url = $(this).attr("id").trim();
+    query.equalTo("url", url);
+    query.find({
+      success: function(results) {
+        if (results.length == 0) {
+          var content = $(document.getElementById(url)).text() + ': 0';
+          $(document.getElementById(url)).text(content);
+          return;
+        }
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+          $(document.getElementById(url)).text(content);
+        }
+      },
+      error: function(object, error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+
+  });
+}
+
+function addCount(Counter) {
+  var Counter = AV.Object.extend("Counter");
+  url = $(".leancloud_visitors").attr('id').trim();
+  title = $(".leancloud_visitors").attr('data-flag-title').trim();
+  var query = new AV.Query(Counter);
+  query.equalTo("url", url);
+  query.find({
+    success: function(results) {
+      if (results.length > 0) {
+        var counter = results[0];
+        counter.fetchWhenSave(true);
+        counter.increment("time");
+        counter.save(null, {
+          success: function(counter) {
+            var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(counter, error) {
+            console.log('Failed to save Visitor num, with error message: ' + error.message);
+          }
+        });
+      } else {
+        var newcounter = new Counter();
+        newcounter.set("title", title);
+        newcounter.set("url", url);
+        newcounter.set("time", 1);
+        newcounter.save(null, {
+          success: function(newcounter) {
+              console.log("newcounter.get('time')="+newcounter.get('time'));
+            var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(newcounter, error) {
+            console.log('Failed to create');
+          }
+        });
+      }
+    },
+    error: function(error) {
+      console.log('Error:' + error.code + " " + error.message);
+    }
+  });
+}
+$(function() {
+  var Counter = AV.Object.extend("Counter");
+  if ($('.leancloud_visitors').length == 1) {
+    addCount(Counter);
+  } else if ($('.post-title-link').length > 1) {
+    showTime(Counter);
+  }
+}); 
+</script>
+
+  
+</body>
+</html>

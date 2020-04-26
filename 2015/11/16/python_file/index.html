@@ -1,0 +1,894 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+  
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2">
+
+
+    <meta name="description" content="记录时间">
+
+
+
+  <meta name="keywords" content="file_python,">
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
+
+
+<meta name="description" content="文件之前都是在控制台标准输入输出用的input和raw_input,今天看一下实际的数据文件的读写。可以使用对象file操作文件：  打开文件open 读取read()和写入write()文件 关闭文件close">
+<meta name="keywords" content="file_python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python的文件操作">
+<meta property="og:url" content="http://leichongxiang.github.io/2015/11/16/python_file/index.html">
+<meta property="og:site_name" content="Vike&#39;s Blog">
+<meta property="og:description" content="文件之前都是在控制台标准输入输出用的input和raw_input,今天看一下实际的数据文件的读写。可以使用对象file操作文件：  打开文件open 读取read()和写入write()文件 关闭文件close">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-26T03:23:15.335Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python的文件操作">
+<meta name="twitter:description" content="文件之前都是在控制台标准输入输出用的input和raw_input,今天看一下实际的数据文件的读写。可以使用对象file操作文件：  打开文件open 读取read()和写入write()文件 关闭文件close">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> python的文件操作 | Vike's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f77b20a6d14f2ad51ff2830ef9fbf36d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vike's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">人生苦短，我用python</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+		
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '6ywXKaDWo7MbiWzbPCVP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                python的文件操作
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-11-16T13:50:02+08:00" content="2015-11-16">
+              2015-11-16
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/16/python_file/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/16/python_file/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2015/11/16/python_file/" class="leancloud_visitors" data-flag-title="python的文件操作">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><p>之前都是在控制台标准输入输出用的input和raw_input,今天看一下实际的数据文件的读写。<br>可以使用对象file操作文件：</p>
+<ul>
+<li>打开文件open</li>
+<li>读取read()和写入write()文件</li>
+<li>关闭文件close</li>
+</ul>
+<a id="more"></a>
+<h1 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h1><h2 id="open函数"><a href="#open函数" class="headerlink" title="open函数"></a>open函数</h2><p><code>file object = open(file_name [, access_mode][, buffering])</code><br>access_mode的选项:<br>模式 描述<br>r 只读,文件的开头,默认模式<br>rb 二进制格式只读，文件的开头，默认模式<br>r+ 读取和写入文件，文件的开头<br>w 存在,覆盖写入；不存在，创建写入<br>w+ 读取和写入文件。存在,覆盖写入；不存在，创建写入<br>a 打开追加文件，文件的结尾；不存在，创建追加<br>a+ 追加和读取文件，文件的结尾；不存在，创建追加</p>
+<p>file 对象属性<br>file.closed     如果文件被关闭则返回true，否则返回false。<br>file.mode     返回该文件被打开的访问模式。<br>file.name     返回文件的名称。<br>file.softspace     如果空格明确要求具有打印，返回false，否则返回true。</p>
+<h2 id="读取和写入"><a href="#读取和写入" class="headerlink" title="读取和写入"></a>读取和写入</h2><p>使用read()和write()方法来读取和写入文件</p>
+<p>read<br><code>fileObject.read([count]);</code><br>这里，传递的参数是从打开的文件中读出的字节数。此方法从该文件的开头读取，如果计数丢失，那么它会尝试尽可能多地读取，直到文件的末尾。</p>
+<p>write<br>write()方法不要将换行字符(‘\n’)添加到字符串的结尾：<br><code>fileObject.write(string);</code><br>这里，传递的参数是要写入到打开的文件的内容。</p>
+<h2 id="close"><a href="#close" class="headerlink" title="close"></a>close</h2><p>一个文件对象的close()方法刷新未写入的信息，并关闭该文件的对象，在这之后没有数据内容可以执行写入。</p>
+<p>Python自动关闭，当文件的引用对象被重新分配给另外一个文件。它是使用close()方法来关闭文件是一个很好的做法。<br><code>fileObject.close();</code></p>
+<h1 id="其他文件函数"><a href="#其他文件函数" class="headerlink" title="其他文件函数"></a>其他文件函数</h1><h2 id="文件位置tell-seek"><a href="#文件位置tell-seek" class="headerlink" title="文件位置tell,seek"></a>文件位置tell,seek</h2><p>tell()方法告诉该文件中的当前位置;换句话说，下一个读取或写入将发生在从该文件的开头的字节数。<br>seek(offset[, from]) 方法会更改当前的文件位置。偏移参数指示要移动的字节数。从该参数指定字节将被移至参考点。<br>如果from被设置为0，这意味着使用该文件的开始处作为基准位置，设置为1则是使用当前位置作为基准位置，如果它被设置为2，则该文件的末尾将被作为基准位置。</p>
+<h2 id="重命名和删除文件"><a href="#重命名和删除文件" class="headerlink" title="重命名和删除文件"></a>重命名和删除文件</h2><p>需要借助于python的os模块<br>rename<br>rename()方法有两个参数，当前文件名和新文件名。<br>语法:<br><code>os.rename(current_file_name, new_file_name)</code></p>
+<p>remove<br>可以使用remove()方法通过提供参数作为文件名称作为要删除的文件。<br>语法:<br><code>os.remove(file_name)</code></p>
+<h2 id="Python中的目录"><a href="#Python中的目录" class="headerlink" title="Python中的目录"></a>Python中的目录</h2><p>可以使用os模块的mkdir()方法在当前目录下创建目录。需要提供参数，这个方法包含的目录要创建的名称。<br>mkdir<br>语法:<br><code>os.mkdir(&quot;newdir&quot;)</code></p>
+<p>chdir<br>可以使用chdir()方法来改变当前目录。chdir()方法接受一个参数，那就是要成为当前目录的目录的名称。<br>语法:<br><code>os.chdir(&quot;newdir&quot;)</code></p>
+<p>getcwd<br>getcwd()方法显示当前的工作目录。<br>例子:<br><code>os.getcwd()</code></p>
+<p>rmdir<br>rmdir()命令方法删除目录，它是通过方法的参数。<br>在删除一个目录，它的所有内容应该被删除。<br><code>os.rmdir(&#39;dirname&#39;)</code></p>
+<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><h2 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"> </span><br><span class="line"><span class="comment">#打开模式列表：</span></span><br><span class="line"><span class="comment">#w      以写方式打开，</span></span><br><span class="line"><span class="comment">#a      以追加模式打开 (从 EOF 开始, 必要时创建新文件)</span></span><br><span class="line"><span class="comment">#r+     以读写模式打开</span></span><br><span class="line"><span class="comment">#w+     以读写模式打开 (参见 w )</span></span><br><span class="line"><span class="comment">#a+     以读写模式打开 (参见 a )</span></span><br><span class="line"><span class="comment">#rb     以二进制读模式打开</span></span><br><span class="line"><span class="comment">#wb     以二进制写模式打开 (参见 w )</span></span><br><span class="line"><span class="comment">#ab     以二进制追加模式打开 (参见 a )</span></span><br><span class="line"><span class="comment">#rb+    以二进制读写模式打开 (参见 r+ )</span></span><br><span class="line"><span class="comment">#wb+    以二进制读写模式打开 (参见 w+ )</span></span><br><span class="line"><span class="comment">#ab+    以二进制读写模式打开 (参见 a+ )</span></span><br><span class="line">f = open(<span class="string">'tpm.txt'</span>, <span class="string">'a+'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>) :</span><br><span class="line">    f.write(time.strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>))</span><br><span class="line">    f.write(<span class="string">' '</span> + str(random.randint(<span class="number">0</span>, i)) + <span class="string">'\n'</span>)</span><br><span class="line"> </span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<h2 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'tpm.txt'</span>)</span><br><span class="line"><span class="comment"># read方式读取</span></span><br><span class="line">s = f.read()</span><br><span class="line">print(s, <span class="string">'\n\n\n'</span>)</span><br><span class="line">print(f.tell())</span><br><span class="line"><span class="comment">#上面读取完后指针移动到最后，通过seek将文件指针移动到文件头</span></span><br><span class="line">f.seek(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#使用readline每次读取一行</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">True</span>):</span><br><span class="line">    line = f.readline()</span><br><span class="line">    print(line)</span><br><span class="line">    <span class="keyword">if</span>(len(line) == <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"> </span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<h2 id="文件目录操作（OS包）"><a href="#文件目录操作（OS包）" class="headerlink" title="文件目录操作（OS包）"></a>文件目录操作（OS包）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#os模块，处理文件和目录的一系列函数</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"> </span><br><span class="line"><span class="comment">#打印当前目录下的所有文件 非递归</span></span><br><span class="line">print(os.listdir(os.getcwd()))</span><br><span class="line"> </span><br><span class="line"><span class="comment">#切换目录为当前目录</span></span><br><span class="line">os.chdir(<span class="string">'.'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#判断目标是否存在，不存在则创建</span></span><br><span class="line"><span class="keyword">if</span>(os.path.exists(<span class="string">'./osdirs'</span>) == <span class="literal">False</span>):</span><br><span class="line">    os.mkdir(<span class="string">"./osdirs"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#重命名文件或目录名</span></span><br><span class="line"><span class="keyword">if</span>(os.path.exists(<span class="string">"./os"</span>) == <span class="literal">False</span>) :</span><br><span class="line">    os.rename(<span class="string">"./osdirs"</span>, <span class="string">"./os"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#rmdir删除目录，需要先清空文件中的子目录或文件夹</span></span><br><span class="line"><span class="comment">#removedirs可多层删除目录（需要目录中无文件） makedirs可多层创建目录</span></span><br><span class="line"><span class="keyword">if</span>(os.path.isdir(<span class="string">"./os"</span>)) :</span><br><span class="line">    os.rmdir(<span class="string">"./os"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#删除文件</span></span><br><span class="line"><span class="keyword">if</span>(os.path.exists(<span class="string">'./tpm.txt'</span>)):</span><br><span class="line">    os.remove(<span class="string">'./tpm.txt'</span>)</span><br></pre></td></tr></table></figure>
+<p>os模块中常用方法和属性：</p>
+<blockquote>
+<p>os.linesep 文件中分割行的字符串<br>os.sep文件路径名的分隔符<br>os.curdir当前工作目录的字符串名称<br>os.pardir父目录字符串名称<br>方法<br>os.remove()删除文件<br>os.rename()重命名文件<br>os.walk()生成目录树下的所有文件名<br>os.chdir()改变目录<br>os.mkdir/makedirs创建目录/多层目录<br>os.rmdir/removedirs删除目录/多层目录<br>listdir()列出指定目录的文件<br>getcwd()取得当前工作目录(current work directory)<br>chmod()改变目录权限<br>os.path.basename()去掉目录路径，返回文件名<br>os.path.dirname()去掉文件名，返回目录路径<br>os.path.join()将分离的各部分组合成一个路径名<br>os.path.split()返回（dirname(),basename())元组<br>os.path.splitext()(返回filename,extension)元组<br>os.path.getatime\ctime\mtime分别返回最近访问、创建、修改时间<br>os.path.getsize()返回文件大小<br>os.path.exists()是否存在<br>os.path.isabs()是否为绝对路径<br>os.path.isdir()是否为目录<br>os.path.isfile()是否为文件</p>
+</blockquote>
+<h2 id="文件目录操作-shutil包"><a href="#文件目录操作-shutil包" class="headerlink" title="文件目录操作(shutil包)"></a>文件目录操作(shutil包)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"> </span><br><span class="line"><span class="comment">#复制文件，相当于CP命令</span></span><br><span class="line">shutil.copy(<span class="string">'start2.txt'</span>, <span class="string">'start3'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#移动文件或目录，相当于MV命令</span></span><br><span class="line">shutil.move(<span class="string">'start3'</span>, <span class="string">'start4'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span>(os.path.exists(<span class="string">'./a/b/c'</span>) == <span class="literal">False</span>) :</span><br><span class="line">    os.makedirs(<span class="string">'./a/b/c'</span>)</span><br><span class="line"><span class="comment">#删除目录</span></span><br><span class="line">shutil.rmtree(<span class="string">'./a'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span>(os.path.exists(<span class="string">'./a/b/c/d'</span>) == <span class="literal">False</span>) :</span><br><span class="line">    os.makedirs(<span class="string">'./a/b/c/d'</span>)</span><br><span class="line">     </span><br><span class="line"><span class="comment">#复制目录</span></span><br><span class="line"><span class="keyword">if</span>(os.path.exists(<span class="string">'b'</span>) == <span class="literal">False</span>) :</span><br><span class="line">    shutil.copytree(<span class="string">'a'</span>, <span class="string">'b'</span>)</span><br></pre></td></tr></table></figure>
+<p>shutil中常用方法</p>
+<blockquote>
+<p>copyfile( src, dst)    从源src复制到dst中去。当然前提是目标地址是具备可写权限。抛出的异常信息为IOException. 如果当前的dst已存在的话就会被覆盖掉<br>copymode( src, dst)         只是会复制其权限其他的东西是不会被复制的<br>copystat( src, dst)         复制权限、最后访问时间、最后修改时间<br>copy( src, dst)         复制一个文件到一个文件或一个目录<br>copy2( src, dst)         在copy上的基础上再复制文件最后访问时间与修改时间也复制过来了，类似于cp –p的东西<br>copy2( src, dst)         如果两个位置的文件系统是一样的话相当于是rename操作，只是改名；如果是不在相同的文件系统的话就是做move操作<br>copytree(olddir,newdir,True/Flase)     把olddir拷贝一份newdir，如果第3个参数是True，则复制目录时将保持文件夹下的符号连接，如果第3个参数是False，则将在复制的目录下生成物理副本来替代符号连接<br>rmtree(path[, ignore_errors[, onerror]])    删除目录<br>move( src, dst)         移动文件或目录</p>
+</blockquote>
+<h2 id="遍历文件夹"><a href="#遍历文件夹" class="headerlink" title="遍历文件夹"></a>遍历文件夹</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment">#遍历当前路劲下的所有目录和文件夹</span></span><br><span class="line"><span class="comment">#返回元组包含三个参数：1.父目录 2.所有文件夹名字（不含路径） 3.所有文件名字</span></span><br><span class="line"><span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk(os.getcwd()):</span><br><span class="line">    <span class="comment">#输出文件夹信息</span></span><br><span class="line">    <span class="keyword">for</span> dir <span class="keyword">in</span>  dirs:</span><br><span class="line">        print(os.path.join(root,dir))</span><br><span class="line">    <span class="comment">#输出文件信息</span></span><br><span class="line">    <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">        print(os.path.join(root,file))</span><br></pre></td></tr></table></figure>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/file-python/" rel="tag">#file_python</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/17/python下操作mysql/" rel="prev">
+                <i class="fa fa-chevron-left"></i> python操作mysql
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/15/CGI_表单/" rel="next">
+                python写CGI脚本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/11/16/python_file/" data-title="python的文件操作" data-url="http://leichongxiang.github.io/2015/11/16/python_file/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://ww3.sinaimg.cn/large/8e712944jw1exen95p8hej208c08cq4u.jpg" alt="Vike Lee" itemprop="image">
+          <p class="site-author-name" itemprop="name">Vike Lee</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">记录时间</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+<! -- 添加微信图标 -->
+    
+<! -- 完成 -->
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/leichongxiang/" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://macshuo.com/" target="_blank">MacTalk</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件"><span class="nav-number">1.</span> <span class="nav-text">文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作步骤"><span class="nav-number">2.</span> <span class="nav-text">操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#open函数"><span class="nav-number">2.1.</span> <span class="nav-text">open函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取和写入"><span class="nav-number">2.2.</span> <span class="nav-text">读取和写入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#close"><span class="nav-number">2.3.</span> <span class="nav-text">close</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他文件函数"><span class="nav-number">3.</span> <span class="nav-text">其他文件函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件位置tell-seek"><span class="nav-number">3.1.</span> <span class="nav-text">文件位置tell,seek</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重命名和删除文件"><span class="nav-number">3.2.</span> <span class="nav-text">重命名和删除文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python中的目录"><span class="nav-number">3.3.</span> <span class="nav-text">Python中的目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例"><span class="nav-number">4.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件写入"><span class="nav-number">4.1.</span> <span class="nav-text">文件写入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件读取"><span class="nav-number">4.2.</span> <span class="nav-text">文件读取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件目录操作（OS包）"><span class="nav-number">4.3.</span> <span class="nav-text">文件目录操作（OS包）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件目录操作-shutil包"><span class="nav-number">4.4.</span> <span class="nav-text">文件目录操作(shutil包)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历文件夹"><span class="nav-number">4.5.</span> <span class="nav-text">遍历文件夹</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vike Lee</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"leicx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+  
+    	 <!-- custom analytics part  --> 
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("mWA1nE7gcYVszHzU3BxSMc1a-gzGzoHsz", "4zH2GdGce6gOiDRfhcomjPBU");</script>
+<script>
+function showTime(Counter) {
+  var query = new AV.Query(Counter);
+  $(".leancloud_visitors").each(function() {
+    var url = $(this).attr("id").trim();
+    query.equalTo("url", url);
+    query.find({
+      success: function(results) {
+        if (results.length == 0) {
+          var content = $(document.getElementById(url)).text() + ': 0';
+          $(document.getElementById(url)).text(content);
+          return;
+        }
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+          $(document.getElementById(url)).text(content);
+        }
+      },
+      error: function(object, error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+
+  });
+}
+
+function addCount(Counter) {
+  var Counter = AV.Object.extend("Counter");
+  url = $(".leancloud_visitors").attr('id').trim();
+  title = $(".leancloud_visitors").attr('data-flag-title').trim();
+  var query = new AV.Query(Counter);
+  query.equalTo("url", url);
+  query.find({
+    success: function(results) {
+      if (results.length > 0) {
+        var counter = results[0];
+        counter.fetchWhenSave(true);
+        counter.increment("time");
+        counter.save(null, {
+          success: function(counter) {
+            var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(counter, error) {
+            console.log('Failed to save Visitor num, with error message: ' + error.message);
+          }
+        });
+      } else {
+        var newcounter = new Counter();
+        newcounter.set("title", title);
+        newcounter.set("url", url);
+        newcounter.set("time", 1);
+        newcounter.save(null, {
+          success: function(newcounter) {
+              console.log("newcounter.get('time')="+newcounter.get('time'));
+            var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(newcounter, error) {
+            console.log('Failed to create');
+          }
+        });
+      }
+    },
+    error: function(error) {
+      console.log('Error:' + error.code + " " + error.message);
+    }
+  });
+}
+$(function() {
+  var Counter = AV.Object.extend("Counter");
+  if ($('.leancloud_visitors').length == 1) {
+    addCount(Counter);
+  } else if ($('.post-title-link').length > 1) {
+    showTime(Counter);
+  }
+}); 
+</script>
+
+  
+</body>
+</html>

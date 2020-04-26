@@ -1,0 +1,894 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+  
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2">
+
+
+    <meta name="description" content="记录时间">
+
+
+
+  <meta name="keywords" content="python,模块,">
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
+
+
+<meta name="description" content="time通常有这几种方式来表示时间  时间戳  格式化的时间字符串 元组（struct_time）共九个元素，（年，月，日，时，分，秒，周，一年中的第几天，夏令时）  特殊函数说明time.time() 获取当前时间戳time.localtime() 当前时间的struct_time形式time.ctime() 当前时间的字符串形式 strftime(…)  strftime(format[, t">
+<meta name="keywords" content="python,模块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python模块快速入门">
+<meta property="og:url" content="http://leichongxiang.github.io/2015/11/11/python_module/index.html">
+<meta property="og:site_name" content="Vike&#39;s Blog">
+<meta property="og:description" content="time通常有这几种方式来表示时间  时间戳  格式化的时间字符串 元组（struct_time）共九个元素，（年，月，日，时，分，秒，周，一年中的第几天，夏令时）  特殊函数说明time.time() 获取当前时间戳time.localtime() 当前时间的struct_time形式time.ctime() 当前时间的字符串形式 strftime(…)  strftime(format[, t">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-26T03:23:15.286Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python模块快速入门">
+<meta name="twitter:description" content="time通常有这几种方式来表示时间  时间戳  格式化的时间字符串 元组（struct_time）共九个元素，（年，月，日，时，分，秒，周，一年中的第几天，夏令时）  特殊函数说明time.time() 获取当前时间戳time.localtime() 当前时间的struct_time形式time.ctime() 当前时间的字符串形式 strftime(…)  strftime(format[, t">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> python模块快速入门 | Vike's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f77b20a6d14f2ad51ff2830ef9fbf36d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vike's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">人生苦短，我用python</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+		
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '6ywXKaDWo7MbiWzbPCVP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                python模块快速入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-11-11T18:50:35+08:00" content="2015-11-11">
+              2015-11-11
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/11/python_module/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/11/python_module/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2015/11/11/python_module/" class="leancloud_visitors" data-flag-title="python模块快速入门">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="time"><a href="#time" class="headerlink" title="time"></a>time</h1><p>通常有这几种方式来表示时间</p>
+<ul>
+<li>时间戳 </li>
+<li>格式化的时间字符串</li>
+<li>元组（struct_time）共九个元素，（年，月，日，时，分，秒，周，一年中的第几天，夏令时）</li>
+</ul>
+<h2 id="特殊函数说明"><a href="#特殊函数说明" class="headerlink" title="特殊函数说明"></a>特殊函数说明</h2><p>time.time() 获取当前时间戳<br>time.localtime() 当前时间的struct_time形式<br>time.ctime() 当前时间的字符串形式</p>
+<p>strftime(…)<br>  strftime(format[, tuple]) -&gt; string<br>  将指定的struct_time(默认为当前时间)，根据指定的格式化字符串输出</p>
+<p>clock()<br>  clock() -&gt; floating point number<br>  该函数有两个功能，<br>  在第一次调用的时候，返回的是程序运行的实际时间；<br>  以第二次之后的调用，返回的是自第一次调用后,到这次调用的时间间隔</p>
+<a id="more"></a>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> time</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.time()</span><br><span class="line"><span class="number">1447315221.7882249</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.localtime()</span><br><span class="line">time.struct_time(tm_year=<span class="number">2015</span>, tm_mon=<span class="number">11</span>, tm_mday=<span class="number">12</span>, tm_hour=<span class="number">16</span>, tm_min=<span class="number">0</span>, tm_sec=<span class="number">32</span>, tm_wday=<span class="number">3</span>, tm_yday=<span class="number">316</span>, tm_isdst=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>FORMAT=<span class="string">'%Y-%m-%d %H:%M:%S'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.strftime(FORMAT,time.localtime())</span><br><span class="line"><span class="string">'2015-11-12 16:09:34'</span></span><br></pre></td></tr></table></figure>
+<h1 id="random"><a href="#random" class="headerlink" title="random"></a>random</h1><p>Python中的random模块用于生成随机数</p>
+<h2 id="特殊函数解释"><a href="#特殊函数解释" class="headerlink" title="特殊函数解释"></a>特殊函数解释</h2><p>random.uniform的函数原型为：random.uniform(a, b)，用于生成一个指定范围内的随机符点数<br>random.randint()的函数原型为：random.randint(a, b)，用于生成一个指定范围内的整数<br>random.randrange的函数原型为：random.randrange([start], stop[, step])，从指定范围内，按指定基数递增的集合中 获取一个随机数。<br>random.choice从序列中获取一个随机元素。<br>random.shuffle的函数原型为：random.shuffle(x[, random])，用于将一个列表中的元素打乱<br>random.sample的函数原型为：random.sample(sequence, k)，从指定序列中随机获取指定长度的片断</p>
+<h2 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> random</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>random.uniform(<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line"><span class="number">13.632064644779806</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>random.randint(<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line"><span class="number">14</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>random.randrange(<span class="number">10</span>,<span class="number">20</span>,<span class="number">2</span>)</span><br><span class="line"><span class="number">18</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>random.randrange(<span class="number">10</span>,<span class="number">20</span>)  </span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>random.randrange(<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line"><span class="number">15</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>random.choice ( [<span class="string">'apple'</span>, <span class="string">'pear'</span>, <span class="string">'peach'</span>, <span class="string">'orange'</span>, <span class="string">'lemon'</span>] )</span><br><span class="line"><span class="string">'peach'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>items = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>random.shuffle(items) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>items</span><br><span class="line">[<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>random.sample(<span class="string">'abcdefghij'</span>,<span class="number">3</span>)</span><br><span class="line">[<span class="string">'e'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</span><br></pre></td></tr></table></figure>
+<h1 id="shelve"><a href="#shelve" class="headerlink" title="shelve"></a>shelve</h1><p>存储数据</p>
+<h2 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h2><p>通过网上的一个典范例子来理解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#python shelve</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Author : Hongten</span></span><br><span class="line"><span class="comment">#MailTo : hongtenzone@foxmail.com</span></span><br><span class="line"><span class="comment">#QQ     : 648719819</span></span><br><span class="line"><span class="comment">#Blog   : http://www.cnblogs.com/hongten</span></span><br><span class="line"><span class="comment">#Create : 2013-08-09</span></span><br><span class="line"><span class="comment">#Version: 1.0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> shelve</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">    python中的shelve模块，可以提供一些简单的数据操作</span></span><br><span class="line"><span class="string">    他和python中的dbm很相似。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    区别如下：</span></span><br><span class="line"><span class="string">    都是以键值对的形式保存数据，不过在shelve模块中，</span></span><br><span class="line"><span class="string">    key必须为字符串，而值可以是python所支持的数据</span></span><br><span class="line"><span class="string">    类型。在dbm模块中，键值对都必须为字符串类型。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    sh['a'] = 'a'</span></span><br><span class="line"><span class="string">    sh['c'] = [11, 234, 'a']</span></span><br><span class="line"><span class="string">    sh['t'] = ('1', '2', '3')</span></span><br><span class="line"><span class="string">    sh['d'] = &#123;'a':'2', 'name':'Hongte' &#125;</span></span><br><span class="line"><span class="string">    sh['b'] = 'b'</span></span><br><span class="line"><span class="string">    sh['i'] = 23</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    我们可以获取一个shelve对象</span></span><br><span class="line"><span class="string">    sh = shelve.open('c:\\test\\hongten.dat', 'c')</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    删除shelve对象中的某个键值对</span></span><br><span class="line"><span class="string">    del sh['d']</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    遍历所有数据</span></span><br><span class="line"><span class="string">    for item in sh.items():</span></span><br><span class="line"><span class="string">        print('键[&#123;&#125;] = 值[&#123;&#125;]'.format(item[0], sh[item[0]]))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    获取某个键值对</span></span><br><span class="line"><span class="string">    print(sh['a'])</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    关闭shelve对象:</span></span><br><span class="line"><span class="string">    sh.close()</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    ####################################################</span></span><br><span class="line"><span class="string">    ####        API中强调</span></span><br><span class="line"><span class="string">    Do not rely on the shelf being closed automatically;</span></span><br><span class="line"><span class="string">    always call close() explicitly when you don’t need</span></span><br><span class="line"><span class="string">    it any more, or use a with statement with</span></span><br><span class="line"><span class="string">    contextlib.closing().</span></span><br><span class="line"><span class="string">    ####################################################</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment">#global var</span></span><br><span class="line"><span class="comment">#是否显示日志信息</span></span><br><span class="line">SHOW_LOG = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_shelve</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''open -- file may get suffix added by low-level library'''</span></span><br><span class="line">    <span class="keyword">return</span> shelve.open(<span class="string">'c:\\test\\hongten.dat'</span>, <span class="string">'c'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(sh)</span>:</span></span><br><span class="line">    <span class="string">'''保存数据'''</span></span><br><span class="line">    <span class="keyword">if</span> sh <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        sh[<span class="string">'name'</span>] = <span class="string">'Hongten'</span></span><br><span class="line">        sh[<span class="string">'gender'</span>] = <span class="string">'M'</span></span><br><span class="line">        sh[<span class="string">'address'</span>] = &#123;<span class="string">'hometown'</span> : <span class="string">'Shuifu,Yunnan'</span>, <span class="string">'nowadd'</span> : <span class="string">'Guangzhou,Guangdong'</span>&#125;</span><br><span class="line">        sh[<span class="string">'phone'</span>] = (<span class="string">'13423****62'</span>, <span class="string">'18998****62'</span>)</span><br><span class="line">        sh[<span class="string">'age'</span>] = <span class="number">22</span></span><br><span class="line">        <span class="keyword">if</span> SHOW_LOG:</span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> sh.items():</span><br><span class="line">                print(<span class="string">'保存数据[&#123;&#125;] = [&#123;&#125;]'</span>.format(item[<span class="number">0</span>], sh[item[<span class="number">0</span>]]))</span><br><span class="line">        sh.close()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'the shelve object is None!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(sh)</span>:</span></span><br><span class="line">    <span class="string">'''更新数据'''</span></span><br><span class="line">    <span class="keyword">if</span> sh <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        sh[<span class="string">'name'</span>] = <span class="string">'Hongten'</span></span><br><span class="line">        sh[<span class="string">'hoby'</span>] = (<span class="string">'篮球'</span>, <span class="string">'羽毛球'</span>, <span class="string">'乒乓球'</span>, <span class="string">'游泳'</span>)</span><br><span class="line">        sh[<span class="string">'phone'</span>] = (<span class="string">'13423****62'</span>, <span class="string">'18998****62'</span>, <span class="string">'020-90909090'</span>)</span><br><span class="line">        sh[<span class="string">'age'</span>] = <span class="number">23</span></span><br><span class="line">        <span class="keyword">if</span> SHOW_LOG:</span><br><span class="line">            keys = (<span class="string">'name'</span>, <span class="string">'hoby'</span>, <span class="string">'phone'</span>, <span class="string">'age'</span>)</span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> keys:</span><br><span class="line">                print(<span class="string">'更新数据[&#123;&#125;] = [&#123;&#125;]'</span>.format(item, sh[item]))</span><br><span class="line">        sh.close()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'the shelve object is None!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(sh, key)</span>:</span></span><br><span class="line">    <span class="string">'''删除某个数据'''</span></span><br><span class="line">    <span class="keyword">if</span> sh <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> SHOW_LOG:</span><br><span class="line">            print(<span class="string">'删除[&#123;&#125;]的数据'</span>.format(key))</span><br><span class="line">        <span class="keyword">del</span> sh[key]</span><br><span class="line">        sh.close()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'the shelve object is None!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deleteall</span><span class="params">(sh)</span>:</span></span><br><span class="line">    <span class="string">'''删除所有数据'''</span></span><br><span class="line">    <span class="keyword">if</span> sh <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> sh.items():</span><br><span class="line">            <span class="keyword">if</span> SHOW_LOG:</span><br><span class="line">                print(<span class="string">'删除数据[&#123;&#125;] = [&#123;&#125;]'</span>.format(item[<span class="number">0</span>], sh[item[<span class="number">0</span>]]))</span><br><span class="line">            <span class="keyword">del</span> sh[item[<span class="number">0</span>]]</span><br><span class="line">        sh.close()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'the shelve object is None!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetchone</span><span class="params">(sh, key)</span>:</span></span><br><span class="line">    <span class="string">'''获取某个数据'''</span></span><br><span class="line">    <span class="keyword">if</span> sh <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        print(<span class="string">'获取[&#123;&#125;]的值：&#123;&#125;'</span>.format(key, sh[key]))</span><br><span class="line">        sh.close()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'the shelve object is None!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetchall</span><span class="params">(sh)</span>:</span></span><br><span class="line">    <span class="string">'''遍历所有数据'''</span></span><br><span class="line">    <span class="keyword">if</span> sh <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> sh.items():</span><br><span class="line">            print(<span class="string">'数据[&#123;&#125;] = [&#123;&#125;]'</span>.format(item[<span class="number">0</span>], sh[item[<span class="number">0</span>]]))</span><br><span class="line">        sh.close()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'the shelve object is None!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">###############################################################</span></span><br><span class="line"><span class="comment">###                测试           START</span></span><br><span class="line"><span class="comment">###############################################################</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''保存数据...'''</span></span><br><span class="line">    print(<span class="string">'保存数据...'</span>)</span><br><span class="line">    sh = get_shelve()</span><br><span class="line">    save(sh)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetchall_test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''遍历所有数据'''</span></span><br><span class="line">    print(<span class="string">'遍历所有数据...'</span>)</span><br><span class="line">    sh = get_shelve()</span><br><span class="line">    fetchall(sh)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetchone_test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''获取某个数据'''</span></span><br><span class="line">    print(<span class="string">'获取某个数据...'</span>)</span><br><span class="line">    sh = get_shelve()</span><br><span class="line">    key = <span class="string">'address'</span></span><br><span class="line">    fetchone(sh, key)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">delete_test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''删除某个数据'''</span></span><br><span class="line">    print(<span class="string">'删除某个数据...'</span>)</span><br><span class="line">    sh = get_shelve()</span><br><span class="line">    key = <span class="string">'hoby'</span></span><br><span class="line">    delete(sh, key)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''更新数据...'''</span></span><br><span class="line">    print(<span class="string">'更新数据...'</span>)</span><br><span class="line">    sh = get_shelve()</span><br><span class="line">    update(sh)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deleteall_test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">'''删除所有数据'''</span></span><br><span class="line">    print(<span class="string">'删除所有数据...'</span>)</span><br><span class="line">    sh = get_shelve()</span><br><span class="line">    deleteall(sh)</span><br><span class="line">    </span><br><span class="line"><span class="comment">###############################################################</span></span><br><span class="line"><span class="comment">###                测试           END</span></span><br><span class="line"><span class="comment">###############################################################</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> SHOW_LOG</span><br><span class="line">    SHOW_LOG = <span class="literal">True</span></span><br><span class="line">    print(<span class="string">'SHOW_LOG : &#123;&#125;'</span>.format(SHOW_LOG))</span><br><span class="line">    deleteall_test()</span><br><span class="line">    save_test()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    init()</span><br><span class="line">    print(<span class="string">'#'</span> * <span class="number">50</span>)</span><br><span class="line">    fetchall_test()</span><br><span class="line">    print(<span class="string">'#'</span> * <span class="number">50</span>)</span><br><span class="line">    update_test()</span><br><span class="line">    print(<span class="string">'#'</span> * <span class="number">50</span>)</span><br><span class="line">    fetchall_test()</span><br><span class="line">    print(<span class="string">'#'</span> * <span class="number">50</span>)</span><br><span class="line">    fetchone_test()</span><br><span class="line">    print(<span class="string">'#'</span> * <span class="number">50</span>)</span><br><span class="line">    delete_test()</span><br><span class="line">    print(<span class="string">'#'</span> * <span class="number">50</span>)</span><br><span class="line">    fetchall_test()</span><br><span class="line">    print(<span class="string">'#'</span> * <span class="number">50</span>)</span><br><span class="line">    deleteall_test()</span><br><span class="line">    print(<span class="string">'#'</span> * <span class="number">50</span>)</span><br><span class="line">    fetchall_test()</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h1 id="re"><a href="#re" class="headerlink" title="re"></a>re</h1><p>重点介绍re模块</p>
+<h2 id="re-match"><a href="#re-match" class="headerlink" title="re.match"></a>re.match</h2><p>re.match 尝试<code>从字符串的开始匹配</code>一个模式，如：下面的例子匹配第一个单词。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>text = <span class="string">"JGood is a handsome boy, he is cool, clever, and so on..."</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m = re.match(<span class="string">r"(\w+)\s"</span>, text)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">if</span> m:</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">print</span> m.group(<span class="number">0</span>), <span class="string">'\n'</span>, m.group(<span class="number">1</span>)</span><br><span class="line"><span class="meta">... </span><span class="keyword">else</span>:    </span><br><span class="line"><span class="meta">... </span>    <span class="keyword">print</span> <span class="string">'not match'</span></span><br><span class="line"><span class="meta">... </span></span><br><span class="line">JGood  </span><br><span class="line">JGood</span><br></pre></td></tr></table></figure>
+<h2 id="re-search"><a href="#re-search" class="headerlink" title="re.search"></a>re.search</h2><p>re.search函数会在字符串内查找模式匹配,只到找到第一个匹配然后返回，如果字符串没有匹配，则返回None。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>text = <span class="string">"JGood is a handsome boy, he is cool, clever, and so on..."</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>m = re.search(<span class="string">r'\shan(ds)ome\s'</span>, text)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">if</span> m:</span><br><span class="line"><span class="meta">... </span>    <span class="keyword">print</span> m.group(<span class="number">0</span>), m.group(<span class="number">1</span>)</span><br><span class="line"><span class="meta">... </span><span class="keyword">else</span>:    </span><br><span class="line"><span class="meta">... </span>    <span class="keyword">print</span> <span class="string">'not match'</span></span><br><span class="line"><span class="meta">... </span></span><br><span class="line"> handsome  ds</span><br></pre></td></tr></table></figure></p>
+<p><code>re.match与re.search的区别</code>：re.match只匹配字符串的开始，如果字符串开始不符合正则表达式，则匹配失败，函数返回None；而re.search匹配整个字符串，直到找到一个匹配。</p>
+<h2 id="re-sub"><a href="#re-sub" class="headerlink" title="re.sub"></a>re.sub</h2><p>re.sub用于替换字符串中的匹配项。下面一个例子将字符串中的空格 ‘ ‘ 替换成 ‘-‘ :<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>text = <span class="string">"JGood is a handsome boy, he is cool, clever, and so on..."</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> re.sub(<span class="string">r'\s+'</span>, <span class="string">'-'</span>, text) </span><br><span class="line">JGood-<span class="keyword">is</span>-a-handsome-boy,-he-<span class="keyword">is</span>-cool,-clever,-<span class="keyword">and</span>-so-on...</span><br></pre></td></tr></table></figure></p>
+<h2 id="re-split"><a href="#re-split" class="headerlink" title="re.split"></a>re.split</h2><p>可以使用re.split来分割字符串<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>re.split(<span class="string">r'\s+'</span>, text)</span><br><span class="line">[<span class="string">'JGood'</span>, <span class="string">'is'</span>, <span class="string">'a'</span>, <span class="string">'handsome'</span>, <span class="string">'boy,'</span>, <span class="string">'he'</span>, <span class="string">'is'</span>, <span class="string">'cool,'</span>, <span class="string">'clever,'</span>, <span class="string">'and'</span>, <span class="string">'so'</span>, <span class="string">'on...'</span>]</span><br></pre></td></tr></table></figure></p>
+<h2 id="re-findall"><a href="#re-findall" class="headerlink" title="re.findall"></a>re.findall</h2><p>re.findall可以获取字符串中所有匹配的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>re.findall(<span class="string">r'\w*oo\w*'</span>, text)</span><br><span class="line">[<span class="string">'JGood'</span>, <span class="string">'cool'</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="re-compile"><a href="#re-compile" class="headerlink" title="re.compile"></a>re.compile</h2><p>可以把正则表达式编译成一个正则表达式对象。可以把那些经常使用的正则表达式编译成正则表达式对象，这样可以提高一定的效率。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> re</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>text = <span class="string">"JGood is a handsome boy, he is cool, clever, and so on..."</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>regex = re.compile(<span class="string">r'\w*oo\w*'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> regex.findall(text)   <span class="comment">#查找所有包含'oo'的单词</span></span><br><span class="line">[<span class="string">'JGood'</span>, <span class="string">'cool'</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> regex.sub(<span class="keyword">lambda</span> m: <span class="string">'['</span> + m.group(<span class="number">0</span>) + <span class="string">']'</span>, text) <span class="comment">#将字符串中含有'oo'的单词用[]括起来。</span></span><br><span class="line">[JGood] <span class="keyword">is</span> a handsome boy, he <span class="keyword">is</span> [cool], clever, <span class="keyword">and</span> so on...</span><br></pre></td></tr></table></figure></p>
+<h1 id="fileinput"><a href="#fileinput" class="headerlink" title="fileinput"></a>fileinput</h1><p>用fileinput 对文件进行循环遍历，格式化输出，查找、替换等操作，非常方便.</p>
+<p>fileinput模块可以对一个或多个文件中的内容进行迭代、遍历等操作。<br>该模块的input()函数有点类似文件readlines()方法，区别在于前者是一个迭代对象，需要用for循环迭代，后者是一次性读取所有行。</p>
+<h2 id="模块说明"><a href="#模块说明" class="headerlink" title="模块说明"></a>模块说明</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fileinput.input (<span class="attribute">files</span>=None, <span class="attribute">inplace</span>=<span class="literal">False</span>, <span class="attribute">backup</span>=<span class="string">''</span>, <span class="attribute">bufsize</span>=0, <span class="attribute">mode</span>=<span class="string">'r'</span>, <span class="attribute">openhook</span>=None)</span><br><span class="line">files:                  #文件的路径列表，默认是stdin方式，多文件[<span class="string">'1.txt'</span>,<span class="string">'2.txt'</span>,<span class="built_in">..</span>.]</span><br><span class="line">inplace:                #是否将标准输出的结果写回文件，默认不取代</span><br><span class="line">backup:                 #备份文件的扩展名，只指定扩展名，如.bak。如果该文件的备份文件已存在，则会自动覆盖。</span><br><span class="line">bufsize:                #缓冲区大小，默认为0，如果文件很大，可以修改此参数，一般默认即可</span><br><span class="line">mode:                   #读写模式，默认为只读</span><br><span class="line">openhook:               #该钩子用于控制打开的所有文件，比如说编码方式等;</span><br></pre></td></tr></table></figure>
+<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fileinput.input()       <span class="comment">#返回能够用于for循环遍历的对象</span></span><br><span class="line">fileinput.filename()    <span class="comment">#返回当前文件的名称</span></span><br><span class="line">fileinput.lineno()      <span class="comment">#返回当前已经读取的行的数量（或者序号）</span></span><br><span class="line">fileinput.filelineno()  <span class="comment">#返回当前读取的行的行号</span></span><br><span class="line">fileinput.isfirstline() <span class="comment">#检查当前行是否是文件的第一行</span></span><br><span class="line">fileinput.isstdin()     <span class="comment">#判断最后一行是否从stdin中读取</span></span><br><span class="line">fileinput.<span class="built_in">close</span>()       <span class="comment">#关闭队列</span></span><br></pre></td></tr></table></figure>
+<h2 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h2><p>利用fileinput及re做分析: 提取符合条件的电话号码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#---样本文件: phone.txt---</span></span><br><span class="line"><span class="number">010</span><span class="number">-110</span><span class="number">-12345</span></span><br><span class="line"><span class="number">800</span><span class="number">-333</span><span class="number">-1234</span></span><br><span class="line"><span class="number">010</span><span class="number">-99999999</span></span><br><span class="line"><span class="number">05718888888</span></span><br><span class="line"><span class="number">021</span><span class="number">-88888888</span></span><br><span class="line"><span class="comment">#---测试脚本: test.py---</span></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> fileinput</span><br><span class="line">pattern = <span class="string">'[010|021]-\d&#123;8&#125;'</span>  <span class="comment">#提取区号为010或021电话号码，格式:010-12345678</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fileinput.input(<span class="string">'phone.txt'</span>):</span><br><span class="line">  <span class="keyword">if</span> re.search(pattern,line):</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'='</span> * <span class="number">50</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Filename:'</span>+ fileinput.filename()+<span class="string">' | Line Number:'</span>+str(fileinput.lineno())+<span class="string">' | '</span>+line,</span><br><span class="line"><span class="comment">#---输出结果:---</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span></span><br><span class="line">==================================================</span><br><span class="line">Filename:phone.txt | Line Number:<span class="number">3</span> | <span class="number">010</span><span class="number">-99999999</span></span><br><span class="line">==================================================</span><br><span class="line">Filename:phone.txt | Line Number:<span class="number">5</span> | <span class="number">021</span><span class="number">-88888888</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag">#python</a>
+          
+            <a href="/tags/模块/" rel="tag">#模块</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/13/python_optparser/" rel="prev">
+                <i class="fa fa-chevron-left"></i> optparser
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/10/python_魔法方法/" rel="next">
+                python的魔法方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2015/11/11/python_module/" data-title="python模块快速入门" data-url="http://leichongxiang.github.io/2015/11/11/python_module/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://ww3.sinaimg.cn/large/8e712944jw1exen95p8hej208c08cq4u.jpg" alt="Vike Lee" itemprop="image">
+          <p class="site-author-name" itemprop="name">Vike Lee</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">记录时间</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+<! -- 添加微信图标 -->
+    
+<! -- 完成 -->
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/leichongxiang/" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://macshuo.com/" target="_blank">MacTalk</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#time"><span class="nav-number">1.</span> <span class="nav-text">time</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊函数说明"><span class="nav-number">1.1.</span> <span class="nav-text">特殊函数说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">1.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#random"><span class="nav-number">2.</span> <span class="nav-text">random</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊函数解释"><span class="nav-number">2.1.</span> <span class="nav-text">特殊函数解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例-1"><span class="nav-number">2.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shelve"><span class="nav-number">3.</span> <span class="nav-text">shelve</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实例-2"><span class="nav-number">3.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#re"><span class="nav-number">4.</span> <span class="nav-text">re</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#re-match"><span class="nav-number">4.1.</span> <span class="nav-text">re.match</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re-search"><span class="nav-number">4.2.</span> <span class="nav-text">re.search</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re-sub"><span class="nav-number">4.3.</span> <span class="nav-text">re.sub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re-split"><span class="nav-number">4.4.</span> <span class="nav-text">re.split</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re-findall"><span class="nav-number">4.5.</span> <span class="nav-text">re.findall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re-compile"><span class="nav-number">4.6.</span> <span class="nav-text">re.compile</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fileinput"><span class="nav-number">5.</span> <span class="nav-text">fileinput</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模块说明"><span class="nav-number">5.1.</span> <span class="nav-text">模块说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用函数"><span class="nav-number">5.2.</span> <span class="nav-text">常用函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例-3"><span class="nav-number">5.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vike Lee</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"leicx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+  
+    	 <!-- custom analytics part  --> 
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("mWA1nE7gcYVszHzU3BxSMc1a-gzGzoHsz", "4zH2GdGce6gOiDRfhcomjPBU");</script>
+<script>
+function showTime(Counter) {
+  var query = new AV.Query(Counter);
+  $(".leancloud_visitors").each(function() {
+    var url = $(this).attr("id").trim();
+    query.equalTo("url", url);
+    query.find({
+      success: function(results) {
+        if (results.length == 0) {
+          var content = $(document.getElementById(url)).text() + ': 0';
+          $(document.getElementById(url)).text(content);
+          return;
+        }
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+          $(document.getElementById(url)).text(content);
+        }
+      },
+      error: function(object, error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+
+  });
+}
+
+function addCount(Counter) {
+  var Counter = AV.Object.extend("Counter");
+  url = $(".leancloud_visitors").attr('id').trim();
+  title = $(".leancloud_visitors").attr('data-flag-title').trim();
+  var query = new AV.Query(Counter);
+  query.equalTo("url", url);
+  query.find({
+    success: function(results) {
+      if (results.length > 0) {
+        var counter = results[0];
+        counter.fetchWhenSave(true);
+        counter.increment("time");
+        counter.save(null, {
+          success: function(counter) {
+            var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(counter, error) {
+            console.log('Failed to save Visitor num, with error message: ' + error.message);
+          }
+        });
+      } else {
+        var newcounter = new Counter();
+        newcounter.set("title", title);
+        newcounter.set("url", url);
+        newcounter.set("time", 1);
+        newcounter.save(null, {
+          success: function(newcounter) {
+              console.log("newcounter.get('time')="+newcounter.get('time'));
+            var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(newcounter, error) {
+            console.log('Failed to create');
+          }
+        });
+      }
+    },
+    error: function(error) {
+      console.log('Error:' + error.code + " " + error.message);
+    }
+  });
+}
+$(function() {
+  var Counter = AV.Object.extend("Counter");
+  if ($('.leancloud_visitors').length == 1) {
+    addCount(Counter);
+  } else if ($('.post-title-link').length > 1) {
+    showTime(Counter);
+  }
+}); 
+</script>
+
+  
+</body>
+</html>

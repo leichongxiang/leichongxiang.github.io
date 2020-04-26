@@ -1,0 +1,968 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.9.0">
+  
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+  
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0">
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2">
+
+
+    <meta name="description" content="记录时间">
+
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
+
+
+<meta name="description" content="1.简介 IPMI是智能型平台管理接口（Intelligent Platform Management Interface）的缩写，用户可以利用IPMI监视服务器的物理健康特征，如温度、电压、风扇工作状态、电源状态等。Ipmi 最大的优势在于它是独立于 CPU BIOS 和 OS 的，所以用户无论在开机还是关机的状态下，只要接通电源就可以实现对服务器的监控。Ipmi 是一种规范的标准，其中最重要的">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ipmitool">
+<meta property="og:url" content="http://leichongxiang.github.io/2016/05/04/linux_ipmi/index.html">
+<meta property="og:site_name" content="Vike&#39;s Blog">
+<meta property="og:description" content="1.简介 IPMI是智能型平台管理接口（Intelligent Platform Management Interface）的缩写，用户可以利用IPMI监视服务器的物理健康特征，如温度、电压、风扇工作状态、电源状态等。Ipmi 最大的优势在于它是独立于 CPU BIOS 和 OS 的，所以用户无论在开机还是关机的状态下，只要接通电源就可以实现对服务器的监控。Ipmi 是一种规范的标准，其中最重要的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/bmc.png">
+<meta property="og:image" content="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/01.png">
+<meta property="og:image" content="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/02.jpg">
+<meta property="og:image" content="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/03.jpg">
+<meta property="og:updated_time" content="2020-04-26T03:23:15.316Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ipmitool">
+<meta name="twitter:description" content="1.简介 IPMI是智能型平台管理接口（Intelligent Platform Management Interface）的缩写，用户可以利用IPMI监视服务器的物理健康特征，如温度、电压、风扇工作状态、电源状态等。Ipmi 最大的优势在于它是独立于 CPU BIOS 和 OS 的，所以用户无论在开机还是关机的状态下，只要接通电源就可以实现对服务器的监控。Ipmi 是一种规范的标准，其中最重要的">
+<meta name="twitter:image" content="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/bmc.png">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+
+
+  <title> ipmitool | Vike's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f77b20a6d14f2ad51ff2830ef9fbf36d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vike's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">人生苦短，我用python</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+		
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+		
+      
+
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input">
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '6ywXKaDWo7MbiWzbPCVP','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ipmitool
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-05-04T17:30:35+08:00" content="2016-05-04">
+              2016-05-04
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/04/linux_ipmi/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/linux_ipmi/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2016/05/04/linux_ipmi/" class="leancloud_visitors" data-flag-title="ipmitool">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p> IPMI是智能型平台管理接口（Intelligent Platform Management Interface）的缩写，用户可以利用IPMI监视服务器的物理健康特征，如温度、电压、风扇工作状态、电源状态等。<br>Ipmi 最大的优势在于它是独立于 CPU BIOS 和 OS 的，所以用户无论在开机还是关机的状态下，只要接通电源就可以实现对服务器的监控。Ipmi 是一种规范的标准，其中最重要的物理部件就是BMC(Baseboard Management Controller) 一种嵌入式管理微控制器，它相当于整个平台管理的“大脑”，通过它 ipmi 可以监控各个传感器的数据并记录各种事件的日志。</p>
+<p>在工作时，所有的IPMI功能都是向BMC发送命令来完成的，命令使用IPMI规范中规定的指令，BMC接收并在系统事件日志中记录事件消息，维护描述系统中传感器情况的传感器数据记录。</p>
+<p>当需要对系统 文本控制台进行远程访问时，Serial Over LAN (SOL) 功能将非常有用。SOL 通过 IPMI 会话重定向本地串行接口，允许远程访问 Windows 的紧急事件管理控制台 (EMS) 特殊管理控制台 (SAC)，或访问 LINUX 串行控制台。这个过程的步骤是 IPMI 固件截取数据，然后通过局域网重新发送定向到串行端口的信息。 这就提供了远程查看 BOOT、OS 加载器或紧急事件管理控制台以诊断并修复服务器相关问题的标准方法，而无需考虑供应商。它允许在引导阶段配置各种组件。</p>
+<p><img src="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/bmc.png" alt="bmc"></p>
+<a id="more"></a>
+<h2 id="2-服务器硬件本身提供对-ipmi-的支持-（硬件）"><a href="#2-服务器硬件本身提供对-ipmi-的支持-（硬件）" class="headerlink" title="2.服务器硬件本身提供对 ipmi 的支持 （硬件）"></a>2.服务器硬件本身提供对 ipmi 的支持 （硬件）</h2><pre><code>目前惠普、戴尔和 NEC 等大多数厂商的服务器都支持 IPMI 2.0，但并不是所有服务器都支持，所以应该先通过产品手册或在 BIOS 中确定服务器是否支持 ipmi，也就是说服务器在主板上要具有 BMC 等嵌入式的管理微控制器。
+</code></pre><p>这里拿DELL R710为例:<br>1) 启动服务器 使用ctrl+e 进去ipmi server mangement configuration</p>
+<p>2)设置IPMI Over LAN 为On<br><img src="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/01.png" alt="R710"></p>
+<p>3)进入IPMI Parameters 设置服务器ip/子网掩码 (也可以进去系统通过Ipmitool管理软件设置)<br><img src="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/02.jpg" alt="ipmi-2"></p>
+<p>4）进入LAN User Confuguration 设置用户名 密码 （同样也可以进去系统通过Ipmitool管理软件设置）<br><img src="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/03.jpg" alt="ipmi-3"></p>
+<p>安装ipmi：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum install ipmi</span><br><span class="line">或者源码</span><br><span class="line">wget http://jaist.dl.sourceforge.net/project/ipmitool/ipmitool/1.8.17/ipmitool-1.8.17.tar.bz2</span><br><span class="line"></span><br><span class="line">启动</span><br><span class="line">service ipmi start</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-常用的管理命令包括："><a href="#3-常用的管理命令包括：" class="headerlink" title="3.常用的管理命令包括："></a>3.常用的管理命令包括：</h2><h3 id="3-1-系统管理命令"><a href="#3-1-系统管理命令" class="headerlink" title="3.1.系统管理命令"></a>3.1.系统管理命令</h3><ol>
+<li><p>查看设备信息<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin chassis status</code></p>
+</li>
+<li><p>查看用户<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin user list</code></p>
+</li>
+<li><p>增加用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin user <span class="built_in">set</span> name 3 test1</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin user list</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin user <span class="built_in">set</span> password 3 test1</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin user priv 3 20</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin user list</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U test1 -P test1 user list</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>disable/enable用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin user <span class="built_in">disable</span> 3</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U test1 -P test1 user list</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin user <span class="built_in">enable</span> 3</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U test1 -P test1 user list</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务器当前开电状态<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin power status</code></p>
+</li>
+<li><p>服务器的开机，关机，reset和power cycle</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin power on</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin power off</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin power cycle</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin power reset</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务器的80 Port当前状态<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin raw 0x30 0xB2</code></p>
+</li>
+<li><p>查看服务器的传感器状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">所有传感器状态详细信息：</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin sensor</span><br><span class="line">传感器SDR summary信息：</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin sdr info</span><br><span class="line">传感器SDR 列表信息：</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin sdr list</span><br><span class="line">FRU传感器SDR 列表信息：</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin sdr list fru</span><br><span class="line">下载RAW SDR信息到文件：</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin sdr dump sdr.raw</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务器的FRU信息</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin fru</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin fru print</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-2-BMC自身配置命令"><a href="#3-2-BMC自身配置命令" class="headerlink" title="3.2.BMC自身配置命令"></a>3.2.BMC自身配置命令</h3><ol>
+<li><p>查看BMC的信息<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin mc info</code></p>
+</li>
+<li><p>查看BMC的LAN信息<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin lan print 1</code><br>（一般channel 1为LAN）</p>
+</li>
+<li><p>修改BMC的MAC信息（只能在本地以root用户做，因为在此之前没IP）</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">enable</span> BMC MAC <span class="builtin-name">SET</span> mode:</span><br><span class="line">/usr/bin/ipmitool<span class="built_in"> raw </span>0x0c 0x01 0x01 0xc2 0x00</span><br><span class="line">Write MAC <span class="keyword">to</span> BMC (BMC <span class="attribute">MAC</span>=d0:27:88:a4:e4:37):</span><br><span class="line">/usr/bin/ipmitool<span class="built_in"> raw </span>0x0c 0x01 0x01 0x05 0xD0 0x27 0x88 0xA4 0xE4 0x37</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改BMC的网络为自动从DHCP获得IP地址，而不是静态的（只能在本地以root用户做，因为在此之前没IP）</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">确定channel 1为LAN:</span><br><span class="line">/usr/bin/ipmitool<span class="built_in"> lan </span><span class="builtin-name">print</span> 1</span><br><span class="line">设定channel 1从DHCP获得IP:</span><br><span class="line">/usr/bin/ipmitool<span class="built_in"> lan </span><span class="builtin-name">set</span> 1 ipsrc dhcp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启BMC自己（不是服务器）（小心BMC挂掉hang）<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin mc reset</code></p>
+</li>
+</ol>
+<h3 id="3-3-SOL和通过IPMItool访问系统终端-Serial-Over-LAN"><a href="#3-3-SOL和通过IPMItool访问系统终端-Serial-Over-LAN" class="headerlink" title="3.3.SOL和通过IPMItool访问系统终端 (Serial-Over-LAN)"></a>3.3.SOL和通过IPMItool访问系统终端 (Serial-Over-LAN)</h3><ol>
+<li><p>查看当前的SOL summary信息<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin sol info 1</code></p>
+</li>
+<li><p>修改SOL配置信息</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查看所有可能的配置</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sol set</span><br><span class="line">修改波特率配置</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sol set non-volatile-bit-rate <span class="number">38.4</span> <span class="number">1</span></span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sol set volatile-bit-rate <span class="number">38.4</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启远程终端</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sol activate</span><br><span class="line">(可以使用~.退出,~?显示帮助信息)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-4-Watchdog配置命令"><a href="#3-4-Watchdog配置命令" class="headerlink" title="3.4.Watchdog配置命令"></a>3.4.Watchdog配置命令</h3><ol>
+<li><p>查看当前的watchdog信息<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin mc watchdog get</code></p>
+</li>
+<li><p>设置，开启一个watchdog</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin mc<span class="built_in"> watchdog </span>get</span><br><span class="line">设置一个OS WDT的watchdog, 超时时间为60秒</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin<span class="built_in"> raw </span>0x06 0x24 0x04 0x01 0x00 0x10 0x58 0x2</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin mc<span class="built_in"> watchdog </span>get</span><br><span class="line">开启该watchdog</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin mc<span class="built_in"> watchdog </span>reset</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin mc<span class="built_in"> watchdog </span>get</span><br><span class="line"></span><br><span class="line">禁止该watchdog的动作(Hard reset-&gt; <span class="literal">no</span> action)</span><br><span class="line"></span><br><span class="line">/usr/bin/ipmitool -I lanplus -H 10.32.228.187 -U sysadmin -P admin<span class="built_in"> raw </span>0x06 0x24 0x04 0x00 0x00 0x10 0x58 0xFF</span><br><span class="line"></span><br><span class="line">上面的命令把时间改为非常大，提示第1个0x00表示没有动作，0x04表示是SMS/OS的watchdog, 0xFF58是超时的时间，单位为100ms。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-5-SEL命令"><a href="#3-5-SEL命令" class="headerlink" title="3.5.SEL命令"></a>3.5.SEL命令</h3><ol>
+<li><p>查看当前的SEL summary信息</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sel</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sel info</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列示所有SEL记录详细信息</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sel <span class="type">list</span></span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sel <span class="type">list</span> <span class="number">10</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除指定的SEL记录<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin sel delete 1</code></p>
+</li>
+<li><p>清除所有的SEL记录<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin sel clear</code></p>
+</li>
+<li><p>获取和修改SEL当前时钟</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sel time get</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin sel time set <span class="string">"04/24/2012 18:44:44"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以RAW方式查看制定的SEL数据</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin raw <span class="number">0xa</span> <span class="number">0x43</span> <span class="number">0</span> <span class="number">0</span> <span class="number">111</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0xFF</span></span><br><span class="line"></span><br><span class="line"><span class="number">0xa</span> <span class="number">0x43</span>为Get SEL Entry Command； <span class="number">0</span> <span class="number">0</span> 保留值，<span class="number">111</span> <span class="number">0</span> 表示取第<span class="number">112</span>条记录（从<span class="number">0</span>开始），<span class="number">0</span> 为offset，保留；<span class="number">0xFF</span>为读取的字节数，FF表示取整条记录</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-6-PEF命令"><a href="#3-6-PEF命令" class="headerlink" title="3.6.PEF命令"></a>3.6.PEF命令</h3><ol>
+<li><p>查看BMC当前的PEF 支持信息</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin pef</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin pef info</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看BMC当前的PEF 配置表信息（配置表也是可以修改的）<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin pef list</code></p>
+</li>
+<li><p>查看BMC当前的PEF 状态信息(BMC处理的最后一条SEL记录)<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin pef status</code></p>
+</li>
+<li><p>修改BMC当前的PEF 配置表</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">查看当前的PEF 配置表</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin pef <span class="type">list</span></span><br><span class="line">假定我们要删除下面这条配置项</span><br><span class="line"><span class="number">1</span> | active, pre-configured | <span class="number">0x11</span> | Voltage | Any | None | OEM | Any | Power-off,OEM-defined</span><br><span class="line">获取该配置项的配置信息</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin raw <span class="number">0x04</span> <span class="number">0x13</span> <span class="number">0x07</span> <span class="number">0x01</span> <span class="number">0x00</span></span><br><span class="line"><span class="number">11</span> <span class="number">01</span> <span class="number">40</span></span><br><span class="line">修改该配置项的配置信息</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin raw <span class="number">0x04</span> <span class="number">0x12</span> <span class="number">0x07</span> <span class="number">0x01</span> <span class="number">0x40</span></span><br><span class="line">检查修改后的PEF配置表</span><br><span class="line">/usr/bin/ipmitool -I lanplus -H <span class="number">10.88</span><span class="number">.1</span><span class="number">.181</span> -U sysadmin -P admin pef <span class="type">list</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-7-特殊命令"><a href="#3-7-特殊命令" class="headerlink" title="3.7.特殊命令"></a>3.7.特殊命令</h3><ol>
+<li><p>查看ipmi服务器端当前活动的session会话<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin session info active</code></p>
+</li>
+<li><p>执行一个保存在文件中的所有ipmitool命令<br><code>/usr/bin/ipmitool -I lanplus -H 10.88.1.181 -U sysadmin -P admin exec myipmi.cmd</code></p>
+</li>
+</ol>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag">#linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/04/hexo_coding/" rel="prev">
+                <i class="fa fa-chevron-left"></i> hexo迁移从gitcafe到coding-net
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/14/linux_ss/" rel="next">
+                ss命令替代netstat <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2016/05/04/linux_ipmi/" data-title="ipmitool" data-url="http://leichongxiang.github.io/2016/05/04/linux_ipmi/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="http://ww3.sinaimg.cn/large/8e712944jw1exen95p8hej208c08cq4u.jpg" alt="Vike Lee" itemprop="image">
+          <p class="site-author-name" itemprop="name">Vike Lee</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">记录时间</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+<! -- 添加微信图标 -->
+    
+<! -- 完成 -->
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/leichongxiang/" target="_blank">
+                  <i class="fa fa-github"></i> github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons">
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">友情链接</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://macshuo.com/" target="_blank">MacTalk</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-服务器硬件本身提供对-ipmi-的支持-（硬件）"><span class="nav-number">2.</span> <span class="nav-text">2.服务器硬件本身提供对 ipmi 的支持 （硬件）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-常用的管理命令包括："><span class="nav-number">3.</span> <span class="nav-text">3.常用的管理命令包括：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-系统管理命令"><span class="nav-number">3.1.</span> <span class="nav-text">3.1.系统管理命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-BMC自身配置命令"><span class="nav-number">3.2.</span> <span class="nav-text">3.2.BMC自身配置命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-SOL和通过IPMItool访问系统终端-Serial-Over-LAN"><span class="nav-number">3.3.</span> <span class="nav-text">3.3.SOL和通过IPMItool访问系统终端 (Serial-Over-LAN)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Watchdog配置命令"><span class="nav-number">3.4.</span> <span class="nav-text">3.4.Watchdog配置命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-SEL命令"><span class="nav-number">3.5.</span> <span class="nav-text">3.5.SEL命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-PEF命令"><span class="nav-number">3.6.</span> <span class="nav-text">3.6.PEF命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-特殊命令"><span class="nav-number">3.7.</span> <span class="nav-text">3.7.特殊命令</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Vike Lee</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"leicx"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+  
+    	 <!-- custom analytics part  --> 
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("mWA1nE7gcYVszHzU3BxSMc1a-gzGzoHsz", "4zH2GdGce6gOiDRfhcomjPBU");</script>
+<script>
+function showTime(Counter) {
+  var query = new AV.Query(Counter);
+  $(".leancloud_visitors").each(function() {
+    var url = $(this).attr("id").trim();
+    query.equalTo("url", url);
+    query.find({
+      success: function(results) {
+        if (results.length == 0) {
+          var content = $(document.getElementById(url)).text() + ': 0';
+          $(document.getElementById(url)).text(content);
+          return;
+        }
+        for (var i = 0; i < results.length; i++) {
+          var object = results[i];
+          var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+          $(document.getElementById(url)).text(content);
+        }
+      },
+      error: function(object, error) {
+        console.log("Error: " + error.code + " " + error.message);
+      }
+    });
+
+  });
+}
+
+function addCount(Counter) {
+  var Counter = AV.Object.extend("Counter");
+  url = $(".leancloud_visitors").attr('id').trim();
+  title = $(".leancloud_visitors").attr('data-flag-title').trim();
+  var query = new AV.Query(Counter);
+  query.equalTo("url", url);
+  query.find({
+    success: function(results) {
+      if (results.length > 0) {
+        var counter = results[0];
+        counter.fetchWhenSave(true);
+        counter.increment("time");
+        counter.save(null, {
+          success: function(counter) {
+            var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(counter, error) {
+            console.log('Failed to save Visitor num, with error message: ' + error.message);
+          }
+        });
+      } else {
+        var newcounter = new Counter();
+        newcounter.set("title", title);
+        newcounter.set("url", url);
+        newcounter.set("time", 1);
+        newcounter.save(null, {
+          success: function(newcounter) {
+              console.log("newcounter.get('time')="+newcounter.get('time'));
+            var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+            $(document.getElementById(url)).text(content);
+          },
+          error: function(newcounter, error) {
+            console.log('Failed to create');
+          }
+        });
+      }
+    },
+    error: function(error) {
+      console.log('Error:' + error.code + " " + error.message);
+    }
+  });
+}
+$(function() {
+  var Counter = AV.Object.extend("Counter");
+  if ($('.leancloud_visitors').length == 1) {
+    addCount(Counter);
+  } else if ($('.post-title-link').length > 1) {
+    showTime(Counter);
+  }
+}); 
+</script>
+
+  
+</body>
+</html>
