@@ -228,8 +228,8 @@
             
             
               
-                <a class="post-title-link" href="/2016/05/04/linux_ipmi/" itemprop="url">
-                  ipmitool
+                <a class="post-title-link" href="/2016/05/04/hexo_coding/" itemprop="url">
+                  hexo迁移从gitcafe到coding-net
                 </a>
               
             
@@ -249,8 +249,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo</span>
                   </a>
                 </span>
 
@@ -265,8 +265,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/04/linux_ipmi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/linux_ipmi/" itemprop="commentsCount"></span>
+                <a href="/2016/05/04/hexo_coding/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/hexo_coding/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -275,7 +275,7 @@
           
           
 	  
-	     <span id="/2016/05/04/linux_ipmi/" class="leancloud_visitors" data-flag-title="ipmitool">
+	     <span id="/2016/05/04/hexo_coding/" class="leancloud_visitors" data-flag-title="hexo迁移从gitcafe到coding-net">
 	     &nbsp; | &nbsp; 阅读次数
 	     </span>
 	  
@@ -291,12 +291,9 @@
 
       
         
-          <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p> IPMI是智能型平台管理接口（Intelligent Platform Management Interface）的缩写，用户可以利用IPMI监视服务器的物理健康特征，如温度、电压、风扇工作状态、电源状态等。<br>Ipmi 最大的优势在于它是独立于 CPU BIOS 和 OS 的，所以用户无论在开机还是关机的状态下，只要接通电源就可以实现对服务器的监控。Ipmi 是一种规范的标准，其中最重要的物理部件就是BMC(Baseboard Management Controller) 一种嵌入式管理微控制器，它相当于整个平台管理的“大脑”，通过它 ipmi 可以监控各个传感器的数据并记录各种事件的日志。</p>
-<p>在工作时，所有的IPMI功能都是向BMC发送命令来完成的，命令使用IPMI规范中规定的指令，BMC接收并在系统事件日志中记录事件消息，维护描述系统中传感器情况的传感器数据记录。</p>
-<p>当需要对系统 文本控制台进行远程访问时，Serial Over LAN (SOL) 功能将非常有用。SOL 通过 IPMI 会话重定向本地串行接口，允许远程访问 Windows 的紧急事件管理控制台 (EMS) 特殊管理控制台 (SAC)，或访问 LINUX 串行控制台。这个过程的步骤是 IPMI 固件截取数据，然后通过局域网重新发送定向到串行端口的信息。 这就提供了远程查看 BOOT、OS 加载器或紧急事件管理控制台以诊断并修复服务器相关问题的标准方法，而无需考虑供应商。它允许在引导阶段配置各种组件。</p>
-<p><img src="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/bmc.png" alt="bmc"></p>
+          <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><div style="border-radius:10px; width: 90%; border:10px solid #AFEEEE;font-size:16px;align=left;  background:#AFEEEE">2016.05.10更新:部署到coding时，如果使用pages的话，项目名称必须与coding的用户名一致，但是演示并没有这个要求。而且目前为止：演示不能绑定自己的域名，而pages可以，所以说，为了以后方便，项目名称还是与用户名一致的好，不然部署pages会出现没有样式的bug.之前已经把hexo部署到github，但是有时候挺慢的，于是就像跟大家一样搞到国内的gitcafe上，岂料，gitcafe被coding收购，要求迁移</div>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/04/linux_ipmi/#more" rel="contents">
+            <a class="btn" href="/2016/05/04/hexo_coding/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -605,7 +602,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww3.sinaimg.cn/large/8e712944jw1f1wjdty31qj209706odfv.jpg" rel="gallery_ck9gkgwqr00153dh7yga8l9km" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://ww3.sinaimg.cn/large/8e712944jw1f1wjdty31qj209706odfv.jpg" rel="gallery_ck9gkii2o00174hh7af2zsucy" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://ww3.sinaimg.cn/large/8e712944jw1f1wjdty31qj209706odfv.jpg" itemprop="contentUrl">
               </a>
             
@@ -723,7 +720,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww2.sinaimg.cn/large/8e712944jw1f1k0oq9ovmj20go0nlwev.jpg" rel="gallery_ck9gkgwsc004d3dh73p8x50dv" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://ww2.sinaimg.cn/large/8e712944jw1f1k0oq9ovmj20go0nlwev.jpg" rel="gallery_ck9gkii5c004i4hh72i06he3k" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://ww2.sinaimg.cn/large/8e712944jw1f1k0oq9ovmj20go0nlwev.jpg" itemprop="contentUrl">
               </a>
             
