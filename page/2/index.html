@@ -228,6 +228,109 @@
             
             
               
+                <a class="post-title-link" href="/2017/02/10/dockerfile的注意事项/" itemprop="url">
+                  dockerfile的注意事项
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2017-02-10T11:30:35+08:00" content="2017-02-10">
+              2017-02-10
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/docker/" itemprop="url" rel="index">
+                    <span itemprop="name">docker</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/10/dockerfile的注意事项/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/10/dockerfile的注意事项/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2017/02/10/dockerfile的注意事项/" class="leancloud_visitors" data-flag-title="dockerfile的注意事项">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><div style="border-radius:10px; width: 90%; border:10px solid #AFEEEE;font-size:16px;align=left;  background:#AFEEEE">dockerfile 编写需要注意的地方。</div>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/02/10/dockerfile的注意事项/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2017/02/10/fpm_linux/" itemprop="url">
                   fpm打rpm包
                 </a>
@@ -626,112 +729,6 @@
 
 
     
-      
-
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2016/05/04/linux_ipmi/" itemprop="url">
-                  ipmitool
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-05-04T17:30:35+08:00" content="2016-05-04">
-              2016-05-04
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/04/linux_ipmi/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/04/linux_ipmi/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-	  
-	     <span id="/2016/05/04/linux_ipmi/" class="leancloud_visitors" data-flag-title="ipmitool">
-	     &nbsp; | &nbsp; 阅读次数
-	     </span>
-	  
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p> IPMI是智能型平台管理接口（Intelligent Platform Management Interface）的缩写，用户可以利用IPMI监视服务器的物理健康特征，如温度、电压、风扇工作状态、电源状态等。<br>Ipmi 最大的优势在于它是独立于 CPU BIOS 和 OS 的，所以用户无论在开机还是关机的状态下，只要接通电源就可以实现对服务器的监控。Ipmi 是一种规范的标准，其中最重要的物理部件就是BMC(Baseboard Management Controller) 一种嵌入式管理微控制器，它相当于整个平台管理的“大脑”，通过它 ipmi 可以监控各个传感器的数据并记录各种事件的日志。</p>
-<p>在工作时，所有的IPMI功能都是向BMC发送命令来完成的，命令使用IPMI规范中规定的指令，BMC接收并在系统事件日志中记录事件消息，维护描述系统中传感器情况的传感器数据记录。</p>
-<p>当需要对系统 文本控制台进行远程访问时，Serial Over LAN (SOL) 功能将非常有用。SOL 通过 IPMI 会话重定向本地串行接口，允许远程访问 Windows 的紧急事件管理控制台 (EMS) 特殊管理控制台 (SAC)，或访问 LINUX 串行控制台。这个过程的步骤是 IPMI 固件截取数据，然后通过局域网重新发送定向到串行端口的信息。 这就提供了远程查看 BOOT、OS 加载器或紧急事件管理控制台以诊断并修复服务器相关问题的标准方法，而无需考虑供应商。它允许在引导阶段配置各种组件。</p>
-<p><img src="http://7xnmpy.com1.z0.glb.clouddn.com/blog/imge/bmc.png" alt="bmc"></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/04/linux_ipmi/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -772,21 +769,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-count">63</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -846,7 +843,7 @@
       <div class="footer-inner"> <div class="copyright">
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>
