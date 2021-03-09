@@ -289,12 +289,12 @@
 
       
         <span itemprop="articleBody"><p>很多时候我们都需要将服务器信息收集起来整理成csv，或者execl格式的表格，呈现给别人。所以就有了这样的需求，如何用python操作csv文件。<br>python的csv模块，简单易用。<br><a id="more"></a></p>
-<h1 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h1><p><code>reader(csvfile[, dialect=&#39;excel&#39;][, fmtparam])</code><br>参数表:</p>
+<h1><span id="du-qu">读取</span><a href="#du-qu" class="header-anchor">#</a></h1><p><code>reader(csvfile[, dialect=&#39;excel&#39;][, fmtparam])</code><br>参数表:</p>
 <p>csvfile<br>        需要是支持迭代(Iterator)的对象，并且每次调用next方法的返回值是字符串(string)，通常的文件(file)对象，或者列表(list)对象都是适用的，如果是文件对象，打开是需要加”b”标志参数。</p>
 <p>dialect<br>        编码风格，默认为excel方式，也就是逗号(,)分隔，另外csv模块也支持excel-tab风格，也就是制表符(tab)分隔。其它的方式需要自己定义，然后可以调用register_dialect方法来注册，以及list_dialects方法来查询已注册的所有编码风格列表。</p>
 <p>fmtparam<br>        格式化参数，用来覆盖之前dialect对象指定的编码风格。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">reader = csv.reader(file(<span class="string">'your.csv'</span>, <span class="string">'rb'</span>))</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> reader:</span><br><span class="line">    <span class="keyword">print</span> line</span><br></pre></td></tr></table></figure>
-<h1 id="写入"><a href="#写入" class="headerlink" title="写入"></a>写入</h1><p><code>writer(csvfile[, dialect=&#39;excel&#39;][, fmtparam])</code><br>参数表(略: 同reader, 见上)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">writer = csv.writer(file(<span class="string">'your.csv'</span>, <span class="string">'wb'</span>))</span><br><span class="line">writer.writerow([<span class="string">'Column1'</span>, <span class="string">'Column2'</span>, <span class="string">'Column3'</span>])</span><br><span class="line">lines = [range(<span class="number">3</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    writer.writerow(line)</span><br></pre></td></tr></table></figure></p>
+<h1><span id="xie-ru">写入</span><a href="#xie-ru" class="header-anchor">#</a></h1><p><code>writer(csvfile[, dialect=&#39;excel&#39;][, fmtparam])</code><br>参数表(略: 同reader, 见上)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">writer = csv.writer(file(<span class="string">'your.csv'</span>, <span class="string">'wb'</span>))</span><br><span class="line">writer.writerow([<span class="string">'Column1'</span>, <span class="string">'Column2'</span>, <span class="string">'Column3'</span>])</span><br><span class="line">lines = [range(<span class="number">3</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    writer.writerow(line)</span><br></pre></td></tr></table></figure></p>
 </span>
       
     </div>
@@ -411,7 +411,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">65</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -425,7 +425,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -478,7 +478,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#读取"><span class="nav-number">1.</span> <span class="nav-text">读取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写入"><span class="nav-number">2.</span> <span class="nav-text">写入</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">读取#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">写入#</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -292,9 +292,9 @@
 <p><font color="red">set的内部结构和dict很像，唯一区别是不存储value，</font>因此，判断一个元素是否在set中速度很快。</p>
 <p><font color="red">set存储的元素和dict的key类似，必须是不变对象，</font>因此，任何可变对象是不能放入set中的。<br>最后，set存储的元素也是没有顺序的。</p>
 <a id="more"></a>
-<h1 id="遍历set"><a href="#遍历set" class="headerlink" title="遍历set"></a>遍历set</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">weekdays = set([<span class="string">'MON'</span>, <span class="string">'TUE'</span>, <span class="string">'WED'</span>, <span class="string">'THU'</span>, <span class="string">'FRI'</span>, <span class="string">'SAT'</span>, <span class="string">'SUN'</span>])</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> d <span class="keyword">in</span> weekdays:</span><br><span class="line">    <span class="keyword">print</span> (d)</span><br></pre></td></tr></table></figure>
+<h1><span id="bian-li-set">遍历set</span><a href="#bian-li-set" class="header-anchor">#</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">weekdays = set([<span class="string">'MON'</span>, <span class="string">'TUE'</span>, <span class="string">'WED'</span>, <span class="string">'THU'</span>, <span class="string">'FRI'</span>, <span class="string">'SAT'</span>, <span class="string">'SUN'</span>])</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> d <span class="keyword">in</span> weekdays:</span><br><span class="line">    <span class="keyword">print</span> (d)</span><br></pre></td></tr></table></figure>
 <p>访问set<br>由于set存储的是无序集合，所以我们没法通过索引来访问。<br><strong>访问 set中的某个元素实际上就是判断一个元素是否在set中。</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = set([<span class="string">'Adam'</span>, <span class="string">'Lisa'</span>, <span class="string">'Bart'</span>, <span class="string">'Paul'</span>])</span><br><span class="line"><span class="string">'Bart'</span> <span class="keyword">in</span> s</span><br><span class="line"><span class="comment">#True</span></span><br><span class="line"><span class="string">'Bill'</span> <span class="keyword">in</span> s</span><br><span class="line"><span class="comment">#False</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="set常用的方法"><a href="#set常用的方法" class="headerlink" title="set常用的方法"></a>set常用的方法</h1><p>len(s)<br>set 的长度</p>
+<h1><span id="set-chang-yong-de-fang-fa">set常用的方法</span><a href="#set-chang-yong-de-fang-fa" class="header-anchor">#</a></h1><p>len(s)<br>set 的长度</p>
 <p>x in s<br>测试 x 是否是 s 的成员</p>
 <p>x not in s<br>测试 x 是否不是 s 的成员</p>
 <p>s.issubset(t)<br>s &lt;= t<br>测试是否 s 中的每一个元素都在 t 中</p>
@@ -430,7 +430,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">65</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -444,7 +444,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -497,7 +497,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#遍历set"><span class="nav-number">1.</span> <span class="nav-text">遍历set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#set常用的方法"><span class="nav-number">2.</span> <span class="nav-text">set常用的方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">遍历set#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">set常用的方法#</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

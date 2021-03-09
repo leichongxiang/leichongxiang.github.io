@@ -45,18 +45,18 @@
   <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
 
 
-<meta name="description" content="我们先做一些声明，MySQL采用二进制包来安装，升级都是在同一台DB Server上操作 升级注意事项在升级 MySQL 时需要注意的事项：  仔细阅读一下升级的目标版本的新特性和改变的特性，以及2个版本之间的不同特性 升级前一定要备份所有的数据 有些不同版本间的升级可能会涉及对授权表的修改 同步数据的兼容性  方法一适用于任何存储引擎。  下载并安装好新版本的MySQL数据库，并将其端口改为33">
+<meta name="description" content="我们先做一些声明，MySQL采用二进制包来安装，升级都是在同一台DB Server上操作 升级注意事项#在升级 MySQL 时需要注意的事项：  仔细阅读一下升级的目标版本的新特性和改变的特性，以及2个版本之间的不同特性 升级前一定要备份所有的数据 有些不同版本间的升级可能会涉及对授权表的修改 同步数据的兼容性  方法一#适用于任何存储引擎。  下载并安装好新版本的MySQL数据库，并将其端口改为">
 <meta name="keywords" content="mysql升级">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql升级">
 <meta property="og:url" content="http://leichongxiang.github.io/2016/01/22/mysql_upgrade/index.html">
 <meta property="og:site_name" content="Vike&#39;s Blog">
-<meta property="og:description" content="我们先做一些声明，MySQL采用二进制包来安装，升级都是在同一台DB Server上操作 升级注意事项在升级 MySQL 时需要注意的事项：  仔细阅读一下升级的目标版本的新特性和改变的特性，以及2个版本之间的不同特性 升级前一定要备份所有的数据 有些不同版本间的升级可能会涉及对授权表的修改 同步数据的兼容性  方法一适用于任何存储引擎。  下载并安装好新版本的MySQL数据库，并将其端口改为33">
+<meta property="og:description" content="我们先做一些声明，MySQL采用二进制包来安装，升级都是在同一台DB Server上操作 升级注意事项#在升级 MySQL 时需要注意的事项：  仔细阅读一下升级的目标版本的新特性和改变的特性，以及2个版本之间的不同特性 升级前一定要备份所有的数据 有些不同版本间的升级可能会涉及对授权表的修改 同步数据的兼容性  方法一#适用于任何存储引擎。  下载并安装好新版本的MySQL数据库，并将其端口改为">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2021-03-05T07:53:32.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql升级">
-<meta name="twitter:description" content="我们先做一些声明，MySQL采用二进制包来安装，升级都是在同一台DB Server上操作 升级注意事项在升级 MySQL 时需要注意的事项：  仔细阅读一下升级的目标版本的新特性和改变的特性，以及2个版本之间的不同特性 升级前一定要备份所有的数据 有些不同版本间的升级可能会涉及对授权表的修改 同步数据的兼容性  方法一适用于任何存储引擎。  下载并安装好新版本的MySQL数据库，并将其端口改为33">
+<meta name="twitter:description" content="我们先做一些声明，MySQL采用二进制包来安装，升级都是在同一台DB Server上操作 升级注意事项#在升级 MySQL 时需要注意的事项：  仔细阅读一下升级的目标版本的新特性和改变的特性，以及2个版本之间的不同特性 升级前一定要备份所有的数据 有些不同版本间的升级可能会涉及对授权表的修改 同步数据的兼容性  方法一#适用于任何存储引擎。  下载并安装好新版本的MySQL数据库，并将其端口改为">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -289,14 +289,14 @@
 
       
         <span itemprop="articleBody"><p>我们先做一些声明，MySQL采用二进制包来安装，升级都是在同一台DB Server上操作</p>
-<h1 id="升级注意事项"><a href="#升级注意事项" class="headerlink" title="升级注意事项"></a>升级注意事项</h1><p>在升级 MySQL 时需要注意的事项：</p>
+<h1><span id="sheng-ji-zhu-yi-shi-xiang">升级注意事项</span><a href="#sheng-ji-zhu-yi-shi-xiang" class="header-anchor">#</a></h1><p>在升级 MySQL 时需要注意的事项：</p>
 <ul>
 <li>仔细阅读一下升级的目标版本的新特性和改变的特性，以及2个版本之间的不同特性</li>
 <li>升级前一定要备份所有的数据</li>
 <li>有些不同版本间的升级可能会涉及对授权表的修改</li>
 <li>同步数据的兼容性</li>
 </ul>
-<h1 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h1><p><code>适用于任何存储引擎。</code></p>
+<h1><span id="fang-fa-yi">方法一</span><a href="#fang-fa-yi" class="header-anchor">#</a></h1><p><code>适用于任何存储引擎。</code></p>
 <ol>
 <li><p>下载并安装好新版本的MySQL数据库，并将其端口改为3307（避免和旧版本的3306冲突），启动服务。</p>
 </li>
@@ -320,7 +320,7 @@
 <ol start="7">
 <li>关闭旧版本，将新版的数据库的使用端口改为3306，重新启动新版本MySQL数据库。到此，一个简单环境下的数据库升级就结束了。</li>
 </ol>
-<h1 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h1><p>同样适用任何存储引擎。</p>
+<h1><span id="fang-fa-er">方法二</span><a href="#fang-fa-er" class="header-anchor">#</a></h1><p>同样适用任何存储引擎。</p>
 <ol>
 <li><p>同样先安装好新版本的MySQL。</p>
 </li>
@@ -336,7 +336,7 @@
 <li><p>之后的所有步骤与第一种方法的后三步5、6、7相同。</p>
 </li>
 </ol>
-<h1 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h1><p>第三种，适用于MyISAM存储引擎，全部是文件间的拷贝。</p>
+<h1><span id="fang-fa-san">方法三</span><a href="#fang-fa-san" class="header-anchor">#</a></h1><p>第三种，适用于MyISAM存储引擎，全部是文件间的拷贝。</p>
 <ol>
 <li>安装。</li>
 <li>从旧版本mysqlsystems_com数据库下将所有<code>.frm、.MYD 和.MYI文件</code>拷贝到新版本的相同目录下。<br>3.之后的步骤依然同于第一种的后三步。</li>
@@ -458,7 +458,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">65</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -472,7 +472,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -525,7 +525,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#升级注意事项"><span class="nav-number">1.</span> <span class="nav-text">升级注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法一"><span class="nav-number">2.</span> <span class="nav-text">方法一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法二"><span class="nav-number">3.</span> <span class="nav-text">方法二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法三"><span class="nav-number">4.</span> <span class="nav-text">方法三</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">升级注意事项#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">方法一#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">方法二#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">方法三#</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

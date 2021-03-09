@@ -36,7 +36,7 @@
 
 
 
-  <meta name="keywords" content="javascript,">
+  <meta name="keywords" content="-go,">
 
 
 
@@ -45,18 +45,18 @@
   <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
 
 
-<meta name="description" content="typeof 操作符你可以使用 typeof 操作符来检测变量的数据类型。12345678typeof &quot;John&quot;                // 返回 string typeof 3.14                  // 返回 numbertypeof false                 // 返回 booleantypeof [1,2,3,4]             /">
-<meta name="keywords" content="javascript">
+<meta name="description" content="说明函数是没有接收者的；而方法是有接收者的。Go语言不像其它面相对象语言一样可以写个类，然后在类里面写一堆方法，但其实Go语言的方法很巧妙的实现了这种效果：我们只需要在普通函数前面加个接受者（receiver，写在函数名前面的括号里面），这样编译器就知道这个函数（方法）属于哪个struct了">
+<meta name="keywords" content="-go">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript小知识">
-<meta property="og:url" content="http://leichongxiang.github.io/2015/12/11/javascript_basic02/index.html">
+<meta property="og:title" content="go 函数和方法的区别">
+<meta property="og:url" content="http://leichongxiang.github.io/2021/03/09/go_基础01/index.html">
 <meta property="og:site_name" content="Vike&#39;s Blog">
-<meta property="og:description" content="typeof 操作符你可以使用 typeof 操作符来检测变量的数据类型。12345678typeof &quot;John&quot;                // 返回 string typeof 3.14                  // 返回 numbertypeof false                 // 返回 booleantypeof [1,2,3,4]             /">
+<meta property="og:description" content="说明函数是没有接收者的；而方法是有接收者的。Go语言不像其它面相对象语言一样可以写个类，然后在类里面写一堆方法，但其实Go语言的方法很巧妙的实现了这种效果：我们只需要在普通函数前面加个接受者（receiver，写在函数名前面的括号里面），这样编译器就知道这个函数（方法）属于哪个struct了">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-03-05T07:53:32.332Z">
+<meta property="og:updated_time" content="2021-03-09T06:30:02.559Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript小知识">
-<meta name="twitter:description" content="typeof 操作符你可以使用 typeof 操作符来检测变量的数据类型。12345678typeof &quot;John&quot;                // 返回 string typeof 3.14                  // 返回 numbertypeof false                 // 返回 booleantypeof [1,2,3,4]             /">
+<meta name="twitter:title" content="go 函数和方法的区别">
+<meta name="twitter:description" content="说明函数是没有接收者的；而方法是有接收者的。Go语言不像其它面相对象语言一样可以写个类，然后在类里面写一堆方法，但其实Go语言的方法很巧妙的实现了这种效果：我们只需要在普通函数前面加个接受者（receiver，写在函数名前面的括号里面），这样编译器就知道这个函数（方法）属于哪个struct了">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -68,7 +68,7 @@
 
 
 
-  <title> javascript小知识 | Vike's Blog </title>
+  <title> go 函数和方法的区别 | Vike's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -228,7 +228,7 @@
             
             
               
-                javascript小知识
+                go 函数和方法的区别
               
             
           </h1>
@@ -237,8 +237,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-12-11T17:53:35+08:00" content="2015-12-11">
-              2015-12-11
+            <time itemprop="dateCreated" datetime="2021-03-09T14:30:35+08:00" content="2021-03-09">
+              2021-03-09
             </time>
           </span>
 
@@ -247,8 +247,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/web编程/" itemprop="url" rel="index">
-                    <span itemprop="name">web编程</span>
+                  <a href="/categories/go/" itemprop="url" rel="index">
+                    <span itemprop="name">go</span>
                   </a>
                 </span>
 
@@ -263,8 +263,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/12/11/javascript_basic02/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/11/javascript_basic02/" itemprop="commentsCount"></span>
+                <a href="/2021/03/09/go_基础01/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2021/03/09/go_基础01/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -273,7 +273,7 @@
           
           
 	  
-	     <span id="/2015/12/11/javascript_basic02/" class="leancloud_visitors" data-flag-title="javascript小知识">
+	     <span id="/2021/03/09/go_基础01/" class="leancloud_visitors" data-flag-title="go 函数和方法的区别">
 	     &nbsp; | &nbsp; 阅读次数
 	     </span>
 	  
@@ -288,29 +288,14 @@
       
 
       
-        <span itemprop="articleBody"><h1><span id="typeof-cao-zuo-fu">typeof 操作符</span><a href="#typeof-cao-zuo-fu" class="header-anchor">#</a></h1><p>你可以使用 typeof 操作符来检测变量的数据类型。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="string">"John"</span>                <span class="comment">// 返回 string </span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">3.14</span>                  <span class="comment">// 返回 number</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">false</span>                 <span class="comment">// 返回 boolean</span></span><br><span class="line"><span class="keyword">typeof</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]             <span class="comment">// 返回 object</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;<span class="attr">name</span>:<span class="string">'John'</span>, <span class="attr">age</span>:<span class="number">34</span>&#125; <span class="comment">// 返回 object</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">NaN</span>                   <span class="comment">// 返回 number</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Date</span>()            <span class="comment">// 返回 object</span></span><br><span class="line">日期(<span class="built_in">Date</span>)的数据类型为 object</span><br></pre></td></tr></table></figure></p>
-<p>在JavaScript中，数组是一种特殊的对象类型。<br><a id="more"></a></p>
-<h1><span id="null-he-undefined">null和Undefined</span><a href="#null-he-undefined" class="header-anchor">#</a></h1><p>null是一个只有一个值的特殊类型。表示一个空对象引用。null 返回是object。<br>typeof 一个没有值的变量会返回 undefined。<br>var person;                  // Value is undefined, type is undefined</p>
-<p>Undefined 和 Null 的区别</p>
-<p>typeof undefined             // undefined<br>typeof null                  // object<br>null === undefined           // false<br>null == undefined            // true</p>
-<h1><span id="lei-xing-zhuan-huan">类型转换</span><a href="#lei-xing-zhuan-huan" class="header-anchor">#</a></h1><h2><span id="jiang-zi-fu-chuan-zhuan-huan-wei-shu-zi">将字符串转换为数字</span><a href="#jiang-zi-fu-chuan-zhuan-huan-wei-shu-zi" class="header-anchor">#</a></h2><p>全局方法 Number() 可以将字符串转换为数字。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">Number</span><span class="params">(<span class="string">"3.14"</span>)</span></span>    <span class="comment">// 返回 3.14</span></span><br><span class="line"><span class="function"><span class="title">Number</span><span class="params">(<span class="string">" "</span>)</span></span>       <span class="comment">// 返回 0 </span></span><br><span class="line"><span class="function"><span class="title">Number</span><span class="params">(<span class="string">""</span>)</span></span>        <span class="comment">// 返回 0</span></span><br><span class="line"><span class="function"><span class="title">Number</span><span class="params">(<span class="string">"99 88"</span>)</span></span>   <span class="comment">// 返回 NaN</span></span><br></pre></td></tr></table></figure></p>
-<h2><span id="jiang-ri-qi-zhuan-huan-wei-zi-fu-chuan">将日期转换为字符串</span><a href="#jiang-ri-qi-zhuan-huan-wei-zi-fu-chuan" class="header-anchor">#</a></h2><p>String(Date())      // 返回 Thu Jul 17 2014 15:38:19 GMT+0200 (W. Europe Daylight Time)<br>Date().toString()   // 返回 Thu Jul 17 2014 15:38:19 GMT+0200 (W. Europe Daylight Time)</p>
-<p>Date()方法：<br>getDate()    从 Date 对象返回一个月中的某一天 (1 ~ 31)。<br>getDay()    从 Date 对象返回一周中的某一天 (0 ~ 6)。<br>getFullYear()    从 Date 对象以四位数字返回年份。<br>getHours()    返回 Date 对象的小时 (0 ~ 23)。<br>getMilliseconds()    返回 Date 对象的毫秒(0 ~ 999)。<br>getMinutes()    返回 Date 对象的分钟 (0 ~ 59)。<br>getMonth()    从 Date 对象返回月份 (0 ~ 11)。<br>getSeconds()    返回 Date 对象的秒数 (0 ~ 59)。<br>getTime()    返回 1970 年 1 月 1 日至今的毫秒数。</p>
-<h1><span id="zheng-ze-biao-da-shi">正则表达式</span><a href="#zheng-ze-biao-da-shi" class="header-anchor">#</a></h1><p>搜索模式可用于文本搜索和文本替换。<br>在 JavaScript 中，正则表达式通常用于两个字符串方法 : search() 和 replace()。<br>search() 方法 用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串，并返回子串的起始位置。<br>replace() 方法 用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。</p>
-<p>search()<br>使用正则表达式搜索 “w3cschool” 字符串，且不区分大小写：<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"Visit w3cschool"</span>;</span><br><span class="line"><span class="keyword">var</span> n = str.search(<span class="regexp">/w3cschool/i</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">#结果</span></span><br><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure></p>
-<p>replace()<br>实例<br>使用正则表达式且不区分大小写将字符串中的 Microsoft 替换为 w3cschool :<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span>	str = <span class="string">"Visit Microsoft!"</span>;</span><br><span class="line"><span class="keyword">var</span> res = str.replace(<span class="regexp">/microsoft/i</span>, <span class="string">"w3cschool"</span>);</span><br><span class="line">结果输出为:</span><br><span class="line">Visit w3cschool!</span><br></pre></td></tr></table></figure></p>
-<h2><span id="xiu-shi-fu">修饰符</span><a href="#xiu-shi-fu" class="header-anchor">#</a></h2><p>i    执行对大小写不敏感的匹配。<br>g    执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。<br>m    执行多行匹配。</p>
-<h2><span id="zheng-ze-biao-da-shi-mo-shi">正则表达式模式</span><a href="#zheng-ze-biao-da-shi-mo-shi" class="header-anchor">#</a></h2><p>[abc]    查找方括号之间的任何字符。<br>[0-9]    查找任何从 0 至 9 的数字。<br>(x|y)    查找任何以 | 分隔的选项。</p>
-<p>元字符    描述<br>\d        查找数字。<br>\s        查找空白字符。<br>\b        匹配单词边界。<br>\uxxxx    查找以十六进制数 xxxx 规定的 Unicode 字符。</p>
-<p>量词    描述<br>n+        匹配任何包含至少一个 n 的字符串。<br>n*        匹配任何包含零个或多个 n 的字符串。<br>n?        匹配任何包含零个或一个 n 的字符串。</p>
-<p>test() 方法用于检测一个字符串是否匹配某个模式，如果字符串中含有匹配的文本，则返回 true，否则返回 false。<br>exec() 方法用于检索字符串中的正则表达式的匹配。<br>该函数返回一个数组，其中存放匹配的结果。如果未找到匹配，则返回值为 null<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var patt = /e/;</span><br><span class="line">patt.test<span class="comment">("The best things in life are free!")</span>;</span><br><span class="line"><span class="comment">//等价于</span></span><br><span class="line">/e/.test<span class="comment">("The best things in life are free!")</span></span><br><span class="line"></span><br><span class="line">/e/.exec<span class="comment">("The best things in life are free!")</span>;</span><br><span class="line">结果是e</span><br></pre></td></tr></table></figure></p>
-<h1><span id="yi-chang">异常</span><a href="#yi-chang" class="header-anchor">#</a></h1><p>try 语句允许我们定义在执行时进行错误测试的代码块。<br>catch 语句允许我们定义当 try 代码块发生错误时，所执行的代码块。<br>JavaScript 语句 try 和 catch 是成对出现的。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">try</span><br><span class="line">  &#123;</span><br><span class="line">  <span class="comment">//在这里运行代码</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="function"><span class="title">catch</span><span class="params">(err)</span></span></span><br><span class="line">  &#123;</span><br><span class="line">  <span class="comment">//在这里处理错误</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
-<h1><span id="json">JSON</span><a href="#json" class="header-anchor">#</a></h1><p>JSON 英文全称 JavaScript Object Notation.<br>JSON 是用于存储和传输数据的格式。<br>JSON 通常用于服务端向网页传递数据 。<br>JSON 格式在语法上与创建 JavaScript 对象代码是相同的。<br>由于它们很相似，所以 JavaScript 程序可以很容易的将 JSON 数据转换为 JavaScript 对象。</p>
-<h2><span id="json-yu-fa-gui-ze">JSON 语法规则</span><a href="#json-yu-fa-gui-ze" class="header-anchor">#</a></h2><p>数据为 键/值 对。<br>数据由逗号分隔。<br>大括号保存对象<br>方括号保存数组</p>
-<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在以上实例中，对象 <span class="string">"employees"</span> 是一个数组。包含了三个对象。</span><br><span class="line"><span class="string">"employees"</span>:[</span><br><span class="line">    &#123;<span class="string">"firstName"</span>:<span class="string">"John"</span>, <span class="string">"lastName"</span>:<span class="string">"Doe"</span>&#125;, </span><br><span class="line">    &#123;<span class="string">"firstName"</span>:<span class="string">"Anna"</span>, <span class="string">"lastName"</span>:<span class="string">"Smith"</span>&#125;, </span><br><span class="line">    &#123;<span class="string">"firstName"</span>:<span class="string">"Peter"</span>, <span class="string">"lastName"</span>:<span class="string">"Jones"</span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>使用 JavaScript 内置函数 JSON.parse() 将字符串转换为 JavaScript 对象:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"demo"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).innerHTML =</span></span><br><span class="line"><span class="actionscript">obj.employees[<span class="number">1</span>].firstName + <span class="string">" "</span> + obj.employees[<span class="number">1</span>].lastName;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">Anna Smith</span><br></pre></td></tr></table></figure></p>
-<h1><span id="void">void</span><a href="#void" class="header-anchor">#</a></h1><p> void 是 JavaScript 中非常重要的关键字，该操作符指定要计算一个表达式但是不返回值。<br> <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:void(0);"</span>&gt;</span>点我没有反应的!<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#pos"</span>&gt;</span>点我定位到指定位置!<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span> <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"pos"</span>&gt;</span>尾部定位点<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>而javascript:void(0), 仅仅表示一个死链接。<br>在页面很长的时候会使用 # 来定位页面的具体位置，格式为：# + id。<br>如果你要定义一个死链接请使用 javascript:void(0) 。</p>
+        <span itemprop="articleBody"><h2><span id="shuo-ming">说明</span><a href="#shuo-ming" class="header-anchor">#</a></h2><div style="border-radius:10px; width: 90%; border:10px solid #AFEEEE;font-size:16px;align=left;  background:#AFEEEE">函数是没有接收者的；而方法是有接收者的。Go语言不像其它面相对象语言一样可以写个类，然后在类里面写一堆方法，但其实Go语言的方法很巧妙的实现了这种效果：我们只需要在普通函数前面加个接受者（receiver，写在函数名前面的括号里面），这样编译器就知道这个函数（方法）属于哪个struct了</div>
+
+<a id="more"></a>
+<p>函数是没有接收者的；而方法是有接收者的，我们说的方法要么是属于一个结构体的，要么属于一个新定义的类型的。</p>
+<p><strong>方法的声明和函数类似，他们的区别是：方法在定义的时候，会在<code>func</code>和方法名之间增加一个参数，这个参数就是接收者，这样我们定义的这个方法就和接收者绑定在了一起，称之为这个接收者的方法。</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span> &#123;</span><br><span class="line">	name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p person)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">"the person name is "</span>+ p.name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Go 中，（接收者）类型关联的方法不写在类型结构里面，就像类那样；耦合更加宽松；类型和方法之间的关联由接收者来建立。 <code>Go 语言不像其它面相对象语言一样可以写个类，然后在类里面写一堆方法，但其实**Go语言的方法**很巧妙的实现了这种效果：我们只需要在普通函数前面加个接受者（receiver，写在函数名前面的括号里面），这样编译器就知道这个函数（方法）属于哪个struct了</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">StructTest06Base</span><span class="params">()</span></span> &#123;</span><br><span class="line">	structTest0601()</span><br><span class="line">	structTest0602()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//1.普通函数</span></span><br><span class="line"><span class="comment">//接收值类型参数的函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">valueIntTest</span><span class="params">(a <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> a + <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//接收指针类型参数的函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">pointerIntTest</span><span class="params">(a *<span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> *a + <span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">structTest0601</span><span class="params">()</span></span> &#123;</span><br><span class="line">	a := <span class="number">2</span></span><br><span class="line">	fmt.Println(<span class="string">"valueIntTest:"</span>, valueIntTest(a))</span><br><span class="line">	<span class="comment">//函数的参数为值类型，则不能直接将指针作为参数传递</span></span><br><span class="line">	<span class="comment">//fmt.Println("valueIntTest:", valueIntTest(&amp;a))</span></span><br><span class="line">	<span class="comment">//compile error: cannot use &amp;a (type *int) as type int in function argument</span></span><br><span class="line"></span><br><span class="line">	b := <span class="number">5</span></span><br><span class="line">	fmt.Println(<span class="string">"pointerIntTest:"</span>, pointerIntTest(&amp;b))</span><br><span class="line">	<span class="comment">//同样，当函数的参数为指针类型时，也不能直接将值类型作为参数传递</span></span><br><span class="line">	<span class="comment">//fmt.Println("pointerIntTest:", pointerIntTest(b))</span></span><br><span class="line">	<span class="comment">//compile error:cannot use b (type int) as type *int in function argument</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.方法</span></span><br><span class="line"><span class="keyword">type</span> PersonD <span class="keyword">struct</span> &#123;</span><br><span class="line">	id   <span class="keyword">int</span></span><br><span class="line">	name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//接收者为值类型</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p PersonD)</span> <span class="title">valueShowName</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(p.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//接收者为指针类型</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *PersonD)</span> <span class="title">pointShowName</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(p.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">structTest0602</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">//值类型调用方法</span></span><br><span class="line">	personValue := PersonD&#123;<span class="number">101</span>, <span class="string">"Will Smith"</span>&#125;</span><br><span class="line">	personValue.valueShowName()</span><br><span class="line">	personValue.pointShowName()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//指针类型调用方法</span></span><br><span class="line">	personPointer := &amp;PersonD&#123;<span class="number">102</span>, <span class="string">"Paul Tony"</span>&#125;</span><br><span class="line">	personPointer.valueShowName()</span><br><span class="line">	personPointer.pointShowName()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//与普通函数不同，接收者为指针类型和值类型的方法，指针类型和值类型的变量均可相互调用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </span>
       
     </div>
@@ -319,7 +304,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/javascript/" rel="tag">#javascript</a>
+            <a href="/tags/go/" rel="tag">#-go</a>
           
         </div>
       
@@ -328,16 +313,12 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/14/javascript_DOM/" rel="prev">
-                <i class="fa fa-chevron-left"></i> javascript html DOM
-              </a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/10/javascript_basic/" rel="next">
-                javascript的基础知识 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/03/05/ubuntu_20.04美化/" rel="next">
+                Ubuntu 20.04 美化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -386,7 +367,7 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/12/11/javascript_basic02/" data-title="javascript小知识" data-url="http://leichongxiang.github.io/2015/12/11/javascript_basic02/">
+              <div class="ds-thread" data-thread-key="2021/03/09/go_基础01/" data-title="go 函数和方法的区别" data-url="http://leichongxiang.github.io/2021/03/09/go_基础01/">
               </div>
             
           </div>
@@ -494,7 +475,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">typeof 操作符#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">null和Undefined#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">类型转换#</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.1.</span> <span class="nav-text">将字符串转换为数字#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.2.</span> <span class="nav-text">将日期转换为字符串#</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">正则表达式#</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.1.</span> <span class="nav-text">修饰符#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.2.</span> <span class="nav-text">正则表达式模式#</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">异常#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">JSON#</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.1.</span> <span class="nav-text">JSON 语法规则#</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">7.</span> <span class="nav-text">void#</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">说明#</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

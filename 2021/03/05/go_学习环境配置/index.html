@@ -288,17 +288,17 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><div style="border-radius:10px; width: 90%; border:10px solid #AFEEEE;font-size:16px;align=left;  background:#AFEEEE">在 Ubuntu 20.04 下重新开始配置 Go 的开发环境。</div>
+        <span itemprop="articleBody"><h2><span id="shuo-ming">说明</span><a href="#shuo-ming" class="header-anchor">#</a></h2><div style="border-radius:10px; width: 90%; border:10px solid #AFEEEE;font-size:16px;align=left;  background:#AFEEEE">在 Ubuntu 20.04 下重新开始配置 Go 的开发环境。</div>
 
 <a id="more"></a>
-<h2 id="以ubuntu为例"><a href="#以ubuntu为例" class="headerlink" title="以ubuntu为例"></a>以ubuntu为例</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://golang.org/doc/install?download=go1.16.linux-amd64.tar.gz</span><br><span class="line">tar -C /usr/<span class="built_in">local</span> -xzf go1.16.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
-<h2 id="配置环境变量-和代理"><a href="#配置环境变量-和代理" class="headerlink" title="配置环境变量 和代理"></a>配置环境变量 和代理</h2><p>vim /etc/profile 或者 ~/.zshrc 下</p>
+<h2><span id="yi-ubuntu-wei-li">以ubuntu为例</span><a href="#yi-ubuntu-wei-li" class="header-anchor">#</a></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://golang.org/doc/install?download=go1.16.linux-amd64.tar.gz</span><br><span class="line">tar -C /usr/<span class="built_in">local</span> -xzf go1.16.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<h2><span id="pei-zhi-huan-jing-bian-liang-he-dai-li">配置环境变量 和代理</span><a href="#pei-zhi-huan-jing-bian-liang-he-dai-li" class="header-anchor">#</a></h2><p>vim /etc/profile 或者 ~/.zshrc 下</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GOROOT=/usr/<span class="built_in">local</span>/go</span><br><span class="line"><span class="comment">#GOPATH 是自己的go项目路径，自定义设置</span></span><br><span class="line"><span class="built_in">export</span> GOPATH=/home/leichongxiang/work/learn/goproject <span class="comment">#替换你的目录</span></span><br><span class="line"><span class="built_in">export</span> GOBIN=<span class="variable">$GOPATH</span>/bin</span><br><span class="line"><span class="comment"># 启用 Go Modules 功能</span></span><br><span class="line"><span class="built_in">export</span> GO111MODULE=auto</span><br><span class="line"><span class="comment"># 配置 GOPROXY 环境变量</span></span><br><span class="line"><span class="built_in">export</span> GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
 <p>source /etc/profile</p>
 <blockquote>
 <p>解释：<br>开启GO111MODULE<br>用环境变量 GO111MODULE 开启或关闭模块支持，它有三个可选值：off、on、auto，默认值是 auto。<br>GO111MODULE=off 无模块支持，go 会从 GOPATH 和 vendor 文件夹寻找包。<br>GO111MODULE=on 模块支持，go 会忽略 GOPATH 和 vendor 文件夹，只根据 go.mod 下载依赖。<br>GO111MODULE=auto 在 $GOPATH/src 外面且根目录有 go.mod 文件时，开启模块支持。<br>在使用模块的时候，GOPATH 是无意义的，不过它还是会把下载的依赖储存在 $GOPATH/src/mod 中，也会把 go install 的结果放在 $GOPATH/bin 中。</p>
 </blockquote>
-<h2 id="第一个hello-go"><a href="#第一个hello-go" class="headerlink" title="第一个hello.go"></a>第一个hello.go</h2><p>在GOPATH目录下编写代码</p>
+<h2><span id="di-yi-ge-hello-go">第一个hello.go</span><a href="#di-yi-ge-hello-go" class="header-anchor">#</a></h2><p>在GOPATH目录下编写代码</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br><span class="line">&gt;<span class="built_in">pwd</span></span><br><span class="line">&gt;/home/leichongxiang/work/learn/goproject/base/20210303</span><br><span class="line">&gt;vim hello_01.go</span><br><span class="line">package main                                                                              </span><br><span class="line"></span><br><span class="line">import <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line">func <span class="function"><span class="title">main</span></span>() &#123;</span><br><span class="line">        fmt.Println(<span class="string">"hello world"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>运行：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">go</span> run hello_01.<span class="keyword">go</span></span><br></pre></td></tr></table></figure>
@@ -425,7 +425,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">65</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -439,7 +439,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -492,7 +492,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以ubuntu为例"><span class="nav-number">2.</span> <span class="nav-text">以ubuntu为例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置环境变量-和代理"><span class="nav-number">3.</span> <span class="nav-text">配置环境变量 和代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一个hello-go"><span class="nav-number">4.</span> <span class="nav-text">第一个hello.go</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">说明#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">以ubuntu为例#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">配置环境变量 和代理#</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">第一个hello.go#</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

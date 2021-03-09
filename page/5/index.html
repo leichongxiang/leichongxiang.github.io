@@ -228,6 +228,111 @@
             
             
               
+                <a class="post-title-link" href="/2016/01/26/mysql_tool/" itemprop="url">
+                  mysql工具
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-26T11:30:35+08:00" content="2016-01-26">
+              2016-01-26
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/26/mysql_tool/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/mysql_tool/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2016/01/26/mysql_tool/" class="leancloud_visitors" data-flag-title="mysql工具">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h1 id="简单sql"><a href="#简单sql" class="headerlink" title="简单sql"></a>简单sql</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">创建数据库</span><br><span class="line">create database name; </span><br><span class="line">选择数据库</span><br><span class="line">use databasename; </span><br><span class="line">直接删除数据库，不提醒</span><br><span class="line">drop databasename; </span><br><span class="line">在shell中执行，删除数据库前，有提示。</span><br><span class="line">mysqladmin drop database name </span><br><span class="line">显示表</span><br><span class="line">show tables; </span><br><span class="line">表的详细描述</span><br><span class="line">describe tablename; </span><br><span class="line"></span><br><span class="line">select 中加上distinct去除重复字段</span><br><span class="line"></span><br><span class="line">显示当前mysql版本和当前日期和当前用户</span><br><span class="line"> select version(),current_date,current_user();</span><br></pre></td></tr></table></figure>
+<p>注意<br>如下脚本创建数据库yourdbname，并制定默认的字符集是utf8。<br><code>CREATE DATABASE IF NOT EXISTS yourdbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;</code></p>
+<p>如果要创建默认gbk字符集的数据库可以用下面的sql:<br><code>create database yourdb DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;</code><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/01/26/mysql_tool/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </p></div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2016/01/25/mysql_variable/" itemprop="url">
                   mysql的变量查看
                 </a>
@@ -405,12 +510,12 @@
           <span itemprop="articleBody">
             
             我们先做一些声明，MySQL采用二进制包来安装，升级都是在同一台DB Server上操作
-升级注意事项在升级 MySQL 时需要注意的事项：
+升级注意事项#在升级 MySQL 时需要注意的事项：
 
 仔细阅读一下升级的目标版本的新特性和改变的特性，以及2个版本之间的不同特性
 升级前一定要备份所有的数据
 有些不同版本间的升级可能会涉及对授权表的修改
-同步数
+同步
             ...
           </span>
           <div class="post-more-link text-center">
@@ -642,123 +747,6 @@
 
 
     
-      
-
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2016/01/19/本命年的回想/" itemprop="url">
-                  本命年的回想 -刘绍棠
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-19T16:30:35+08:00" content="2016-01-19">
-              2016-01-19
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/读书/" itemprop="url" rel="index">
-                    <span itemprop="name">读书</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/19/本命年的回想/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/19/本命年的回想/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-	  
-	     <span id="/2016/01/19/本命年的回想/" class="leancloud_visitors" data-flag-title="本命年的回想 -刘绍棠">
-	     &nbsp; | &nbsp; 阅读次数
-	     </span>
-	  
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww1.sinaimg.cn/large/8e712944jw1f04romqd2tj20xc0p045u.jpg" rel="gallery_cklw3vdds0057umj8epsl2cwb" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://ww1.sinaimg.cn/large/8e712944jw1f04romqd2tj20xc0p045u.jpg" itemprop="contentUrl">
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
-
-      
-        
-          <p>春雨惊春清谷天，<br>夏满芒夏暑相连，<br>秋处露秋寒霜降，<br>冬雪雪冬小大寒。<br>村风乡俗中，四时二十四节色彩缤纷，而最有鲜明地方特色和浓郁乡土风味的，却是二十四节之外的春节。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/01/19/本命年的回想/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </p></div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -799,7 +787,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">65</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -813,7 +801,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
