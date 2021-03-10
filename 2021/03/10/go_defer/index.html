@@ -36,7 +36,7 @@
 
 
 
-  <meta name="keywords" content="python,MySQLdb使用,">
+  <meta name="keywords" content="-go,">
 
 
 
@@ -45,18 +45,18 @@
   <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=0.4.5.2">
 
 
-<meta name="description" content="操作MySQL数据库的首选模块MySQLdb。基本步骤：  引入MySQLdb库 和数据库建立连接 执行sql语句和接收返回值 关闭游标关闭数据库连接">
-<meta name="keywords" content="python,MySQLdb使用">
+<meta name="description" content="说明Go语言中的defer语句会将其后面跟随的语句进行延迟处理。在defer归属的函数即将返回时，将延迟处理的语句按defer定义的逆序进行执行，也就是说，先被defer的语句最后被执行，最后被defer的语句，最先被执行。返回值=x –&amp;gt; 运行 defer –&amp;gt; RET指令">
+<meta name="keywords" content="-go">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python操作mysql">
-<meta property="og:url" content="http://leichongxiang.github.io/2015/11/17/python下操作mysql/index.html">
+<meta property="og:title" content="go 语言中的 defer">
+<meta property="og:url" content="http://leichongxiang.github.io/2021/03/10/go_defer/index.html">
 <meta property="og:site_name" content="Vike&#39;s Blog">
-<meta property="og:description" content="操作MySQL数据库的首选模块MySQLdb。基本步骤：  引入MySQLdb库 和数据库建立连接 执行sql语句和接收返回值 关闭游标关闭数据库连接">
+<meta property="og:description" content="说明Go语言中的defer语句会将其后面跟随的语句进行延迟处理。在defer归属的函数即将返回时，将延迟处理的语句按defer定义的逆序进行执行，也就是说，先被defer的语句最后被执行，最后被defer的语句，最先被执行。返回值=x –&amp;gt; 运行 defer –&amp;gt; RET指令">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-03-05T07:53:32.244Z">
+<meta property="og:updated_time" content="2021-03-10T05:27:03.337Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python操作mysql">
-<meta name="twitter:description" content="操作MySQL数据库的首选模块MySQLdb。基本步骤：  引入MySQLdb库 和数据库建立连接 执行sql语句和接收返回值 关闭游标关闭数据库连接">
+<meta name="twitter:title" content="go 语言中的 defer">
+<meta name="twitter:description" content="说明Go语言中的defer语句会将其后面跟随的语句进行延迟处理。在defer归属的函数即将返回时，将延迟处理的语句按defer定义的逆序进行执行，也就是说，先被defer的语句最后被执行，最后被defer的语句，最先被执行。返回值=x –&amp;gt; 运行 defer –&amp;gt; RET指令">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -68,7 +68,7 @@
 
 
 
-  <title> python操作mysql | Vike's Blog </title>
+  <title> go 语言中的 defer | Vike's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -228,7 +228,7 @@
             
             
               
-                python操作mysql
+                go 语言中的 defer
               
             
           </h1>
@@ -237,8 +237,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-17T14:50:02+08:00" content="2015-11-17">
-              2015-11-17
+            <time itemprop="dateCreated" datetime="2021-03-10T14:30:35+08:00" content="2021-03-10">
+              2021-03-10
             </time>
           </span>
 
@@ -247,8 +247,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/go/" itemprop="url" rel="index">
+                    <span itemprop="name">go</span>
                   </a>
                 </span>
 
@@ -263,8 +263,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/17/python下操作mysql/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/17/python下操作mysql/" itemprop="commentsCount"></span>
+                <a href="/2021/03/10/go_defer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2021/03/10/go_defer/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -273,7 +273,7 @@
           
           
 	  
-	     <span id="/2015/11/17/python下操作mysql/" class="leancloud_visitors" data-flag-title="python操作mysql">
+	     <span id="/2021/03/10/go_defer/" class="leancloud_visitors" data-flag-title="go 语言中的 defer">
 	     &nbsp; | &nbsp; 阅读次数
 	     </span>
 	  
@@ -288,21 +288,14 @@
       
 
       
-        <span itemprop="articleBody"><p>操作MySQL数据库的首选模块MySQLdb。<br>基本步骤：</p>
-<ul>
-<li>引入MySQLdb库</li>
-<li>和数据库建立连接</li>
-<li>执行sql语句和接收返回值</li>
-<li>关闭游标关闭数据库连接 </li>
-</ul>
+        <span itemprop="articleBody"><h2><span id="shuo-ming">说明</span><a href="#shuo-ming" class="header-anchor">#</a></h2><div style="border-radius:10px; width: 90%; border:10px solid #AFEEEE;font-size:16px;align=left;  background:           #AFEEEE">Go语言中的defer语句会将其后面跟随的语句进行延迟处理。在defer归属的函数即将返回时，将延迟处理的语句按defer定义的逆序进行执行，也就是说，先被defer的语句最后被执行，最后被defer的语句，最先被执行。返回值=x –&gt; 运行 defer –&gt; RET指令 </div>
+
 <a id="more"></a>
-<h1><span id="shu-ju-ku-lian-jie">数据库连接</span><a href="#shu-ju-ku-lian-jie" class="header-anchor">#</a></h1><p><code>conn=MySQLdb.connect(host=&quot;localhost&quot;,user=&quot;root&quot;,passwd=&quot;sa&quot;,db=&quot;mytable&quot;,charset=&quot;utf8&quot;)</code></p>
-<h1><span id="you-biao-dui-xiang-fang-fa">游标对象方法</span><a href="#you-biao-dui-xiang-fang-fa" class="header-anchor">#</a></h1><p>cursor=conn.cursor()  用使用连接对象获得一个cursor对象<br>n=cursor.execute(sql,param)<br>使用cursor提供的方法来进行工作.这些方法包括两大类:<br>1.执行命令<br>2.接收返回值</p>
-<p>cursor用来执行命令的方法:<br>callproc(self, procname, args):用来执行存储过程,接收的参数为存储过程名和参数列表,返回值为受影响的行数<br>execute(self, query, args):执行单条sql语句,接收的参数为sql语句本身和使用的参数列表,返回值为受影响的行数<br>executemany(self, query, args):执行单条sql语句,但是重复执行参数列表里的参数,返回值为受影响的行数<br>nextset(self):移动到下一个结果集 </p>
-<p>cursor用来接收返回值的方法:<br>fetchall(self):接收全部的返回结果行.<br>fetchmany(self, size=None):接收size条返回结果行.如果size的值大于返回的结果行的数量,则会返回cursor.arraysize条数据.<br>fetchone(self):返回一条结果行.<br>scroll(self, value, mode=’relative’):移动指针到某一行.如果mode=’relative’,则表示从当前所在行移动value条,如果mode=’absolute’,则表示从结果集的第一行移动value条.  </p>
-<h1><span id="guan-bi-you-biao-he-shu-ju-ku">关闭游标和数据库</span><a href="#guan-bi-you-biao-he-shu-ju-ku" class="header-anchor">#</a></h1><p>需要分别的关闭指针对象和连接对象.他们有名字相同的方法<br>cursor.close()<br>conn.close()</p>
-<h1><span id="shi-li">实例</span><a href="#shi-li" class="header-anchor">#</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-     </span></span><br><span class="line"><span class="comment">#mysqldb    </span></span><br><span class="line"><span class="keyword">import</span> time, MySQLdb    </span><br><span class="line">   </span><br><span class="line"><span class="comment">#连接    </span></span><br><span class="line">conn=MySQLdb.connect(host=<span class="string">"localhost"</span>,user=<span class="string">"root"</span>,passwd=<span class="string">""</span>,db=<span class="string">"test"</span>,charset=<span class="string">"utf8"</span>)  </span><br><span class="line">cursor = conn.cursor()    </span><br><span class="line">   </span><br><span class="line"><span class="comment">#写入    </span></span><br><span class="line">sql = <span class="string">"insert into user(name,created) values(%s,%s)"</span>   </span><br><span class="line">param = (<span class="string">"aaa"</span>,int(time.time()))    </span><br><span class="line">n = cursor.execute(sql,param)    </span><br><span class="line"><span class="keyword">print</span> n    </span><br><span class="line">   </span><br><span class="line"><span class="comment">#更新    </span></span><br><span class="line">sql = <span class="string">"update user set name=%s where id=3"</span>   </span><br><span class="line">param = (<span class="string">"bbb"</span>)    </span><br><span class="line">n = cursor.execute(sql,param)    </span><br><span class="line"><span class="keyword">print</span> n    </span><br><span class="line">   </span><br><span class="line"><span class="comment">#查询    </span></span><br><span class="line">n = cursor.execute(<span class="string">"select * from user"</span>)    </span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> cursor.fetchall():    </span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> row:    </span><br><span class="line">        <span class="keyword">print</span> r    </span><br><span class="line">   </span><br><span class="line"><span class="comment">#删除    </span></span><br><span class="line">sql = <span class="string">"delete from user where name=%s"</span>   </span><br><span class="line">param =(<span class="string">"aaa"</span>)    </span><br><span class="line">n = cursor.execute(sql,param)    </span><br><span class="line"><span class="keyword">print</span> n    </span><br><span class="line">cursor.close()    </span><br><span class="line">   </span><br><span class="line"><span class="comment">#关闭    </span></span><br><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
-<p>一次性返回所有的数据未必可行，我们可以取逐行依次取回。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> MySQLdb <span class="keyword">as</span> mdb</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">con = mdb.connect(<span class="string">'localhost'</span>, <span class="string">'testuser'</span>, </span><br><span class="line">    <span class="string">'test623'</span>, <span class="string">'testdb'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> con:</span><br><span class="line"></span><br><span class="line">    cur = con.cursor()</span><br><span class="line">    cur.execute(<span class="string">"SELECT * FROM Writers"</span>)</span><br><span class="line">    <span class="comment">#确认SQL语句查询结果中包含的行数</span></span><br><span class="line">    numrows = int(cur.rowcount)</span><br><span class="line">    <span class="comment">#使用fetchone()方法逐行获取数据</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numrows):</span><br><span class="line">        row = cur.fetchone()</span><br><span class="line">        <span class="keyword">print</span> row[<span class="number">0</span>], row[<span class="number">1</span>]</span><br></pre></td></tr></table></figure></p>
+<h3><span id="defer-shi-yong-chang-jing">defer 使用场景</span><a href="#defer-shi-yong-chang-jing" class="header-anchor">#</a></h3><p>由于<code>defer</code>语句延迟调用的特性，所以<code>defer</code>语句能非常方便的处理资源释放问题。比如：资源清理、文件关闭、解锁及记录时间等。</p>
+<h3><span id="defer-zhi-xing-shi-ji">defer执行时机</span><a href="#defer-zhi-xing-shi-ji" class="header-anchor">#</a></h3><p>在Go语言的函数中<code>return</code>语句在底层并不是原子操作，它分为给返回值赋值和RET指令两步。而<code>defer</code>语句执行的时机就在返回值赋值操作后，RET指令执行前。</p>
+<h3><span id="defer-li-zi">defer 例子</span><a href="#defer-li-zi" class="header-anchor">#</a></h3><h4><span id="shi-ti-1">试题1</span><a href="#shi-ti-1" class="header-anchor">#</a></h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"start"</span>)</span><br><span class="line">	<span class="keyword">defer</span> fmt.Println(<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">defer</span> fmt.Println(<span class="number">2</span>)</span><br><span class="line">	<span class="keyword">defer</span> fmt.Println(<span class="number">3</span>)</span><br><span class="line">	fmt.Println(<span class="string">"end"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果</span></span><br><span class="line">start</span><br><span class="line">end</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h4><span id="shi-ti-2">试题2</span><a href="#shi-ti-2" class="header-anchor">#</a></h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f1</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	x := <span class="number">5</span></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		x++</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> x <span class="comment">//返回值x=5 --&gt; defer x=6 --&gt; return 5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f2</span><span class="params">()</span> <span class="params">(x <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		x++</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> <span class="number">5</span> <span class="comment">//返回值x=5 --&gt; defer x=6 --&gt; return x=6</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f3</span><span class="params">()</span> <span class="params">(y <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	x := <span class="number">5</span></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		x++</span><br><span class="line">	&#125;()</span><br><span class="line">	<span class="keyword">return</span> x <span class="comment">//返回值y=x=5 --&gt; defer x=6 --&gt; return y=5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f4</span><span class="params">()</span> <span class="params">(x <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(x <span class="keyword">int</span>)</span></span> &#123; <span class="comment">// defer 中匿名函数中的x 是个副本</span></span><br><span class="line">		x++</span><br><span class="line">	&#125;(x)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">5</span> <span class="comment">//返回值x=5 --&gt; defer x=5, x(副本)=6 --&gt; return x=5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(f1())</span><br><span class="line">	fmt.Println(f2())</span><br><span class="line">	fmt.Println(f3())</span><br><span class="line">	fmt.Println(f4())</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">5</span></span><br></pre></td></tr></table></figure>
+<h4><span id="shi-ti-3">试题3</span><a href="#shi-ti-3" class="header-anchor">#</a></h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calc</span><span class="params">(index <span class="keyword">string</span>, a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	ret := a + b</span><br><span class="line">	fmt.Println(index, a, b, ret)</span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	x := <span class="number">1</span></span><br><span class="line">	y := <span class="number">2</span></span><br><span class="line">	<span class="keyword">defer</span> calc(<span class="string">"AA"</span>, x, calc(<span class="string">"A"</span>, x, y))</span><br><span class="line">	x = <span class="number">10</span></span><br><span class="line">	<span class="keyword">defer</span> calc(<span class="string">"BB"</span>, x, calc(<span class="string">"B"</span>, x, y))</span><br><span class="line">	y = <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 1. defer calc("AA", 1, calc("A", 1, 2))</span></span><br><span class="line"><span class="comment">// 2. calc("A", 1, 2) --&gt; "A" 1 2 3</span></span><br><span class="line"><span class="comment">// 3. x = 10 --&gt; x =10, y=2</span></span><br><span class="line"><span class="comment">// 4. defer calc("BB", 10, calc("B", 10, 2))</span></span><br><span class="line"><span class="comment">// 5. calc("B", 10, 2) --&gt; "B" 10 2 12</span></span><br><span class="line"><span class="comment">// 6. defer calc("BB", 10, 12) --&gt; "BB" 10 12 22</span></span><br><span class="line"><span class="comment">// 7. defer calc("AA", 1, 3) --&gt; "AA" 1 3 4</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">结果</span></span><br><span class="line"><span class="comment">"A" 1 2 3</span></span><br><span class="line"><span class="comment">"B" 10 2 12</span></span><br><span class="line"><span class="comment">"BB" 10 12 22</span></span><br><span class="line"><span class="comment">"AA" 1 3 4</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
 </span>
       
     </div>
@@ -311,9 +304,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag">#python</a>
-          
-            <a href="/tags/MySQLdb使用/" rel="tag">#MySQLdb使用</a>
+            <a href="/tags/go/" rel="tag">#-go</a>
           
         </div>
       
@@ -322,16 +313,12 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/11/18/python_ConfigParser/" rel="prev">
-                <i class="fa fa-chevron-left"></i> ConfigParser模块处理INI配置文件
-              </a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/16/python_file/" rel="next">
-                python的文件操作 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/03/09/go_基础01/" rel="next">
+                go 函数和方法的区别 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -380,7 +367,7 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/11/17/python下操作mysql/" data-title="python操作mysql" data-url="http://leichongxiang.github.io/2015/11/17/python下操作mysql/">
+              <div class="ds-thread" data-thread-key="2021/03/10/go_defer/" data-title="go 语言中的 defer" data-url="http://leichongxiang.github.io/2021/03/10/go_defer/">
               </div>
             
           </div>
@@ -488,7 +475,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">数据库连接#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">游标对象方法#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">关闭游标和数据库#</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">实例#</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">说明#</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.1.</span> <span class="nav-text">defer 使用场景#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.2.</span> <span class="nav-text">defer执行时机#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.</span> <span class="nav-text">defer 例子#</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.3.1.</span> <span class="nav-text">试题1#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.3.2.</span> <span class="nav-text">试题2#</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.3.3.</span> <span class="nav-text">试题3#</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

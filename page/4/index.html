@@ -228,6 +228,110 @@
             
             
               
+                <a class="post-title-link" href="/2016/04/14/linux_ss/" itemprop="url">
+                  ss命令替代netstat
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-14T14:30:35+08:00" content="2016-04-14">
+              2016-04-14
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/14/linux_ss/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/14/linux_ss/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+	  
+	     <span id="/2016/04/14/linux_ss/" class="leancloud_visitors" data-flag-title="ss命令替代netstat">
+	     &nbsp; | &nbsp; 阅读次数
+	     </span>
+	  
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="ss命令"><a href="#ss命令" class="headerlink" title="ss命令"></a>ss命令</h2><h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>ss命令用来显示处于活动状态的套接字信息。ss命令可以用来获取socket统计信息，它可以显示和netstat类似的内容。但ss的优势在于它能够显示更多更详细的有关TCP和连接状态的信息，而且比netstat更快速更高效。 当服务器的socket连接数量变得非常大时，无论是使用netstat命令还是直接cat /proc/net/tcp，执行速度都会很慢。可能你不会有切身的感受，但请相信我，当服务器维持的连接达到上万个的时候，使用netstat等于浪费 生命，而用ss才是节省时间。 天下武功唯快不破。ss快的秘诀在于，它利用到了TCP协议栈中tcp_diag。tcp_diag是一个用于分析统计的模块，可以获得Linux 内核中第一手的信息，这就确保了ss的快捷高效。当然，如果你的系统中没有tcp_diag，ss也可以正常运行，只是效率会变得稍慢。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat -<span class="built_in">at</span> | <span class="type">wc</span>  耗时 <span class="number">15.60</span> 秒</span><br><span class="line">ss -atr     | <span class="type">wc</span>  耗时  <span class="number">5.40</span> 秒（未利用tcp_diag）</span><br><span class="line">ss -atr     | <span class="type">wc</span>  耗时  <span class="number">0.47</span> 秒（利用tcp_diag）</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/14/linux_ss/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2016/04/05/linux_bonding/" itemprop="url">
                   多网卡绑定
                 </a>
@@ -395,7 +499,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww3.sinaimg.cn/large/8e712944jw1f1wjdty31qj209706odfv.jpg" rel="gallery_cklw62yzy0019zoj8fv3a4qrw" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://ww3.sinaimg.cn/large/8e712944jw1f1wjdty31qj209706odfv.jpg" rel="gallery_ckm302ycw001f2yj8ezusn4o6" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://ww3.sinaimg.cn/large/8e712944jw1f1wjdty31qj209706odfv.jpg" itemprop="contentUrl">
               </a>
             
@@ -513,7 +617,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww2.sinaimg.cn/large/8e712944jw1f1k0oq9ovmj20go0nlwev.jpg" rel="gallery_cklw62z2y004ozoj8pa40yukt" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://ww2.sinaimg.cn/large/8e712944jw1f1k0oq9ovmj20go0nlwev.jpg" rel="gallery_ckm302yfp004v2yj8x63065ke" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://ww2.sinaimg.cn/large/8e712944jw1f1k0oq9ovmj20go0nlwev.jpg" itemprop="contentUrl">
               </a>
             
@@ -632,7 +736,7 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww4.sinaimg.cn/large/8e712944jw1f1ctlw6dcjj208c04omxc.jpg" rel="gallery_cklw62z4v008gzoj882rds2vh" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+              <a class="post-gallery-img fancybox" href="http://ww4.sinaimg.cn/large/8e712944jw1f1ctlw6dcjj208c04omxc.jpg" rel="gallery_ckm302yhp008q2yj8bv9syb27" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
                 <img src="http://ww4.sinaimg.cn/large/8e712944jw1f1ctlw6dcjj208c04omxc.jpg" itemprop="contentUrl">
               </a>
             
@@ -673,132 +777,11 @@
 
 
     
-      
-
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2016/02/17/python生成器/" itemprop="url">
-                  python生成器
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-02-17T16:53:35+08:00" content="2016-02-17">
-              2016-02-17
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/02/17/python生成器/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/17/python生成器/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-	  
-	     <span id="/2016/02/17/python生成器/" class="leancloud_visitors" data-flag-title="python生成器">
-	     &nbsp; | &nbsp; 阅读次数
-	     </span>
-	  
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-          
-          
-            <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://ww4.sinaimg.cn/large/8e712944jw1f12hj8o2zxj2064064glh.jpg" rel="gallery_cklw62z2o004ezoj8fnz40xby" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://ww4.sinaimg.cn/large/8e712944jw1f12hj8o2zxj2064064glh.jpg" itemprop="contentUrl">
-              </a>
-            
-          
-
-          
-          </div>
-        </div>
-      
-
-      
-        
-          <h2 id="使用dict和set"><a href="#使用dict和set" class="headerlink" title="使用dict和set"></a>使用dict和set</h2><p>在使用dict和list的时候，经常会遇到字典不存的时候报错。<br>dict：<br>如果key不存在，dict就会报错：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span>&gt; d[<span class="string">'Thomas'</span>]</span><br><span class="line">Traceback (most recent call last)<span class="symbol">:</span></span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;<span class="class"><span class="keyword">module</span>&gt;</span></span><br><span class="line"><span class="symbol">KeyError:</span> <span class="string">'Thomas'</span></span><br></pre></td></tr></table></figure>
-<p>要避免key不存在的错误，有两种办法，一是通过in判断key是否存在：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span>&gt; <span class="string">'Thomas'</span> in d</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
-<p>二是通过dict提供的get方法，如果key不存在，可以返回None，或者自己指定的value：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;</span>&gt; d.get(<span class="string">'Thomas'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt; d.get(<span class="string">'Thomas'</span>, -<span class="number">1</span>)</span><br><span class="line">-<span class="number">1</span></span><br><span class="line"></span><br><span class="line">注意：返回None的时候Python的交互式命令行不显示结果。</span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/17/python生成器/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -834,7 +817,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">65</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
